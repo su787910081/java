@@ -1,0 +1,3 @@
+JAVA ME: 嵌入式设备开发
+JAVA SE: 桌面应用程序开发
+JAVA EE: 企业级应用开发
