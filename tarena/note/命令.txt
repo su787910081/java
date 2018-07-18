@@ -1,0 +1,41 @@
+ping -c 4 192.168.xxx.xxx  指定发送次数
+last 
+	列出用户登录信息
+
+traceroute
+	数据包到主机间的路径
+	traceroute www.baidu.com
+netstat
+	显示网络信息
+	-t tcp
+	-u udp
+	-l 监听
+	-r 路由
+	-n ip、端口
+	-tlun 本机监听的端口
+	-an  本机所有网络连接
+	-rn 本机路由表
+mount
+	挂载
+	-t 文件系统
+	mout -t iso9660 /dev/cdrom(硬件)  /mnt/cdrom(目录)
+umount
+	卸载 设备
+	umount /dev/cdrom
+shutdown
+	关机
+	-h 指定时间 -h now 或者 -h 20:00
+	-r 重启 -r now 或者 -r 20:00
+		reboot  立即重启
+	-c 取消预订的关机命令
+vim 
+	:%s/aaa/bbb/g 不询问
+	:%s/aaa/bbb/c  询问确认
+			全文替换，aaa 替换成bbb
+	:n1,n2s/aaa/bbb/g
+	:n1,n2s/aaa/bbb/c
+		指定行范围内替换
+	:set ic 不区分大小写
+	:set noic 区分大小写
+
+
