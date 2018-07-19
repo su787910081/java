@@ -57,13 +57,13 @@ gzip 压缩
 
 grep
 	文件内容过滤，找到符合条件的那一行
-    		-i  忽略大小写
-    		-v 排除 ... -v ^#
+    	-i  忽略大小写
+    	-v 排除 ... -v ^#
 	可以处理其他命令的处理结果，通过 “通道”给grep  处理。
-    		grep /etc/passwd root
-    		ls -l /etc | grep ^d            将ls -l 的结果，交给grep ，grep 查找以d 开头(^)的行
-    		ls -l /etc | grep ^d | wc -l       wc -l 统计行数
-    		ls -l /etc | wc -l          统计所有行数
+    	grep /etc/passwd root
+    	ls -l /etc | grep ^d            将ls -l 的结果，交给grep ，grep 查找以d 开头(^)的行
+    	ls -l /etc | grep ^d | wc -l    wc -l 统计行数
+    	ls -l /etc | wc -l          	统计所有行数
 
 
 ping -c 4 192.168.xxx.xxx  指定发送次数
