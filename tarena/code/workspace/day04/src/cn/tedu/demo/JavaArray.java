@@ -11,7 +11,8 @@ public class JavaArray {
 //		thirdFunc();
 //		fourthFunc();
 //		fifthFunc();
-		sixthFunc();
+//		sixthFunc();
+		seventhFunc();
 	}
 	
 	public static void firstFunc() {
@@ -120,6 +121,18 @@ public class JavaArray {
 		arr2[0] = min;
 		System.out.println(Arrays.toString(arr1));
 		System.out.println(Arrays.toString(arr2));
+	}
+	
+	public static void seventhFunc() {
+		int[][] arr1 = {{1, 1, 1}, {2, 2}, {3, 3, 3, 3}};
+		for (int i = 0; i < arr1.length; ++i) {
+			System.out.println("arr1[" + i + "].length = " + arr1[i].length);
+			
+			for (int j = 0; j <arr1[i].length; ++j) {
+				System.out.println("arr1[" + i + "][" + j + "] = " + arr1[i][j]);
+			}
+			
+		}
 	}
 	
 }
