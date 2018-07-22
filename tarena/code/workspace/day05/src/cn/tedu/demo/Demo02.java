@@ -1,11 +1,15 @@
 package cn.tedu.demo;
 
+import java.util.Random;
+import java.util.Scanner;
+
 public class Demo02 {
 	public static void main(String[] args) {
 		Demo02 d = new Demo02();
 //		d.demo();
-		d.demo(1, 3, 3);
-		d.count();
+//		d.demo(1, 3, 3);
+//		d.count();
+		d.game();
 	}
 	
 	public void demo(int x, int...y) {
@@ -46,5 +50,34 @@ public class Demo02 {
 				ary[index++] = 0;
 			}
 		}
+	}
+	
+	public void game() {
+		Random rd = new Random();
+		boolean[] arrResult = new boolean[26];
+		System.out.print("[");
+		for (int i = 0; i < 5; ++i) {
+			int index = rd.nextInt(26);
+			arrResult[index] = true;
+			char ch = (char)(index + 'a');
+			System.out.print(ch + " ");
+		}
+		System.out.println("]");
+
+		System.out.print("ÇëÊäÈëÎå¸ö×ÖÄ¸£º");
+		Scanner input = new Scanner(System.in);
+		
+		while (true) {
+			String str = input.nextLine();
+//			str.getChars(srcBegin, srcEnd, dst, dstBegin);
+			str.charAt(0);
+			System.out.println(str);
+			if (str == "exit")
+				break;
+			
+			
+		}
+		
+		input.close();
 	}
 }
