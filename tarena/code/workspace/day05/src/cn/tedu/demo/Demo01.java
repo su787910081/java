@@ -2,9 +2,9 @@ package cn.tedu.demo;
 
 import java.util.Scanner;
 
-public class demo01 {
+public class Demo01 {
 	public static void main(String[] args) {
-		demo01 d = new demo01();
+		Demo01 d = new Demo01();
 		int dp = d.product(10);
 		System.out.println(10 + "µÄ½×³ËÊÇ£º" + dp);
 		
