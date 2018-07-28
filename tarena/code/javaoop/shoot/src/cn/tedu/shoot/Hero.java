@@ -5,11 +5,7 @@ package cn.tedu.shoot;
  * @author suyh
  *
  */
-public class Hero {
-	int width;
-	int height;
-	int x;
-	int y;
+public class Hero extends FlyingObject {
 	int life;	// 生命值
 	int doubleFire;	// 火力值
 	

@@ -5,11 +5,7 @@ package cn.tedu.shoot;
  * @author suyh
  *
  */
-public class Sky {
-	int width;
-	int height;
-	int x;
-	int y;
+public class Sky extends FlyingObject {
 	int step;
 	int y1;	// 第二张图片的y 坐标
 	public Sky() {
@@ -22,8 +18,8 @@ public class Sky {
 	}
 	
 	// 移动行为
-	public void step() {
-		System.out.println("sky 移动了" + step + " 个像素.");
-	}
+//	public void step() {
+//		System.out.println("sky 移动了" + step + " 个像素.");
+//	}
 	
 }

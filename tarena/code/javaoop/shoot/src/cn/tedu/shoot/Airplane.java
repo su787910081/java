@@ -5,11 +5,7 @@ package cn.tedu.shoot;
  * @author suyh
  *
  */
-public class Airplane {
-	int width;
-	int height;
-	int x; 
-	int y;
+public class Airplane extends FlyingObject {
 	int step;	// 移动单位
 	
 	
@@ -21,10 +17,10 @@ public class Airplane {
 		step = 2;
 	}
 	
-	// 移动行为
-	public void step() {
-		System.out.println("小敌机移动了: " + step + "个像素");
-	}
+//	// 移动行为
+//	public void step() {
+//		System.out.println("小敌机移动了: " + step + "个像素");
+//	}
 	
 	
 }

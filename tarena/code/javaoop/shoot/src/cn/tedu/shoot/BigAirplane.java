@@ -5,11 +5,7 @@ package cn.tedu.shoot;
  * @author suyh
  *
  */
-public class BigAirplane {
-	int width;
-	int height;
-	int x;
-	int y;
+public class BigAirplane extends FlyingObject {
 	int step;
 	
 	public BigAirplane() {
@@ -20,8 +16,8 @@ public class BigAirplane {
 		step = 2;
 	}
 	
-	// 移动行为
-	public void step() {
-		System.out.println("大敌机移动了: " + step + "个像素");
-	}
+//	// 移动行为
+//	public void step() {
+//		System.out.println("大敌机移动了: " + step + "个像素");
+//	}
 }
