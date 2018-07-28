@@ -5,7 +5,13 @@
 	super() 在构造方法中，必须在第一行。不可以将super() 放到其他子句之后。
 	super() 是默认存在的，可以没有这一行代码，但是效果是一样的。
 
-
+重写：
+	不能降低访问范围(修饰符：子类 >= 父类)
+	返回类型允许是父类方法返回类型的子类型(返回类型: 子类 <= 父类)
+	
+    public String toString() {
+        return getClass().getName() + "@" + Integer.toHexString(hashCode());
+    }
 
 
 
