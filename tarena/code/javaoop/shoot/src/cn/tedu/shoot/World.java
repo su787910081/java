@@ -56,6 +56,6 @@ public class World extends JPanel {
 		// 让窗体显示，默认JFrame 创建出来 是不显示出来的，需要显示调用。
 		frame.setVisible(true);
 		
-//		world.action();
+		world.action();
 	}
 }
