@@ -71,13 +71,26 @@ public class Demo02 {
 			String str = input.nextLine();
 //			str.getChars(srcBegin, srcEnd, dst, dstBegin);
 			str.charAt(0);
+
 			System.out.println(str);
-			if (str == "exit")
+			if (str == "exit"){
+				System.out.println("欢迎下次使用！");
 				break;
+			}
+
+			char[] inputArray = str.toCharArray();
+			if (inputArray.length != 5) {
+				System.out.println("输入的字符个数错误，请重新输入：");
+				break;
+			}
 			
-			
+			check();
 		}
 		
 		input.close();
+	}
+
+	public void check() {
+		
 	}
 }
