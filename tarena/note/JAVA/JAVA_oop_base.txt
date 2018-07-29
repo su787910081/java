@@ -13,6 +13,65 @@
         return getClass().getName() + "@" + Integer.toHexString(hashCode());
     }
 
+static 关键字
+静态代码块：
+	static 修饰对象的初始化时刻：
+		测试了一下，静态代码块，如果没有调用该类的静态函数，或者构造类对象，则不会被调用。
+		同时，他会在main() 函数运行之后再被调用。
+
+		与C++ 做对比，在C++ 中静态变量的初始化是在main() 函数之前初始化的。需要构造该类对象就已经存在了。
+
+	static 只能修饰类的成员变量、成员方法、类中代码块。
+	static 不能修饰方法中的局部变量。
+
+非静态方法叫做实例方法
+非静态成员变量叫做实例变量
+
+final 关键字
+	用法(可以修饰)：
+		变量: 
+		方法: 用final 修饰的成员方法，不可以被重写。
+			public final void test() {  }
+		类: 被final 修饰的类是不可以被继承的.
+			public final class java.long.Math;
+			public final class java.long.String;
+
+static final:
+	用来修饰变量:
+		static final int a = 5;
+
+FlyingObject.class.getResource(fileName);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

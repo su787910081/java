@@ -1,8 +1,8 @@
 // 画窗口
 
 	JFrame frame = new JFrame("飞机大战");
-	World world = new World();
-	
+	World world = new World();	// World 派生成 JPanel
+
 	frame.add(world);	// 将某个对象添加到窗口中
 	
 	// 设定窗口默认关闭行为 - 如果不设置这个，那么关闭窗口后，程序不会结束。
