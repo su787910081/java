@@ -1,15 +1,32 @@
-// »­´°¿Ú
+// ç”»çª—å£
 
-	JFrame frame = new JFrame("·É»ú´óÕ½");
-	World world = new World();	// World ÅÉÉú³É JPanel
+	JFrame frame = new JFrame("é£æœºå¤§æˆ˜");
+	World world = new World();	// World æ´¾ç”Ÿæˆ JPanel
 
-	frame.add(world);	// ½«Ä³¸ö¶ÔÏóÌí¼Óµ½´°¿ÚÖĞ
+	frame.add(world);	// å°†æŸä¸ªå¯¹è±¡æ·»åŠ åˆ°çª—å£ä¸­
 	
-	// Éè¶¨´°¿ÚÄ¬ÈÏ¹Ø±ÕĞĞÎª - Èç¹û²»ÉèÖÃÕâ¸ö£¬ÄÇÃ´¹Ø±Õ´°¿Úºó£¬³ÌĞò²»»á½áÊø¡£
+	// è®¾å®šçª—å£é»˜è®¤å…³é—­è¡Œä¸º - å¦‚æœä¸è®¾ç½®è¿™ä¸ªï¼Œé‚£ä¹ˆå…³é—­çª—å£åï¼Œç¨‹åºä¸ä¼šç»“æŸã€‚
 	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	// ÉèÖÃ´°¿Ú´óĞ¡
+	// è®¾ç½®çª—å£å¤§å°
 	frame.setSize(400, 700);
 	frame.setLocationRelativeTo(null);
-	// ÈÃ´°ÌåÏÔÊ¾£¬Ä¬ÈÏJFrame ´´½¨³öÀ´ ÊÇ²»ÏÔÊ¾³öÀ´µÄ£¬ĞèÒªÏÔÊ¾µ÷ÓÃ¡£
+	// è®©çª—ä½“æ˜¾ç¤ºï¼Œé»˜è®¤JFrame åˆ›å»ºå‡ºæ¥ æ˜¯ä¸æ˜¾ç¤ºå‡ºæ¥çš„ï¼Œéœ€è¦æ˜¾ç¤ºè°ƒç”¨ã€‚
 	frame.setVisible(true);
 		
+
+import java.awt.image.BufferedImage;
+
+@Override
+public void paint(Graphics g) {
+	BufferedImage image = null;
+	
+	try {
+		image =	ImageIO.read(FlyingObject.class.getResource(fileName));
+	} catch (IOException e) {
+		e.printStackTrace();
+	}
+	
+	// æŒ‡å®šç”»å“ªä¸€å¼ å›¾ç‰‡ï¼Œç”»çš„ä½ç½®æ˜¯ç›¸å¯¹äºçª—å£çš„åæ ‡
+	g.drawImage(image, 0, 0, null);
+}
+
