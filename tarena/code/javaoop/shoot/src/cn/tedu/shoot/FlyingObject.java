@@ -4,19 +4,19 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import java.awt.Graphics;
 
-/** é£žè¡Œç‰© */
+/** ·ÉÐÐÎï */
 public abstract class FlyingObject {
-	public static final int LIFE = 0;   //æ´»ç€çš„
-	public static final int DEAD = 1;   //æ­»äº†çš„
-	public static final int REMOVE = 2; //å¯ä»¥åˆ é™¤çš„
-	protected int state = LIFE; //å½“å‰çŠ¶æ€(é»˜è®¤ä¸ºæ´»ç€çš„)
+	public static final int LIFE = 0;   //»î×ÅµÄ
+	public static final int DEAD = 1;   //ËÀÁËµÄ
+	public static final int REMOVE = 2; //¿ÉÒÔÉ¾³ýµÄ
+	protected int state = LIFE; //µ±Ç°×´Ì¬(Ä¬ÈÏÎª»î×ÅµÄ)
 	
-	protected int width; 		//å®½
-	protected int height; 	    //é«˜
-	protected int x; 			//xåæ ‡
-	protected int y; 			//yåæ ‡
+	protected int width; 		//¿í
+	protected int height; 	    //¸ß
+	protected int x; 			//x×ø±ê
+	protected int y; 			//y×ø±ê
 	
-	//é»˜è®¤æž„é€ (Sky,Hero,Bullet)
+	//Ä¬ÈÏ¹¹Ôì(Sky,Hero,Bullet)
 	public FlyingObject(int width,int height,int x,int y){
 		this.width = width;
 		this.height = height;
@@ -24,16 +24,16 @@ public abstract class FlyingObject {
 		this.y = y;
 	}
 	
-	//ä¸“é—¨ç»™æ•Œäººç•™çš„(Airplaneã€BigAirplaneã€Bee)
+	//×¨ÃÅ¸øµÐÈËÁôµÄ(Airplane¡¢BigAirplane¡¢Bee)
 	public FlyingObject(int width,int height){
 		this.width = width;
 		this.height = height;
-		Random rand = new Random(); //éšæœºæ•°å¯¹è±¡
-		x = rand.nextInt(World.WIDTH-this.width); //x:0åˆ°(çª—å£å®½-å°æ•Œæœºå®½)ä¹‹å†…çš„éšæœºæ•°
-		y = -this.height; //y:è´Ÿçš„å°æ•Œæœºçš„é«˜
+		Random rand = new Random(); //Ëæ»úÊý¶ÔÏó
+		x = rand.nextInt(World.WIDTH-this.width); //x:0µ½(´°¿Ú¿í-Ð¡µÐ»ú¿í)Ö®ÄÚµÄËæ»úÊý
+		y = -this.height; //y:¸ºµÄÐ¡µÐ»úµÄ¸ß
 	}
 	
-	/** åŠ è½½/è¯»å–å›¾ç‰‡ */
+	/** ¼ÓÔØ/¶ÁÈ¡Í¼Æ¬ */
 	public static BufferedImage loadImage(String fileName){
 		try{
 			BufferedImage img = ImageIO.read(FlyingObject.class.getResource(fileName));
@@ -44,48 +44,52 @@ public abstract class FlyingObject {
 		}
 	}
 	
-	/** é£žè¡Œç‰©ç§»åŠ¨ */
-	public abstract void step();
-	
-	/** èŽ·å–å›¾ç‰‡ */
-	public abstract BufferedImage getImage();
-	
-	/** ç”»å¯¹è±¡ g:ç”»ç¬” */
-	public void paintObject(Graphics g){
-		g.drawImage(getImage(),x,y,null); //ç”»å¯¹è±¡
+	public void paint(Graphics g) {
+		g.drawImage(getImage(), x, y, null);
 	}
 	
-	/** åˆ¤æ–­æ˜¯å¦æ˜¯æ´»ç€å‘¢ */
+	/** ·ÉÐÐÎïÒÆ¶¯ */
+	public abstract void step();
+	
+	/** »ñÈ¡Í¼Æ¬ */
+	public abstract BufferedImage getImage();
+	
+	/** »­¶ÔÏó g:»­±Ê */
+	public void paintObject(Graphics g){
+		g.drawImage(getImage(),x,y,null); //»­¶ÔÏó
+	}
+	
+	/** ÅÐ¶ÏÊÇ·ñÊÇ»î×ÅÄØ */
 	public boolean isLife(){
 		return state==LIFE;
 	}
-	/** åˆ¤æ–­æ˜¯å¦æ˜¯æ­»äº†çš„ */
+	/** ÅÐ¶ÏÊÇ·ñÊÇËÀÁËµÄ */
 	public boolean isDead(){
 		return state==DEAD;
 	}
-	/** åˆ¤æ–­æ˜¯å¦æ˜¯å¯ä»¥åˆ é™¤çš„ */
+	/** ÅÐ¶ÏÊÇ·ñÊÇ¿ÉÒÔÉ¾³ýµÄ */
 	public boolean isRemove(){
 		return state==REMOVE;
 	}
 	
-	/** åˆ¤æ–­é£žè¡Œç‰©æ˜¯å¦è¶Šç•Œ */
+	/** ÅÐ¶Ï·ÉÐÐÎïÊÇ·ñÔ½½ç */
 	public abstract boolean outOfBounds();
 	
-	/** æ£€æµ‹æ•Œäººä¸Žå­å¼¹å’Œè‹±é›„æœºçš„ç¢°æ’ž this:æ•Œäºº other:å­å¼¹å’Œè‹±é›„æœº */
+	/** ¼ì²âµÐÈËÓë×Óµ¯ºÍÓ¢ÐÛ»úµÄÅö×² this:µÐÈË other:×Óµ¯ºÍÓ¢ÐÛ»ú */
 	public boolean hit(FlyingObject other){
-		int x1 = this.x-other.width;  //x1:æ•Œäººçš„x-å­å¼¹çš„å®½
-		int x2 = this.x+this.width;   //x2:æ•Œäººçš„x+æ•Œäººçš„å®½
-		int y1 = this.y-other.height; //y1:æ•Œäººçš„y-å­å¼¹çš„é«˜
-		int y2 = this.y+this.height;  //y2:æ•Œäººçš„y+æ•Œäººçš„é«˜
-		int x = other.x; //x:å­å¼¹çš„x
-		int y = other.y; //y:å­å¼¹çš„y
+		int x1 = this.x-other.width;  //x1:µÐÈËµÄx-×Óµ¯µÄ¿í
+		int x2 = this.x+this.width;   //x2:µÐÈËµÄx+µÐÈËµÄ¿í
+		int y1 = this.y-other.height; //y1:µÐÈËµÄy-×Óµ¯µÄ¸ß
+		int y2 = this.y+this.height;  //y2:µÐÈËµÄy+µÐÈËµÄ¸ß
+		int x = other.x; //x:×Óµ¯µÄx
+		int y = other.y; //y:×Óµ¯µÄy
 		
 		return x>=x1 && x<=x2
 			   &&
-			   y>=y1 && y<=y2; //xåœ¨x1ä¸Žx2ä¹‹é—´ï¼Œå¹¶ä¸”ï¼Œyåœ¨y1ä¸Žy2ä¹‹é—´ï¼Œå³ä¸ºæ’žä¸Šäº†
+			   y>=y1 && y<=y2; //xÔÚx1Óëx2Ö®¼ä£¬²¢ÇÒ£¬yÔÚy1Óëy2Ö®¼ä£¬¼´Îª×²ÉÏÁË
 	}
 	
-	/** é£žè¡Œç‰©åŽ»æ­» */
+	/** ·ÉÐÐÎïÈ¥ËÀ */
 	public void goDead(){
 		state = DEAD;
 	}

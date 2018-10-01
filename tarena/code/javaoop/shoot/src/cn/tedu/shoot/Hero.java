@@ -1,9 +1,9 @@
 package cn.tedu.shoot;
 import java.awt.image.BufferedImage;
 
-/** è‹±é›„æœº: æ˜¯é£è¡Œç‰© */
+/** Ó¢ĞÛ»ú: ÊÇ·ÉĞĞÎï */
 public class Hero extends FlyingObject {
-	private static BufferedImage[] images; //å›¾ç‰‡æ•°ç»„
+	private static BufferedImage[] images; //Í¼Æ¬Êı×é
 	static{
 		images = new BufferedImage[6];
 		for(int i=0;i<images.length;i++){
@@ -11,32 +11,32 @@ public class Hero extends FlyingObject {
 		}
 	}
 	
-	private int life; 		//å‘½
-	private int doubleFire; //ç«åŠ›å€¼
-	/** æ„é€ æ–¹æ³• */
+	private int life; 		//Ãü
+	private int doubleFire; //»ğÁ¦Öµ
+	/** ¹¹Ôì·½·¨ */
 	public Hero(){
 		super(97,124,140,400);
-		this.life = 3; //é»˜è®¤3æ¡å‘½
-		this.doubleFire = 0; //å•å€ç«åŠ›
+		this.life = 3; //Ä¬ÈÏ3ÌõÃü
+		this.doubleFire = 0; //µ¥±¶»ğÁ¦
 	}
 	
-	/** è‹±é›„æœºéšç€é¼ æ ‡ç§»åŠ¨ x,y:é¼ æ ‡çš„xå’Œy */
+	/** Ó¢ĞÛ»úËæ×ÅÊó±êÒÆ¶¯ x,y:Êó±êµÄxºÍy */
 	public void moveTo(int x,int y){
-		this.x = x-this.width/2;  //è‹±é›„æœºçš„x=é¼ æ ‡çš„x-1/2è‹±é›„æœºçš„å®½
-		this.y = y-this.height/2; //è‹±é›„æœºçš„y=é¼ æ ‡çš„y-1/2è‹±é›„æœºçš„é«˜
+		this.x = x-this.width/2;  //Ó¢ĞÛ»úµÄx=Êó±êµÄx-1/2Ó¢ĞÛ»úµÄ¿í
+		this.y = y-this.height/2; //Ó¢ĞÛ»úµÄy=Êó±êµÄy-1/2Ó¢ĞÛ»úµÄ¸ß
 	}
 	
-	/** è‹±é›„æœºç§»åŠ¨ */
+	/** Ó¢ĞÛ»úÒÆ¶¯ */
 	public void step(){
 		
 	}
 	
-	int index = 0; //æ´»ç€çš„ä¸‹æ ‡
-	int deadIndex = 2; //æ­»äº†çš„ä¸‹æ ‡
-	/** é‡å†™getImage()è·å–å›¾ç‰‡ */
-	public BufferedImage getImage(){ //10æ¯«ç§’èµ°ä¸€æ¬¡
-		if(isLife()){ //è‹¥æ´»ç€å‘¢
-			return images[index++%2]; //2å¼ å›¾ç‰‡åˆ‡æ¢
+	int index = 0; //»î×ÅµÄÏÂ±ê
+	int deadIndex = 2; //ËÀÁËµÄÏÂ±ê
+	/** ÖØĞ´getImage()»ñÈ¡Í¼Æ¬ */
+	public BufferedImage getImage(){ //10ºÁÃë×ßÒ»´Î
+		if(isLife()){ //Èô»î×ÅÄØ
+			return images[index++%2]; //2ÕÅÍ¼Æ¬ÇĞ»»
 			/*
 			 *               index=0
 			 * 10M images[0] index=1
@@ -44,10 +44,10 @@ public class Hero extends FlyingObject {
 			 * 30M images[0] index=3
 			 * 40M images[1] index=4
 			 */
-		}else if(isDead()){ //è‹¥æ­»äº†å‘¢
-			BufferedImage img = images[deadIndex++]; //ä¸‹æ ‡ä»2å¼€å§‹
-			if(deadIndex==images.length){ //å½“ä¸‹æ ‡ä¸ºæ•°ç»„çš„é•¿åº¦
-				state = REMOVE; //åˆ™ä¿®æ”¹å½“å‰çŠ¶æ€ä¸ºå¯ä»¥åˆ é™¤çš„
+		}else if(isDead()){ //ÈôËÀÁËÄØ
+			BufferedImage img = images[deadIndex++]; //ÏÂ±ê´Ó2¿ªÊ¼
+			if(deadIndex==images.length){ //µ±ÏÂ±êÎªÊı×éµÄ³¤¶È
+				state = REMOVE; //ÔòĞŞ¸Äµ±Ç°×´Ì¬Îª¿ÉÒÔÉ¾³ıµÄ
 			}
 			return img;
 			/*
@@ -62,51 +62,51 @@ public class Hero extends FlyingObject {
 		return null;
 	}
 	
-	/** è‹±é›„æœºå‘å°„å­å¼¹(åˆ›å»ºå­å¼¹å¯¹è±¡) */
+	/** Ó¢ĞÛ»ú·¢Éä×Óµ¯(´´½¨×Óµ¯¶ÔÏó) */
 	public Bullet[] shoot(){
-		int xStep = this.width/4; //1/4è‹±é›„æœºçš„å®½ 
-		int yStep = 20; //å›ºå®šçš„20
-		if(doubleFire>0){ //åŒ
-			Bullet[] bs = new Bullet[2]; //2å‘å­å¼¹
-			bs[0] = new Bullet(this.x+1*xStep,this.y-yStep); //x:è‹±é›„æœºçš„x+1/4è‹±é›„æœºçš„å®½ y:è‹±é›„æœºçš„y-å›ºå®šçš„20
-			bs[1] = new Bullet(this.x+3*xStep,this.y-yStep); //x:è‹±é›„æœºçš„x+3/4è‹±é›„æœºçš„å®½ y:è‹±é›„æœºçš„y-å›ºå®šçš„20
-			doubleFire-=2; //å‘å°„ä¸€æ¬¡åŒå€ç«åŠ›ï¼Œåˆ™ç«åŠ›å€¼å‡2
+		int xStep = this.width/4; //1/4Ó¢ĞÛ»úµÄ¿í 
+		int yStep = 20; //¹Ì¶¨µÄ20
+		if(doubleFire>0){ //Ë«
+			Bullet[] bs = new Bullet[2]; //2·¢×Óµ¯
+			bs[0] = new Bullet(this.x+1*xStep,this.y-yStep); //x:Ó¢ĞÛ»úµÄx+1/4Ó¢ĞÛ»úµÄ¿í y:Ó¢ĞÛ»úµÄy-¹Ì¶¨µÄ20
+			bs[1] = new Bullet(this.x+3*xStep,this.y-yStep); //x:Ó¢ĞÛ»úµÄx+3/4Ó¢ĞÛ»úµÄ¿í y:Ó¢ĞÛ»úµÄy-¹Ì¶¨µÄ20
+			doubleFire-=2; //·¢ÉäÒ»´ÎË«±¶»ğÁ¦£¬Ôò»ğÁ¦Öµ¼õ2
 			return bs;
-		}else{ //å•
-			Bullet[] bs = new Bullet[1]; //1å‘å­å¼¹
-			bs[0] = new Bullet(this.x+2*xStep,this.y-yStep); //x:è‹±é›„æœºçš„x+2/4è‹±é›„æœºçš„å®½ y:è‹±é›„æœºçš„y-å›ºå®šçš„20
+		}else{ //µ¥
+			Bullet[] bs = new Bullet[1]; //1·¢×Óµ¯
+			bs[0] = new Bullet(this.x+2*xStep,this.y-yStep); //x:Ó¢ĞÛ»úµÄx+2/4Ó¢ĞÛ»úµÄ¿í y:Ó¢ĞÛ»úµÄy-¹Ì¶¨µÄ20
 			return bs;
 		}
 	}
 	
-	/** é‡å†™outOfBounds()åˆ¤æ–­æ˜¯å¦è¶Šç•Œ */
+	/** ÖØĞ´outOfBounds()ÅĞ¶ÏÊÇ·ñÔ½½ç */
 	public boolean outOfBounds(){
-		return false; //æ°¸ä¸è¶Šç•Œ
+		return false; //ÓÀ²»Ô½½ç
 	}
 	
-	/** è‹±é›„æœºå¢å‘½ */
+	/** Ó¢ĞÛ»úÔöÃü */
 	public void addLife(){
-		life++; //å‘½æ•°å¢1
+		life++; //ÃüÊıÔö1
 	}
 	
-	/** è·å–è‹±é›„æœºçš„å‘½ */
+	/** »ñÈ¡Ó¢ĞÛ»úµÄÃü */
 	public int getLife(){
-		return life; //è¿”å›å‘½æ•°
+		return life; //·µ»ØÃüÊı
 	}
 	
-	/** è‹±é›„æœºå‡å‘½ */
+	/** Ó¢ĞÛ»ú¼õÃü */
 	public void subtractLife(){
-		life--; //å‘½æ•°å‡1
+		life--; //ÃüÊı¼õ1
 	}
 	
-	/** æ¸…ç©ºè‹±é›„æœºçš„ç«åŠ›å€¼ */
+	/** Çå¿ÕÓ¢ĞÛ»úµÄ»ğÁ¦Öµ */
 	public void clearDoubleFire(){
 		doubleFire = 0;
 	}
 	
-	/** è‹±é›„æœºå¢ç«åŠ› */
+	/** Ó¢ĞÛ»úÔö»ğÁ¦ */
 	public void addDoubleFire(){
-		doubleFire+=40; //ç«åŠ›å€¼å¢40
+		doubleFire+=40; //»ğÁ¦ÖµÔö40
 	}
 	
 }

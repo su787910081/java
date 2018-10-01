@@ -1,9 +1,9 @@
 package cn.tedu.shoot;
 import java.awt.image.BufferedImage;
 import java.util.Random;
-/** å°èœœèœ‚: æ˜¯é£è¡Œç‰© */
+/** Ğ¡ÃÛ·ä: ÊÇ·ÉĞĞÎï */
 public class Bee extends FlyingObject implements Award {
-	private static BufferedImage[] images; //å›¾ç‰‡æ•°ç»„
+	private static BufferedImage[] images; //Í¼Æ¬Êı×é
 	static{
 		images = new BufferedImage[5];
 		for(int i=0;i<images.length;i++){
@@ -11,50 +11,50 @@ public class Bee extends FlyingObject implements Award {
 		}
 	}
 	
-	private int xSpeed;    //xåæ ‡ç§»åŠ¨é€Ÿåº¦
-	private int ySpeed;	   //yåæ ‡ç§»åŠ¨é€Ÿåº¦
-	private int awardType; //å¥–åŠ±ç±»å‹(0æˆ–1)
-	/** æ„é€ æ–¹æ³• */
+	private int xSpeed;    //x×ø±êÒÆ¶¯ËÙ¶È
+	private int ySpeed;	   //y×ø±êÒÆ¶¯ËÙ¶È
+	private int awardType; //½±ÀøÀàĞÍ(0»ò1)
+	/** ¹¹Ôì·½·¨ */
 	public Bee(){
 		super(60,50);
 		xSpeed = 1;
 		ySpeed = 2;
 		Random rand = new Random();
-		awardType = rand.nextInt(2); //0åˆ°1ä¹‹å†…çš„éšæœºæ•°
+		awardType = rand.nextInt(2); //0µ½1Ö®ÄÚµÄËæ»úÊı
 	}
 	
-	/** å°èœœèœ‚ç§»åŠ¨ */
+	/** Ğ¡ÃÛ·äÒÆ¶¯ */
 	public void step(){
-		x+=xSpeed; //x+(å‘å·¦æˆ–å‘å³)
-		y+=ySpeed; //y+(å‘ä¸‹)
-		if(x<=0 || x>=World.WIDTH-this.width){ //è‹¥x<=0æˆ–è€…x>=(çª—å£å®½-èœœèœ‚å®½)ï¼Œè¯´æ˜åˆ°ä¸¤è¾¹äº†ï¼Œåˆ™ä¿®æ”¹xç§»åŠ¨çš„æ–¹å‘
-			xSpeed*=-1; //æ­£å˜è´Ÿï¼Œè´Ÿå˜æ­£
+		x+=xSpeed; //x+(Ïò×ó»òÏòÓÒ)
+		y+=ySpeed; //y+(ÏòÏÂ)
+		if(x<=0 || x>=World.WIDTH-this.width){ //Èôx<=0»òÕßx>=(´°¿Ú¿í-ÃÛ·ä¿í)£¬ËµÃ÷µ½Á½±ßÁË£¬ÔòĞŞ¸ÄxÒÆ¶¯µÄ·½Ïò
+			xSpeed*=-1; //Õı±ä¸º£¬¸º±äÕı
 		}
 	}
 	
-	int deadIndex = 1; //æ­»äº†çš„ä¸‹æ ‡
-	/** é‡å†™getImage()è·å–å›¾ç‰‡ */
-	public BufferedImage getImage(){ //10æ¯«ç§’èµ°ä¸€æ¬¡
-		if(isLife()){ //è‹¥æ´»ç€å‘¢
-			return images[0]; //è¿”å›ç¬¬1å¼ å›¾ç‰‡
-		}else if(isDead()){ //è‹¥æ­»äº†å‘¢
-			BufferedImage img = images[deadIndex++]; //ä»ç¬¬2å¼ å›¾ç‰‡å¼€å§‹
-			if(deadIndex==images.length){ //å½“ä¸‹æ ‡ä¸ºæ•°ç»„çš„é•¿åº¦
-				state = REMOVE; //åˆ™ä¿®æ”¹å½“å‰çŠ¶æ€ä¸ºå¯ä»¥åˆ é™¤çš„
+	int deadIndex = 1; //ËÀÁËµÄÏÂ±ê
+	/** ÖØĞ´getImage()»ñÈ¡Í¼Æ¬ */
+	public BufferedImage getImage(){ //10ºÁÃë×ßÒ»´Î
+		if(isLife()){ //Èô»î×ÅÄØ
+			return images[0]; //·µ»ØµÚ1ÕÅÍ¼Æ¬
+		}else if(isDead()){ //ÈôËÀÁËÄØ
+			BufferedImage img = images[deadIndex++]; //´ÓµÚ2ÕÅÍ¼Æ¬¿ªÊ¼
+			if(deadIndex==images.length){ //µ±ÏÂ±êÎªÊı×éµÄ³¤¶È
+				state = REMOVE; //ÔòĞŞ¸Äµ±Ç°×´Ì¬Îª¿ÉÒÔÉ¾³ıµÄ
 			}
 			return img;
 		}
 		return null;
 	}
 	
-	/** é‡å†™outOfBounds()åˆ¤æ–­æ˜¯å¦è¶Šç•Œ */
+	/** ÖØĞ´outOfBounds()ÅĞ¶ÏÊÇ·ñÔ½½ç */
 	public boolean outOfBounds(){
-		return this.y>=World.HEIGHT; //å°èœœèœ‚çš„y>=çª—å£çš„é«˜ï¼Œå³ä¸ºè¶Šç•Œäº†
+		return this.y>=World.HEIGHT; //Ğ¡ÃÛ·äµÄy>=´°¿ÚµÄ¸ß£¬¼´ÎªÔ½½çÁË
 	}
 	
-	/** é‡å†™getType()è·å–å¥–åŠ±ç±»å‹ */
+	/** ÖØĞ´getType()»ñÈ¡½±ÀøÀàĞÍ */
 	public int getType(){
-		return awardType; //è¿”å›å¥–åŠ±ç±»å‹(0æˆ–1)
+		return awardType; //·µ»Ø½±ÀøÀàĞÍ(0»ò1)
 	}
 	
 }

@@ -1,7 +1,7 @@
 package cn.tedu.shoot;
-/** 鏁屼汉鎺ュ彛: 寰楀垎 */
+/** 敌人接口: 得分 */
 public interface Enemy {
-	/** 寰楀垎 */
+	/** 得分 */
 	public int getScore();
 }
 

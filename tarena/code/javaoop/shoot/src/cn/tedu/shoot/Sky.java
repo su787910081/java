@@ -2,48 +2,55 @@ package cn.tedu.shoot;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
-/** å¤©ç©º: æ˜¯é£è¡Œç‰© */
+/** Ìì¿Õ: ÊÇ·ÉĞĞÎï */
 public class Sky extends FlyingObject {
-	private static BufferedImage image; //å›¾ç‰‡
+	private static BufferedImage image; //Í¼Æ¬
 	static{
 		image = loadImage("background.png");
 	}
 	
-	private int speed;	//ç§»åŠ¨é€Ÿåº¦
-	private int y1;		//y1åæ ‡(å›¾ç‰‡è½®æ¢)
-	/** æ„é€ æ–¹æ³• */
+	private int speed;	//ÒÆ¶¯ËÙ¶È
+	private int y1;		//y1×ø±ê(Í¼Æ¬ÂÖ»»)
+	/** ¹¹Ôì·½·¨ */
 	public Sky(){
 		super(World.WIDTH,World.HEIGHT,0,0);
 		speed = 1;
-		y1 = -height; //y1:è´Ÿçš„çª—å£çš„é«˜
+		y1 = -height; //y1:¸ºµÄ´°¿ÚµÄ¸ß
 	}
 	
-	/** å¤©ç©ºç§»åŠ¨ */
+	/** Ìì¿ÕÒÆ¶¯ */
 	public void step(){
-		y+=speed;  //y+(å‘ä¸‹)
-		y1+=speed; //y1+(å‘ä¸‹)
-		if(y>=this.height){ //è‹¥y>=å¤©ç©ºçš„é«˜(åˆ°ä¸‹é¢äº†)
-			y=-this.height; //åˆ™è®¾ç½®yä¸ºè´Ÿçš„é«˜(å›æœ€ä¸Šé¢)
+		y+=speed;  //y+(ÏòÏÂ)
+		y1+=speed; //y1+(ÏòÏÂ)
+		if(y>=this.height){ //Èôy>=Ìì¿ÕµÄ¸ß(µ½ÏÂÃæÁË)
+			y=-this.height; //ÔòÉèÖÃyÎª¸ºµÄ¸ß(»Ø×îÉÏÃæ)
 		}
-		if(y1>=this.height){ //è‹¥y1>=å¤©ç©ºçš„é«˜(åˆ°ä¸‹é¢äº†)
-			y1=-this.height; //åˆ™è®¾ç½®y1ä¸ºè´Ÿçš„é«˜(å›æœ€ä¸Šé¢)
+		if(y1>=this.height){ //Èôy1>=Ìì¿ÕµÄ¸ß(µ½ÏÂÃæÁË)
+			y1=-this.height; //ÔòÉèÖÃy1Îª¸ºµÄ¸ß(»Ø×îÉÏÃæ)
 		}
 	}
 	
-	/** é‡å†™getImage()è·å–å›¾ç‰‡ */
+	/** ÖØĞ´getImage()»ñÈ¡Í¼Æ¬ */
 	public BufferedImage getImage(){
 		return image;
 	}
 	
-	/** ç”»å¯¹è±¡ g:ç”»ç¬” */
+	/** »­¶ÔÏó g:»­±Ê */
 	public void paintObject(Graphics g){
-		g.drawImage(getImage(),x,y,null);  //ç”»å¤©ç©º1
-		g.drawImage(getImage(),x,y1,null); //ç”»å¤©ç©º2
+		g.drawImage(getImage(),x,y,null);  //»­Ìì¿Õ1
+		g.drawImage(getImage(),x,y1,null); //»­Ìì¿Õ2
 	}
 	
-	/** é‡å†™outOfBounds()åˆ¤æ–­æ˜¯å¦è¶Šç•Œ */
+	/** ÖØĞ´outOfBounds()ÅĞ¶ÏÊÇ·ñÔ½½ç */
 	public boolean outOfBounds(){
-		return false; //æ°¸ä¸è¶Šç•Œ
+		return false; //ÓÀ²»Ô½½ç
+	}
+	
+	// »­Í¼Æ¬µÄ·½·¨
+	@Override
+	public void paint(Graphics g) {
+		g.drawImage(getImage(), x, y, null);
+		g.drawImage(getImage(), x, y1, null);
 	}
 	
 }

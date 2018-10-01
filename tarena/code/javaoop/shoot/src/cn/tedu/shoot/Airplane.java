@@ -1,9 +1,9 @@
 package cn.tedu.shoot;
 import java.awt.image.BufferedImage;
 import java.util.Random;
-/** å°æ•Œæœº: æ˜¯é£è¡Œç‰©ï¼Œä¹Ÿæ˜¯æ•Œäººèƒ½å¾—åˆ† */
+/** Ğ¡µĞ»ú: ÊÇ·ÉĞĞÎï£¬Ò²ÊÇµĞÈËÄÜµÃ·Ö */
 public class Airplane extends FlyingObject implements Enemy {
-	private static BufferedImage[] images; //å›¾ç‰‡æ•°ç»„
+	private static BufferedImage[] images; //Í¼Æ¬Êı×é
 	static{
 		images = new BufferedImage[5];
 		for(int i=0;i<images.length;i++){
@@ -11,41 +11,41 @@ public class Airplane extends FlyingObject implements Enemy {
 		}
 	}
 	
-	private int speed;  //ç§»åŠ¨é€Ÿåº¦
-	/** æ„é€ æ–¹æ³• */
+	private int speed;  //ÒÆ¶¯ËÙ¶È
+	/** ¹¹Ôì·½·¨ */
 	public Airplane(){
-		super(49,36); //è°ƒç”¨è¶…ç±»çš„æ„é€ æ–¹æ³•
+		super(49,36); //µ÷ÓÃ³¬ÀàµÄ¹¹Ôì·½·¨
 		speed = 2;
 	}
 	
-	/** å°æ•Œæœºç§»åŠ¨ */
+	/** Ğ¡µĞ»úÒÆ¶¯ */
 	public void step(){
-		y+=speed; //y+(å‘ä¸‹)
+		y+=speed; //y+(ÏòÏÂ)
 	}
 	
-	int deadIndex = 1; //æ­»äº†çš„ä¸‹æ ‡
-	/** é‡å†™getImage()è·å–å›¾ç‰‡ */
-	public BufferedImage getImage(){ //10æ¯«ç§’èµ°ä¸€æ¬¡
-		if(isLife()){ //è‹¥æ´»ç€å‘¢
-			return images[0]; //è¿”å›ç¬¬1å¼ å›¾ç‰‡
-		}else if(isDead()){ //è‹¥æ­»äº†å‘¢
-			BufferedImage img = images[deadIndex++]; //ä»ç¬¬2å¼ å›¾ç‰‡å¼€å§‹
-			if(deadIndex==images.length){ //å½“ä¸‹æ ‡ä¸ºæ•°ç»„çš„é•¿åº¦
-				state = REMOVE; //åˆ™ä¿®æ”¹å½“å‰çŠ¶æ€ä¸ºå¯ä»¥åˆ é™¤çš„
+	int deadIndex = 1; //ËÀÁËµÄÏÂ±ê
+	/** ÖØĞ´getImage()»ñÈ¡Í¼Æ¬ */
+	public BufferedImage getImage(){ //10ºÁÃë×ßÒ»´Î
+		if(isLife()){ //Èô»î×ÅÄØ
+			return images[0]; //·µ»ØµÚ1ÕÅÍ¼Æ¬
+		}else if(isDead()){ //ÈôËÀÁËÄØ
+			BufferedImage img = images[deadIndex++]; //´ÓµÚ2ÕÅÍ¼Æ¬¿ªÊ¼
+			if(deadIndex==images.length){ //µ±ÏÂ±êÎªÊı×éµÄ³¤¶È
+				state = REMOVE; //ÔòĞŞ¸Äµ±Ç°×´Ì¬Îª¿ÉÒÔÉ¾³ıµÄ
 			}
 			return img;
 		}
 		return null;
 	}
 	
-	/** é‡å†™outOfBounds()åˆ¤æ–­æ˜¯å¦è¶Šç•Œ */
+	/** ÖØĞ´outOfBounds()ÅĞ¶ÏÊÇ·ñÔ½½ç */
 	public boolean outOfBounds(){
-		return this.y>=World.HEIGHT; //å°æ•Œæœºçš„y>=çª—å£çš„é«˜ï¼Œå³ä¸ºè¶Šç•Œäº†
+		return this.y>=World.HEIGHT; //Ğ¡µĞ»úµÄy>=´°¿ÚµÄ¸ß£¬¼´ÎªÔ½½çÁË
 	}
 	
-	/** é‡å†™getScore()å¾—åˆ† */
+	/** ÖØĞ´getScore()µÃ·Ö */
 	public int getScore(){
-		return 1; //æ‰“æ‰ä¸€ä¸ªå°æ•Œæœºå¾—1åˆ†
+		return 1; //´òµôÒ»¸öĞ¡µĞ»úµÃ1·Ö
 	}
 }
 
