@@ -1,0 +1,10 @@
+package cn.tedu.wrapper;
+
+public class WrapperDemo {
+	public static void main(String[] args) {
+		// Integer 类是的常用方法
+		
+		// intValue(); - int
+		Integer integer = new Integer(30);
+	}
+}

@@ -1,0 +1,9 @@
+package cn.tedu.datedemo;
+
+public class CalendarDemo {
+	public static void main(String[] args) {
+		/*
+		 * 得到Calendar 对象有两种方式
+		 */
+	}
+}

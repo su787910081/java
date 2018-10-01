@@ -1,0 +1,13 @@
+package cn.tedu.datedemo;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class Work {
+	public static void main(String[] args) {
+		Date today = new Date();
+		long todayMs = today.getTime();
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	}
+}

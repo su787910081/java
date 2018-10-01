@@ -1,0 +1,7 @@
+package cn.tedu.regex;
+
+public class RegexDemo {
+	public static void main(String[] args) {
+		String regex = "";
+	}
+}

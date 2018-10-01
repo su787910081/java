@@ -1,0 +1,16 @@
+package cn.tedu.datedemo;
+
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
+public class CalendarDemo {
+	public static void main(String[] args) {
+		/*
+		 * 得到Calendar 对象有两种方式
+		 */
+		Calendar calendar = new GregorianCalendar();
+		
+		// 方式二: 使用静态方法(常用方式)
+		Calendar cal = Calendar.getInstance();
+	}
+}
