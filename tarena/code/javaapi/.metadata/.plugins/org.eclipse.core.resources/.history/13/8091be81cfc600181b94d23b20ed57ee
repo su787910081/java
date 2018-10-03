@@ -1,0 +1,22 @@
+package cn.tedu.demo;
+
+import java.io.File;
+
+public class FileDemo {
+	public static void main(String[] args) {
+		demo01();
+		demo02();
+	}
+	
+	public static void demo01()
+	{
+		File file = new File("c:" + File.separator + "test.txt");
+		System.out.println(file);
+	}
+	
+	public static void demo02()
+	{
+		File file = new File("C:" + File.separator + "test");
+		File fielChild = new File(file, "a.txt");
+	}
+}

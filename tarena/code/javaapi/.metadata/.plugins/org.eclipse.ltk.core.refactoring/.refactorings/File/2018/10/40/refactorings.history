@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;cn.tedu.demo.Persion&apos; to &apos;Person&apos;&#x0D;&#x0A;- Original project: &apos;File&apos;&#x0D;&#x0A;- Original element: &apos;cn.tedu.demo.Persion&apos;&#x0D;&#x0A;- Renamed element: &apos;cn.tedu.demo.Person&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;Persion&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;cn.tedu.demo{WriteObject.java[Persion" matchStrategy="1" name="Person" qualified="false" references="true" similarDeclarations="false" stamp="1538560828437" textual="false" version="1.0"/>
+</session>

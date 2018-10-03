@@ -1,0 +1,15 @@
+package cn.tedu.demo;
+
+import java.io.FileNotFoundException;
+import java.io.RandomAccessFile;
+
+public class RandomAccessFileDemo {
+	public static void main(String[] args) throws FileNotFoundException {
+		demo01();
+	}
+
+	private static void demo01() throws FileNotFoundException {
+		// 构造方法
+		RandomAccessFile raf = new RandomAccessFile("a.txt", "rw");
+	}
+}

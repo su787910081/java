@@ -1,0 +1,36 @@
+package cn.tedu.demo;
+
+import java.io.File;
+import java.io.IOException;
+
+public class FileDemo {
+	public static void main(String[] args) throws IOException {
+		demo04();
+	}
+	
+	private static void demo04() throws IOException {
+		// 创建文件
+		File file = new File("C:" + File.separator + "a.txt");
+		boolean bCreate = file.createNewFile();
+		System.out.println(bCreate);
+	}
+
+	public static void demo01()
+	{
+		File file = new File("c:" + File.separator + "test.txt");
+		System.out.println(file);
+	}
+	
+	public static void demo02()
+	{
+		File file = new File("C:" + File.separator + "test");
+		File fileChild = new File(file, "a.txt");
+		System.out.println(fileChild);
+	}
+	
+	public static void demo03()
+	{
+		File file = new File("c:", "b.txt");
+		System.out.println(file);
+	}
+}

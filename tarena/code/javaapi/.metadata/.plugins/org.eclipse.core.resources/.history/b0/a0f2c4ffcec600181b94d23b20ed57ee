@@ -1,0 +1,12 @@
+package cn.tedu.demo;
+
+public class FileDemo {
+	public static void main(String[] args) {
+		demo01();
+	}
+	
+	public static demo01()
+	{
+		
+	}
+}

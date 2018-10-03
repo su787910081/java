@@ -1,0 +1,11 @@
+package cn.tedu.demo;
+
+public class RandomAccessFileDemo {
+	public static void main(String[] args) {
+		demo01();
+	}
+
+	private static void demo01() {
+		// 构造方法
+	}
+}

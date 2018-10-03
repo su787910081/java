@@ -1,0 +1,12 @@
+package cn.tedu.demo;
+
+public class DirDemo {
+	public static void main(String[] args) {
+		demo01();
+	}
+	
+	public static void demo01()
+	{
+		File file = new File();
+	}
+}

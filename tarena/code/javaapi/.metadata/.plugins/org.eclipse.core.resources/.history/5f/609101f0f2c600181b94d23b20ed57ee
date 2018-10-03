@@ -1,0 +1,14 @@
+package cn.tedu.demo;
+
+public class WriteObject {
+
+}
+
+class Persion
+{
+	private int id;
+	private String name;
+	
+	
+}
+

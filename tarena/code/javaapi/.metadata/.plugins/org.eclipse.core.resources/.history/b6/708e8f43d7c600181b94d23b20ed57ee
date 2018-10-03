@@ -1,0 +1,61 @@
+package cn.tedu.demo;
+
+import java.io.File;
+import java.io.FileFilter;
+import java.io.IOException;
+
+public class FileDemo {
+	public static void main(String[] args) throws IOException {
+//		demo04();
+		demo05();
+	}
+	
+	private static void demo05() {
+		File file = new File("D:" + File.separator);
+		
+		File[] files = file.listFiles(new FileFilter() {
+			
+			@Override
+			public boolean accept(File file) {
+				// 以.sql 结尾的文件
+				
+				return false;
+			}
+		});
+	}
+
+	private static void demo04() throws IOException {
+		// 创建文件
+		File file = new File("E:" + File.separator + "a.txt");
+		boolean bCreate = file.createNewFile();
+		boolean bFile = file.isFile();
+		boolean bDir = file.isDirectory();
+		long nLen = file.length();
+		boolean bDelete = file.delete();
+		
+		System.out.println(bCreate);
+		System.out.println(bFile);
+		System.out.println(bDir);
+		System.out.println(nLen);
+		System.out.println(bDelete);
+	}
+
+	public static void demo01()
+	{
+		File file = new File("c:" + File.separator + "test.txt");
+		System.out.println(file);
+	}
+	
+	public static void demo02()
+	{
+		File file = new File("C:" + File.separator + "test");
+		File fileChild = new File(file, "a.txt");
+		System.out.println(fileChild);
+	}
+	
+	public static void demo03()
+	{
+		File file = new File("c:", "b.txt");
+		System.out.println(file);
+	}
+}
