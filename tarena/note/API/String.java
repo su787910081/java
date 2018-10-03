@@ -40,3 +40,72 @@ replaceAll(String regex, String replacement)
 	
 replaceFirst(String regex, String replacement)
 	替换第一个
+
+
+编码：
+	getBytes() - 使用默认字符集(工程设置的字符集)进行转换为字节流
+
+	String --> byte[] 调用String::getBytes(Charset charset)方法
+		getBytes(Charset charset) - 使用指定字符集将字符串转换为字节流
+			e.g: "实现追加写入功能！".getBytes("UTF-8");
+
+	byte[] --> String 调用String 的构造方法
+		String(byte[] bytes, int offset, int length, Charset charset); 指定转换字符集
+			e.g: String str = new String(bys, 0, bys.Length, "UTF-8");
+
+			public static void demo01() throws IOException
+			{
+				Person person = new Person(1, "aa");
+				
+				FileOutputStream fos = new FileOutputStream("person.txt");
+				ObjectOutputStream oos = new ObjectOutputStream(fos);
+				
+				oos.writeObject(person);
+				
+				oos.close();
+				fos.close();
+			}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
