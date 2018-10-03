@@ -1,0 +1,15 @@
+package cn.tedu.map;
+
+/*
+ * hashCode() - int Object 类中的一个方法：将对象在内存中的地址返回
+ */
+public class HashDemo {
+	public static void main(String[] args) {
+		
+	}
+	
+	public static void demo01()
+	{
+		
+	}
+}

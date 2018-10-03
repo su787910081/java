@@ -1,0 +1,18 @@
+package cn.tedu.list;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class demoList {
+	public static void main(String[] args) {
+		List<String> list = new ArrayList<String>();
+		list.add("java");
+		list.add("web");
+		list.add("c++");
+		
+		String str = list.get(2);
+		System.out.println(str);
+		
+		list.set(1, ".net");
+	}
+}

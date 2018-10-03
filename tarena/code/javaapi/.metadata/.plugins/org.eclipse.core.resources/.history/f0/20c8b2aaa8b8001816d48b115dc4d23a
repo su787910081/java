@@ -1,9 +1,0 @@
-package cn.tedu.datedemo;
-
-import java.util.Date;
-
-public class DateDemo01 {
-	public static void main(String[] args) {
-		Date date = new Date();
-	}
-}

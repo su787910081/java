@@ -1,0 +1,14 @@
+package cn.tedu.demo;
+
+import java.util.ArrayList;
+import java.util.Collection;
+
+public class Demo01 {
+	public static void main(String[] args) {
+		// 创建集合对象
+		Collection c = new ArrayList();
+		// 向集合中添加元素
+		c.add(2);
+		c.add("abc");
+	}
+}

@@ -23,6 +23,20 @@ String 对象的创建 - 2种方法
 		// 	2. new String()
 		String str = new String("abc");
 
+matches(String regex): 自带开始和结尾匹配功能
 
+split(String regex): 
+	对指定字符串按照regex 进行分区
+	regex: 分隔符
+	
+	案例：
+		对一个字符串进行分割，分割符为',' 加上多个空格
+		
+	String str = "java, php,  c++,   end";
+	分割符：",\\s*"	逗号后跟的所有空白字符
 
-
+replaceAll(String regex, String replacement)
+	使用给定的 replacement 替换此字符串所有匹配给定的正则表达式的子字符串。
+	
+replaceFirst(String regex, String replacement)
+	替换第一个

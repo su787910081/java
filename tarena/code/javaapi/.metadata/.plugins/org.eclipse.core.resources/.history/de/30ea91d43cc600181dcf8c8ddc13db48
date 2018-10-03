@@ -1,0 +1,9 @@
+package cn.tedu.map;
+
+public class HashDemo {
+
+	public static void demo01()
+	{
+		
+	}
+}

@@ -18,7 +18,18 @@ boolean 	java.lang.Boolean       java.lang.Object
 
 Number 类
 	抽象类，是六个数值类的共同的父类
-
+	
+Integer: 
+	parseInt(String) - int 有非数字字符则会抛异常
+	toString() - int -> string 
+	static valueOf(int) - Integer 
+	intValue() - int 将一个Integer -> int 
+Double:
+	
+自动装箱和拆箱
+	自动装箱: int -> Integer
+	自动拆箱: Integer -> int
+	
 
 
 

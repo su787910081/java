@@ -15,9 +15,18 @@ java.text 		处理文字、日期、数字、信息的格式
 
 
 
+集合数据结构
+	List: 链表    实现类 ArrayList<E>
+	Queue: 队列        实现类 LinkedList<E>
+	Deque: 双端队列     实现类 LinkedList<E>
+	Stack: 栈
+	Set   实现类 HashSet()
 
-
-
+集合的结构分为: Collection 和 Map
+	Collection: 
+		List   实现类： ArrayList  LinkedList
+		Set  实现类：HasSet
+	Map 与Collection 没有任何关系
 
 
 

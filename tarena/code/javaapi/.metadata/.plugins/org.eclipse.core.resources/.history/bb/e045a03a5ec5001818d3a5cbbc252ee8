@@ -1,0 +1,22 @@
+package cn.tedu.regex;
+
+import java.util.Arrays;
+
+/**
+ * split(String regex) - String[]
+ * 根据给定的正则表达式作为分隔符，
+ * @author suyh
+ *
+ */
+public class SplitDemo {
+	public static void main(String[] args) {
+		String str = "java,php, c++,   end";
+		String[] arr = str.split(",\\s*");
+		System.out.println(Arrays.toString(arr));
+	}
+	
+	public static void demoSplit()
+	{
+		
+	}
+}
