@@ -8,6 +8,7 @@
 				FileOutputStream fos = new FileOutputStream("bos.txt");
 				BufferedOutputStream bos = new BufferedOutputStream(fos);
 				bos.write('a');
+				bos.flush();
 				bos.close();
 				fos.close();
 

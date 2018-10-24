@@ -23,6 +23,7 @@
 				
 				oos.close();
 				fos.close();
+				
 			}
 
 			// 必须 implements Serializable 但不用重写任何抽象方法
@@ -46,8 +47,15 @@
 				FileInputStream fis = new FileInputStream("person.txt");
 				ObjectInputStream ois = new ObjectInputStream(fis);
 				
-				Person person = (Person)ois.readObject();
-				System.out.println(person);
+				try {
+					Person person = (Person)ois.readObject();
+					System.out.println(person);
+				} catch (EOFException e) {
+					System.out.println("读到文件尾");
+				} catch (Exception e) {
+					System.out.println("其他异常");
+				}
+				
 				
 				ois.close();
 				fis.close();
