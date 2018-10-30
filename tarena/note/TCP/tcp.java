@@ -9,6 +9,9 @@ IP地址：
 
 	传输数据使用TLD 协议：Type Length Data 
 
+	读写流：
+		DataInputStream
+		DataOutputStream
 
 
 
