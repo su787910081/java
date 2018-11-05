@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<books>
+	<book id="b1" lang="cn">
+		<name>十八岁给我一个姑娘</name>
+		<author>冯唐</author>
+	</book>
+	<book id="b2" lang="cn">
+		<name>相关何处</name>
+		<author>土家野夫</author>
+	</book>
+	<book id="b3" lang="cn">
+		<name>和空姐同居的日子</name>
+		<autho>三十</autho>
+	</book>
+	<maven web="maven.aliyun.com"></maven>
+</books>
+
+
+
+
+
