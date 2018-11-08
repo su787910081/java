@@ -41,6 +41,7 @@ class BusinessThread extends Thread {
     @Override
     public void run() {
         queue = new LinkedList<IFunc>();
+        str = Thread.getCurrentThread().getName();
         
         while (true) {
             IFunc f = null;
@@ -67,7 +68,7 @@ class BusinessThread extends Thread {
     }
 
     Queue<IFunc> queue;
-    String str = "string";
+    String str;
 }
 
 interface IFunc {
