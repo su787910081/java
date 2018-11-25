@@ -48,10 +48,41 @@
 			/* 1. 后代选择器 
 				将div 下所有的span 标签的字体大小设置为22 px, 背景颜色设置为#DDA0DD
 			*/
+			/* 选择id 为d1 下面的所有span */
+			#d1 span{
+				font-size: 22px;
+				background-color:#DDA0DD;
+			}
+			/* 2. 子元素选择器 
+				将div 下所有的span 子元素标签的字体大小设置为16px, 背景颜色设置为#DEB887
+			*/
+			/* 这里不能有多于的空格 */
+			#d1>span {
+				font-size:16px;
+				background-color:#DEB887;
+			}
 			
-			/* 2. 子元素选择器 */
+			/* 3. 分组选择器 
+				将span1、span2 和p 标签下的span 的背景颜色设置为#F4A460
+			*/
+			.c1, .c2, #p1 span{
+				background-color:#F4A460;
+			}
 			
-			/* 3. 分组选择器 */
+			
+			/* 4. 属性选择器
+				4.1 将所有有class 属性的元素的边框设置为2px、实绩、灰色
+				4.2 将所有的type="text" 的<input> 标签的背景颜色设置为red, 设置字体首先缩进10 px
+			*/
+			/* '*' 是通配符，是选中所有元素 */
+			*[class]{
+				border: 2px solid red;
+			}
+			input[type='text']{
+				background-color: red;
+				text-indent:10px;
+			}
+			
 		</style>
 	</head>
 	<body>
@@ -65,6 +96,41 @@
 			<span>div 下的span</span><br/>
 		</div>
 		<br/>
+		<span class="c1">
+			span111
+		</span> &nbsp;&nbsp;&nbsp
+		<span class="c2">
+			span222
+		</span> &nbsp;&nbsp;&nbsp
+		
+		<p id="p1">
+			这是一个P<br/>
+			<span>P 下的span </span>
+		</p>
+		<p>
+			这是一个P<br/>
+		</p>
+		
+		<a href="#">
+			这是一个超链接
+		</a> &nbsp;&nbsp;&nbsp
+		<a href="#">
+			这是一个超链接
+		</a> &nbsp;&nbsp;&nbsp
+		
+		<br/>
+		<br/>
+		<input type="text" name="username" value="aaaa" />
+		<input type="button" value="按钮" />
+		
+		<br/>
+		<br/>	
+		<br/>
+		<br/>	
+		<br/>
+		<br/>	
+		<br/>
+		<br/>	
 		
 	</body>
 </html>
