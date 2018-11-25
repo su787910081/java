@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<server>
+	<service>
+		<connector protocol="HTTP/1.1" port="8080" maxThread="100" />
+		<webroot>webapps</webroot>
+		<not-found-page>404.html</not-found-page>
+	</service>
+	
+	<!-- 
+		配置浏览器请求的资源的后缀名和
+		响应数据的类型
+		http://localhost/index.html
+		response.setContentType("text/html");
+		http://localhost/index.jpg
+		response.setContentType("image/jpeg");
+		http://localhost/index.ico
+		response.setContentType("image/ico");
+	 -->
+	<type-mappings>
+		<type-mapping ext="html" type="text/html"/>
+		<type-mapping ext="jpg" type="image/jpeg"/>
+		<type-mapping ext="png" type="image/png"/>
+		<type-mapping ext="gif" type="image/gif"/>
+		<type-mapping ext="ico" type="image/ico"/>
+	</type-mappings>
+</server>
