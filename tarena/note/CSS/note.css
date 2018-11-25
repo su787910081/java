@@ -55,11 +55,11 @@
 			格式: 大哥+小弟{css 属性... }
 		1.2.6 伪元素选择器
 			根据元素的状态选中指定的元素
-			
-
-
 
 盒子模型
+	内边距(padding): padding-top padding-right padding-bottom padding-left
+	边框(border): border-top border-right border-bottom border-left
+	外边距(margin): margin-top margin-right margin-bottom margin-left
 
 
 常用的属性

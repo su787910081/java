@@ -93,17 +93,17 @@
 			/* 6. 设置a 标签(去掉边框)
 				未点击时状态是{
 					font-size:24px;
-					text-decoration:none;	/* 无下划线 */
+					text-decoration:none;	//  无下划线 
 				}
 				光标移入的状态是{
 					color:green;
 					font-size:36px;
-					text-decoration: underline; /* 有下划线 */
+					text-decoration: underline; //  有下划线 
 				}
 				被点击时的状态是{
 					color:#8FBC8F
 					font-size:50px;
-					text-decoration: none;	/* 无下划线 */
+					text-decoration: none;	//  无下划线 
 				}
 				被点击后的状态是{
 					color:gray;
@@ -112,9 +112,28 @@
 			*/
 			/* a 元素未被选中时的状态 link */
 			a:link{
-				font-size:24px;
+				font-size: 24px;
 				text-decoration:none;
 				color:green;
+			}
+			/* 鼠标悬停 */
+			a:hover{
+				font-size:28px;
+				text-decoration:underline;
+				color:red;
+			}
+			/* 点击时 */
+			a:active{
+				font-size:20px;
+				text-decoration:none;
+				color:cyan;
+				font-weight:bolder;
+			}
+			/* 点击后 -- 这个好像支持不是很全 */
+			a:visited{
+				font-size:16px;
+				text-decoration:underline;
+				color:pink;
 			}
 		</style>
 	</head>
