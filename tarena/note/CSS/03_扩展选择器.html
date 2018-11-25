@@ -15,7 +15,7 @@
 				4.1 将所有有class 属性的元素的边框设置为2px、实绩、灰色
 				4.2 将所有的type="text" 的<input> 标签的背景颜色设置为red, 设置字体首先缩进10 px
 			5. 相邻兄弟选择器
-				5.1 将id 为P2 元素后面的p元素的背景颜色设置为 #DB7093
+				5.1 将id 为P1 元素后面的p元素的背景颜色设置为 #DB7093
 			6. 设置a 标签(去掉边框)
 				未点击时状态是{
 					font-size:24px;
@@ -83,6 +83,39 @@
 				text-indent:10px;
 			}
 			
+			/* 5.相邻兄弟选择器
+				将id 为P1 元素后面的p元素的背景颜色设置为 #DB7093
+			*/
+			#p1+p{
+				background-color:#DB7093
+			}
+			
+			/* 6. 设置a 标签(去掉边框)
+				未点击时状态是{
+					font-size:24px;
+					text-decoration:none;	/* 无下划线 */
+				}
+				光标移入的状态是{
+					color:green;
+					font-size:36px;
+					text-decoration: underline; /* 有下划线 */
+				}
+				被点击时的状态是{
+					color:#8FBC8F
+					font-size:50px;
+					text-decoration: none;	/* 无下划线 */
+				}
+				被点击后的状态是{
+					color:gray;
+					font-size:24px;
+				}
+			*/
+			/* a 元素未被选中时的状态 link */
+			a:link{
+				font-size:24px;
+				text-decoration:none;
+				color:green;
+			}
 		</style>
 	</head>
 	<body>
