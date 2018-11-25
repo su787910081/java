@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>扩展选择器</title>
+		<meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
+		<style type="text/css">
+			
+			div,span,img,ul{
+				border:2px solid red;
+				margin:5px 0;
+			}
+			.c1{
+				width:100px;
+				height:100px;
+				/* div 是块元素，它是独占一行的，但是如果使用display 将其变为行内块元素则可以做得让几个块元素在同一行内显示 */
+				display:inline-block;
+			}
+			.c2{
+				width:100px;
+				height:100px;
+				/* span 是行内元素是不能设置宽高的，但是如果将其改变为行内块元素则可以得到此效果 */
+				display:inline-block;
+			}
+		</style>
+	</head>
+	
+	<body>
+		<div>
+			xxx<br/>
+			xxx<br/>
+			xxx<br/>
+		</div>
+		
+		<h3>display</h3>
+		<div class="c1">div1</div>
+		<div class="c1">div2</div>
+		<div class="c1">div3</div>
+		<span class="c2">span1</span>
+		<span class="c2">span2</span>
+		<span class="c2">span3</span>
+		<br/><br/><br/>
+		2. 练习：将下面的div 设置为隐藏<br/>
+		<div style="display:none;width:150px;height:150px;">div4</div>
+		
+		<br/><br/>
+		<h3>列表 属性</h3>
+		3. 练习：改变下面无序列表项的符号(list-style-type: 设置或检索对象的列表项所使用的预设标记。)<br/>
+			(disc: 默认值，实心贺。)
+	</body>
+	
+</html>
