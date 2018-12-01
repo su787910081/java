@@ -74,6 +74,7 @@ body,table,tr,td,ul,ui,input{
 	width: 819px;
 	margin-left: 109px;	/* 左外边距 */
 	display: inline-block;
+	border: 1px solid #EEE;
 	/* background-color: pink; */
 }
 #main form input{ /* 为所有input 设置样式 */
@@ -89,6 +90,21 @@ body,table,tr,td,ul,ui,input{
 	background-image: url('../image/u_ico.jpg');
 	background-repeat: no-repeat;	/* 设置背景不重复 */
 	background-position: 15px 15px;
+}
+/* 输入提示 */
+#main form .err_msg{
+	text-indent: 45px;
+	color: #C3C3C3;
+	font-size: 12px;
+	height: 32px;
+	background-image: url("../image/u_ico.jpg");
+	background-repeat: no-repeat;
+	background-position: 12px 6px;
+}
+/* 密码错误提示 */
+#main form .alert{
+	background-image: url("../image/u_ico.jpg");
+	color: #E64346;
 }
 /* 设置密码输入框 */
 #main form input[name='password']{
@@ -109,19 +125,58 @@ body,table,tr,td,ul,ui,input{
 	background-position: 15px 15px;
 }
 
+/* 验证邮箱 */
+#main form .ck_emal{
+	font-size: 16px;
+}
+#main form .ck_emal a{
+	color: #005EA7;
+}
+
+/* 阅读协议 */
+#main form .protocol{
+	height: 83px;
+	font-size: 16px;
+	text-indent: 60px;
+	line-height: 52px;
+}
+
+#main form .protocol a{
+	text-decoration: none;	/* 去掉下划线 */
+	color: #005EA7;
+}
+
+/* 提交按钮 */
+#main form input[type='submit']{
+	font-size: 20px;
+	color: #DDD;
+	background-color: #E64346;
+	text-indent: 0px;
+}
+
 /* 图片: 快速注册 */
 #main>div{
 	width: 211px;
 	height: 211px;
 	display: inline-block;
 	background-color: #eee;
+	border: 1px solid #EEE;
+	vertical-align: top;
 }
 /* ***** main end ***** */
 
 /* ***** footer start ***** */
 #footer{
-	background-color: red;
 	width:1200px;
 	margin: 0px auto;
+
+	margin-top: 109px;
+}
+
+#footer p{
+	font-size: 14px;
+	color: #999;
+	line-height: 34px;
+	text-align: center;
 }
 /* ***** footer end ***** */
