@@ -43,6 +43,7 @@
 		1.2.3 分组选择器
 			将多个选择器选中的元素来统一设置样式
 			span,div,p,.c1,#d1{ css 属性... }
+			* { css 属性... }
 		1.2.4 属性选择器
 			根据属性条件选中符合条件的元素来设置样式
 			<input type="text" />
@@ -55,6 +56,7 @@
 			格式: 大哥+小弟{css 属性... }
 		1.2.6 伪元素选择器
 			根据元素的状态选中指定的元素
+			选择器:hover{}
 
 盒子模型
 	内边距(padding): padding-top padding-right padding-bottom padding-left
