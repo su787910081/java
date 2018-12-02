@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<!-- 第一种引入方式
+			直接在head 标签内的script 标签内书写js 代码
+		 -->
+		<script type="text/javascript">
+			// JS 自定义对象
+			function Persion() {
+				
+			}
+
+			var p1 = new Persion();
+
+			// 为p1 对象添加两个属性
+			p1.name = "尼古拉斯赵四";
+			p1.age = 38;
+			// 为p1 对象添加一个函数
+			p1.run = function() {
+				// 这里的this 和p1 效果是一样的都是p1 对象
+				alert(this.name + ": " + p1.age + ": running...");
+			}
+
+			// p1.run(); // 调用
+		</script>
+	</head>
+	<body>
+		<input type="button" value="按钮" onclick="fn1()" />
+	</body>
+</html>
+
+
+
+
+
+
+
+

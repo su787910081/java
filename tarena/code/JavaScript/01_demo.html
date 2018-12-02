@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>demo</title>
+		<meta charset=UTF-8 />
+	</head>
+	<body>
+		<!-- 
+			需求：点击下面的文字，切换为当前时间
+		-->
+		<div id="div1" onclick="fn()">我的第一个JavaScript程序</div>
+
+		<br/>
+		<br/>
+		<br/>
+		<br/>
+		<br/>
+		<hr/>
+
+		<!-- 需求: 点击灯泡： -->
+		<img id="bulb" scr="img/abc.gif" onclick="openBule()" />
+		<script >
+			/* 点击div 中的文字，切换为当前时间 */
+			function fn() {
+				// alert(1);
+				// 获取div
+				var oDiv = document.getElementById("div1");
+				// 将div 中的内容替换为当前时间
+				oDiv.innerHTML = "当前时间: " + new Date();
+				oDiv.innerHTML = "当前时间: " + new Date().toLocaleString();
+			}
+
+			/* 点击图片，开灯/关灯 */
+			var isOpen = false;	// 关闭状态
+			function openBulb() {
+				// 获取图片
+				var oImg = document.getElementById("bulb");
+				if (!isOpen) {
+					isOpen = true;
+					oImg.src = "img/buti.jpg";
+				} else {
+					isOpen = true;
+					oImg.src = "img/abc.gif";
+				}
+			}
+		</script>
+	</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<!-- 第一种引入方式
+			直接在head 标签内的script 标签内书写js 代码
+		 -->
+		<script type="text/javascript">
+			var p2 = {
+				// 属性之间用逗号分隔
+				// 属性变量名可以不加双引号
+				"name": "张飞",
+				"age": 18,
+				"addr": "燕人", 
+				"run": function() {
+					alert(this.name);
+				}
+			};
+			p2.name;
+			p2.age;
+			p2.addr;
+			p2.run();
+		</script>
+	</head>
+	<body>
+		<input type="button" value="按钮" onclick="fn1()" />
+	</body>
+</html>
+
+
+
+
+
+
+
+

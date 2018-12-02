@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<!-- 第一种引入方式
+			直接在head 标签内的script 标签内书写js 代码
+		 -->
+		<script type="text/javascript">
+			function fn1() {
+				alert("第一种引入方式...");
+			}
+
+			// var x;	// 此时x 的值为undefined
+			// alert(x.valueOf());
+
+			/*
+				数值和boolean 类型的转换
+			*/
+			var arr1 = [1<2<3, 3>2>1];
+			arr1[0] == true;	// 1<2: true, true<3 -> 1<3: true
+			arr1[1] == false;	// 3>2: true, true>1 -> 1>1: false
+			// alert(arr1[0]);
+			// alert(arr1[1]);
+		</script>
+
+		<!-- 第二种引入方式，将JS 文件引入进来，注意script 标签不要使用自闭形式，注意script 标签内部不要书写任何内容 -->
+		<script src="demo.js"></script>
+	</head>
+	<body>
+		<input type="button" value="按钮" onclick="fn1()" />
+	</body>
+</html>
