@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>增删改查</title>
+        
+        <meta charset="UTF-8" />
+        <style type="text/css">
+            div {
+                border: 1px solid #999;
+                height: 100px;
+                width: 200px;
+                margin-top: 20px;
+            }
+            #div_2 {
+                background-color: yellow;
+            }
+            #div_3 {
+                background-color: red;
+            }
+            #div_4 {
+                background-color: pink;
+            }
+        </style>
+        <script type="text/javascript">
+            var i = 1;
+            /* 添加节点: 添加一个div 元素到body 的最后面 */
+            function addNode() {
+                // 1. 创建一个新的div 元素
+                var oNewDiv = document.createElement("div");
+                // 为div 设置HTML 内容
+                oNewDiv.innerHTML = "我是新来的";
+
+                // 2. 获取父元素(body)
+                // var arrBody = document.getElementsByTagName("body");
+                // var oBody = arrBody[0];
+                var oBody = document.body;  // 通过属性直接获取body 元素
+
+                // 3. 将div 元素挂载到body上
+                oBody.appendChild(oNewDiv);
+            }
+
+            /* 删除节点 */
+            function deleteNode() {
+                
+            }
+
+            function updateNode() {
+                
+            }
+
+            function copyNode() {
+                
+            }
+        </script>
+    </head>
+    <body>
+        <div id="div_1">
+            
+        </div>
+        <div id="div_2">
+            div 区域2
+        </div>
+        <div id="div_3">
+            div 区域3
+        </div>
+        <div id="div_4">
+            div 区域4
+        </div>
+
+        <hr />
+        <input type="button" value="创建并添加节点" onclick="addNode()" />
+        <input type="button" value="删除节点" onclick="deleteNode()" />
+        <input type="button" value="替换节点" onclick="updateNode()" />
+        <input type="button" value="克隆节点" onclick="copyNode()" />
+    </body>
+</html>
