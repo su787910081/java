@@ -31,7 +31,10 @@ body,table,tr,td,ul,ui,input{
 	vertical-align: middle;	/* 是和其他元素对齐，所有需要对齐的元素都要添加 */
 }
 #line1 .line{ /* 竖线 */
-	display: inline-block;	/* 这里为什么要用inlie-block ，但是如果不用的话，它的高度是显示不出来的 */
+    /* 这里为什么要用inlie-block ，但是如果不用的话，它的高度是显示不出来的 */
+    /* 这是因为span 是一个行内块元素，它的宽高是由内容决定的，这里的span 是没有内容的，所以就没有，同时设置了高也是没有效果的。
+    要让它设置的高变为有效，则只有将其改变为行内块元素才可以，所以这里设置了 display: inline-block; */
+	display: inline-block;	
 	border: 1px solid #CBCBCB;
 	height: 72px;
 	margin-right: 23px;
