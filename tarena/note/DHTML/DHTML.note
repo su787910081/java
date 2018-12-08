@@ -25,8 +25,28 @@ DHTML
                 document.getElementsByTagName("元素名称");  // 根据元素的名称获取指定名称的元素
 
                 value 属性: 获取或设置输入控件的value 
-            1.2.2.2 增加、删除、修改HTML元素
+                innerHTML: 
+                innerText: 
 
+            1.2.2.2 增加、删除、修改HTML元素
+                创建元素
+                    document.createElement("元素名称<div>");
+                克隆元素
+                    oNode.cloneNode([true/false]); 克隆当前元素，参数true: 克隆元素及元素内部所有的内容，默认为false
+                插入元素
+                    oParent.insertBefore(oNewNode, oChild): 通过父元素将新元素插入到某一个子元素的前面 
+                添加元素
+                    oParent.appendChild(oChild);
+                删除元素
+                    oParent.removeChild(oChild);
+                替换元素
+                    oParent.replaceChild(oNewNode, oChildNode);
+
+                parentNode 属性 -- 获取父元素
+                obj.style.dispaly -- 设置元素是否以及如何显示
+
+                onclick事件 -- 在元素被点击之后立即触发
+                onchange事件 -- 在下拉选框中的选项切换时触发
 
 
 
