@@ -128,9 +128,42 @@
 
 
 四、文档操作(练习)
+    4.1 HTML 元素的增删改查
+        1. 创建新元素
+            $("<div></div>") - 创建一个div 元素
+            $("<div>hello...</div>")
+            $("<div><input type='text' /></div>") 包含子元素的div 元素
+        2. 添加子元素
+            $("div").append($oSpan);
+            $("div").append("<span></span>");
+        3. 删除元素本身
+            $("div").remove(); -- 删除匹配的所有div 元素
+        4. 替换元素
+            $("div").replaceWith($span);    // 用$span 来替换所有匹配的div
 
+    4.2 HTML 属性/值操作
+        html() text() attr()
+        1. html() -- 获取或者设置元素的html 内容
+            $("div").html();     -- 只能获取到第一个，但是设置的话，则会将所有匹配到的都更改
+            $("div").html("<span>xxx</span>"); -- 将所有匹配到的div 元素的HTML 内容更新。
+        2. text() -- 获取或者设置元素的文本内容
+        3. attr() -- 获取或者设置元素的属性
 
+    4.3 操作css 样式
+        1. css() 函数
+            $("div").css("background-color") - 获取所匹配的div 元素中的第一个div 元素的背景颜色
+            $("div").css("background-color", "red") - 设置背景色
 
+            hide()
+            show()
+            toggle() -- 切换元素的显示状态，如果显示则切换为隐藏，如果是隐藏则切换为显示
+
+五、事件
+    1. click
+    2. blur 失去焦点事件
+    3. focus 输入框获得输入焦点事件，在输入框获得输入焦点时触发
+    4. change 下拉选框选项切换事件发生时调用
+    5. ready 文档就绪事件
 
 
 
