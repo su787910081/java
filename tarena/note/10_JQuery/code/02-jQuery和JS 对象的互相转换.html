@@ -7,10 +7,17 @@
         <!-- 引入jQuery 的函数库 -->
         <script src="js/jquery-1.4.2.js"></script>
         <script type="text/javascript">
+
             /* 在页面加载完成之后触发 */
+            $(document).ready(function() {
+            }
+
+            /* 这样写也是在页面加载完成之后触发，两种写法都可以。这是简写形式 */
+            /*
             $(function(){
                 
             })
+            */
 
             /* 在用户名输入框失去焦点时获取用户名 */
             function getUsername01() {

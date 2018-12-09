@@ -33,6 +33,7 @@
 
     4. jQuery 引入
         jQuery 函数本身是一个js 文件，所以引入jQuery 跟引入普通js 文件一样
+            <script src="js/jquery-1.4.2.js"></script>
 
 二、jQuery 语法
     1. '$' 符号介绍
@@ -63,6 +64,10 @@
 三、jQuery 选择器(重点)
     3.1. 基本选择器
         selector/01_selector_base.html
+            $("div");
+            $(".c1");
+            $("#d1");
+            $("div,.c1,#d1");
     3.2. 层级选择器
         selector/02_jQuery_selector_level.html
         $("#two~div")   // 匹配id 为two 元素后面的兄弟div 与nextAll() 等价
@@ -78,6 +83,14 @@
 
     3.3. 基本过滤选择器
         selector/03_jQuery_selector_filter.html
+            $("div:first")
+            $("div:last")
+            $("div:eq(n)")
+            $("div:lt(n)")
+            $("div:gt(n)")
+            $("div[id^='d1']") - 匹配具有id 属性并且值以d1 开头的元素
+            $("div[id$='d1']") - 匹配具有id 属性并且值以d1 结尾的元素
+
     3.4. 内容选择器
         selector/04_jQuery_selector_content.html
             contains
@@ -86,13 +99,31 @@
             parent
     3.5. 可见选择器
         selector/05_jQuery_selector_visible.html
+            $("div:hidden")
+            $("div:visible")
+
+            hide()
+            show()
+
     3.6. 属性选择器
         selector/06_jQuery_selector_attribute.html
         $("div[id^='d1']") - 匹配具有id 属性并且值以d1 开头的元素
         $("div[id$='d1']") - 匹配具有id 属性并且值以d1 结尾的元素
     3.7. 子元素选择器
         selector/06_jQuery_selector_attribute.html
+            $("div span:first-child") // DIV 第一个span 后代元素
+            $("div>span:first-child")   // 子元素
+            $("div>span:last-child")
+            $("div>span:nth-child(n)")  // 第n 个span子元素
     3.8. 表单选择器
+        selector/07_jQuery_selector_form.html
+            $(":input") -- 匹配所有的表单项元素(包括input,select,textarea 等)
+            $(":text") -- 匹配所有的单行文本框元素
+            $(":password") -- 匹配所有的密码框
+            $(":redio")     -- 匹配所有的单选框
+            $(":checkbox") -- 匹配所有的复选框
+            $(":checked")   -- 匹配所有的被选中的单选框、复选框、option(IE 里面是不包含option的)
+            $(":selected")
 
 
 
