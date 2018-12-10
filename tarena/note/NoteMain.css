@@ -1,0 +1,18 @@
+* {
+    font-size: 16px;
+}
+
+h1 {
+    font-size: 28px;
+    color: blue;
+    text-align: center;
+}
+
+div {
+    /* margin-left: 2em; */
+    padding-left: 2em;
+}
+
+p {
+    text-indent: 2em;
+}

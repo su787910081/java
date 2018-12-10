@@ -20,6 +20,7 @@
 
             /* 点击分组，打开或关闭分组 */
             function openDiv(thisObj) {
+                var vHTML = thisObj.parentNode.innerHTML;
                 // 1. 获取当前分组下的div 元素(好友列表)
                 var arrDiv = thisObj.parentNode.getElementsByTagName("div");    // 当前点击的分组名(<a>)
                 var oDiv = arrDiv[0];   // 只有一个div
