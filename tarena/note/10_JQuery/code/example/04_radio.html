@@ -5,7 +5,7 @@
         <title>单选按钮</title>
         <meta charset="UTF-8"/>
         <style type="text/css">
-            #all div {
+            #all span {
                 display: none;
             }
         </style>
@@ -15,7 +15,8 @@
                 // 在显示当前div 之前，先将其他div 设置为隐藏
                 // $("#all").find("div").hide();
                 // $("#all div").hide();
-                $("div[id^='result']").hide();
+                // $("div[id^='result']").hide();
+                $("span").hide();
                 // 根据input 的value 值拼接出对应的应该显示的id 值
                 var showId = "result" + $(obj).val();
                 $("#" + showId).show();
@@ -32,18 +33,10 @@
             <input type="radio" name="fruit" value="4" onclick="show(this)" />芒果<br />
 
             <div id="all">
-                <div id="result1">
-                    您的性格，很羞涩.1111
-                </div>
-                <div id="result2">
-                    您的性格，很羞涩.2222
-                </div>
-                <div id="result3">
-                    您的性格，很羞涩.3333
-                </div>
-                <div id="result4">
-                    您的性格，很羞涩.4444
-                </div>
+                <span id="result1">您的性格，很羞涩.1111</span>
+                <span id="result2">您的性格，很羞涩.2222</span>
+                <span id="result3">您的性格，很羞涩.3333</span>
+                <span id="result4">您的性格，很羞涩.4444</span>
             </div>
         </div>
     </body>
