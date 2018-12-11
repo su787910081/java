@@ -156,6 +156,37 @@
 		3. 直接 {} 就是一个对象
             var p2 = { };
 
+        // 得到一个自定义对象的所有键值
+        <script type="text/javascript">
+            var dataCountry = {
+                "中国": ["北京市", "河北省", "辽宁省", "山东省"],
+                "美国": ["纽约", "华盛顿"],
+                "日本": ["东京"]
+            }
+            var dataProvince = {
+                "北京市": ["海淀区","朝阳区","丰台区"],
+                "河北省": ["石家庄", "唐山","秦皇岛"],
+                "辽宁省": ["沈阳", "大连", "鞍山"],
+                "山东省": ["青岛", "济南","烟台"]
+            }
+
+            window.onload = function() {
+                var arrKeysCountry = [];
+                for (var ele in dataCountry) {
+                    if (dataCountry.hasOwnProperty(ele)) {
+                        arrKeysCountry.push(ele);
+                    }
+                }
+                alert("国家：" + arrKeysCountry);
+                var arrKeysProvince = [];
+                for (var ele in dataProvince) {
+                    arrKeysProvince.push(ele);
+                }
+                alert("省份：" + arrKeysProvince);
+            }
+
+        </script>
+
 
 
 
