@@ -1,3 +1,8 @@
+/* 
+ * 所有需要处理为超链接 的P 标签 都需要添加一个值为 "pStair" 的class 并且不能有 a 标签
+ * 所有的这样的P 标签 都 需要紧接着一个DIV 标签 ，且不能有ID
+ */
+
 var strDivPrevIdName = "divIdStair";    // 每一个需要展开或者隐藏的DIV ID 名前缀
 var strFuncName = "toggleDiv";          // 每一个需要展开或者隐藏的DIV 添加点击事件
 var strPStair = "pStair";               // 每一个需要展开或者隐藏的P 标签 的class 值
@@ -36,6 +41,17 @@ function toggleDiv(divStairId) {
     }
 }
 
+function init(strDivIdRoot) {
+    if (!strDivIdRoot) {
+        strDivIdRoot = "divBoss";
+    }
+
+    var arrChilds = $("#" + strDivIdRoot).children();
+    initLink(arrChilds, strDivPrevIdName);
+    // 初始化所有CLASS 值 为"divStair" 的div
+    var divBoss = document.getElementById(strDivIdRoot);
+    hiddenAllDivStair(divBoss);
+}
 
 // 对所有该有的超链接 进行初始化
 function initLink(arrChilds, strCurDivPrevIdName) {

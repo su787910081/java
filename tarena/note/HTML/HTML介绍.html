@@ -6,15 +6,11 @@
         <meta charset="UTF-8" />
 
         <link rel="stylesheet" href="../NoteMain.css" />
-        <script src="../10_jQuery/code/js/jquery-1.4.2.js"></script>
+        <script src="../10_JQuery/code/js/jquery-1.4.2.js"></script>
         <script src="../NoteMain.js"></script>
         <script type="text/JavaScript">
             window.onload = function() {
-                var arrChilds = $("#divBoss").children();
-                initLink(arrChilds, strDivPrevIdName);
-                // 初始化所有CLASS 值 为"divStair" 的div
-                var divBoss = document.getElementById("divBoss");
-                hiddenAllDivStair(divBoss);
+                init();
             }
         </script>
     </head>
