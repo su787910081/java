@@ -6,6 +6,22 @@
         <meta charset="UTF-8" />
 
         <link rel="stylesheet" href="../NoteMain.css" />
+        <style type="text/css">
+            /* 展示的源代码样式 */
+            .exhibitionSrcCode {
+            	background-color: #EEE;
+            	display: inline-block; 
+            	vertical-align: middle;
+            }
+            /* 展示 效果样式 */
+            .exhibitionEffect {
+                display: inline-block; 
+            	vertical-align: middle;
+            }
+            xmp {
+                text-indent: 2em;
+            }
+        </style>
         <script src="../10_JQuery/code/js/jquery-1.4.2.js"></script>
         <script src="../NoteMain.js"></script>
         <script type="text/JavaScript">
@@ -15,7 +31,6 @@
         </script>
     </head>
     <body>
-        <!-- -->
         <h1>HTML 笔记</h1>
         <div id="divBoss">
             <p class="pStair">HTML 简介</p>
@@ -60,6 +75,7 @@
                 	<p>(5). &lt;meta charset="utf-8"/&gt; 用来通知浏览器使用哪一个编码来打开HTML 文档，这个编码一定要和文件保存时用的编码保持一致，才不会出现中文编码问题。</p>
                 </div>
             </div>
+
             <p class="pStair">HTML 语法</p>
             <div>
                 <p>1. HTML 标签</p>
@@ -95,6 +111,7 @@
                     </div>
                 </div>
             </div>
+
             <p class="pStair">HTML 标题标签</p>
             <div>
             	<p>&lt;h1&gt;一级标题&lt;/h1&gt;</p>
@@ -105,18 +122,79 @@
 
             	<p class="comment">	&lt;!-- 水平居中 align="center" left(左) right(右) jusity(两端对齐) --&gt;</p>
             	<p>	&lt;h1 align="center"&gt;马云有没有去过天上人间..., 去过...&lt;/h1&gt;</p>
+            </div>
 
-            	<p class="comment">	&lt;!-- ul列表 type指定前面的小加点(disc、square、circle) --&gt;</p>
-            	<p>	&lt;ul type="circle"&gt;</p>
-            	<div>
-                	<p>&lt;li&gt;中国&lt;/li&gt;</p>
-                	<p>&lt;li&gt;美国&lt;/li&gt;</p>
-                	<p>&lt;li&gt;韩国&lt;/li&gt;</p>
-                	<p>&lt;li&gt;日本&lt;/li&gt;</p>
-            	</div>
-            	<p>	&lt;/ul&gt;</p>
+            <p class="pStair">无序列表</p>
+            <div>
+            	<p class="comment">	&lt;!-- ul列表 type指定前面的小圆点(disc、square、circle) --&gt;</p>
             	<p class="comment">	&lt;!-- li 用来定义列表看的条目 --&gt;</p>
+            	<p class="pStair">实心小圆点</p>
+                <div>
+                    <div class="exhibitionSrcCode">
+                        &lt;ul type="disc"&gt;<br />
+                    	<div style="display: inline-block">
+                        	&lt;li&gt;中国&lt;/li&gt;<br />
+                        	&lt;li&gt;美国&lt;/li&gt;<br />
+                        	&lt;li&gt;韩国&lt;/li&gt;<br />
+                        	&lt;li&gt;日本&lt;/li&gt;<br />
+                    	</div><br />
+                    	&lt;/ul&gt;
+                	</div>
+                	<div class="exhibitionEffect">
+                        <ul type="disc">
+                            <li>中国</li>
+                            <li>美国</li>
+                            <li>韩国</li>
+                            <li>日本</li>
+                        </ul>
+                    </div>
+                </div>
+                <p class="pStair">实心小方框</p>
+                <div>
+                    <div class="exhibitionSrcCode">
+                        &lt;ul type="square"&gt;<br />
+                    	<div style="display: inline-block">
+                        	&lt;li&gt;中国&lt;/li&gt;<br />
+                        	&lt;li&gt;美国&lt;/li&gt;<br />
+                        	&lt;li&gt;韩国&lt;/li&gt;<br />
+                        	&lt;li&gt;日本&lt;/li&gt;<br />
+                    	</div><br />
+                    	&lt;/ul&gt;
+                	</div>
+                	<div class="exhibitionEffect">
+                        <ul type="square">
+                            <li>中国</li>
+                            <li>美国</li>
+                            <li>韩国</li>
+                            <li>日本</li>
+                        </ul>
+                    </div>
+                </div>
+                <p class="pStair">空心小圆圈</p>
+                <div>
+                    <div class="exhibitionSrcCode">
+                        &lt;ul type="circle"&gt;<br />
+                    	<div style="display: inline-block">
+                        	&lt;li&gt;中国&lt;/li&gt;<br />
+                        	&lt;li&gt;美国&lt;/li&gt;<br />
+                        	&lt;li&gt;韩国&lt;/li&gt;<br />
+                        	&lt;li&gt;日本&lt;/li&gt;<br />
+                    	</div><br />
+                    	&lt;/ul&gt;
+                	</div>
+                	<div class="exhibitionEffect">
+                        <ul type="circle">
+                            <li>中国</li>
+                            <li>美国</li>
+                            <li>韩国</li>
+                            <li>日本</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
 
+            <p class="pStair">图片标签</p>
+            <div>
             	<p class="comment">	&lt;!-- 图片标签 </p>
             	<div>
                 	<p class="comment">src - 用来指定图片的url 地址 </p>
@@ -125,8 +203,13 @@
                 	<p class="comment">border - 指定图片的边框</p>
             	</div>
             	<p class="comment">--&gt;</p>
-            	<p>	&lt;image src="./image/039.jpg" width="500px" height="500px" border="5px"/&gt;</p>
+            	<p class="pStair">图片标签</p>
+            	<div>
+                    <xmp class="exhibitionSrcCode"><image src="./image/264.jpg"/></xmp><br />
+                    <image style="margin-left: 2em;" src="./image/264.jpg"/>
+                </div>
             </div>
+
             <p class="pStair">HTML 超链接标签</p>
             <div>
             	<p>(1). 通过超链接可以实现点击超链接后跳转到另一个文档</p>
@@ -141,6 +224,10 @@
                 	<p>&lt;a name="top"&gt;&lt;/a&gt;</p>
                 	<p class="comment">&lt;!-- 回到name 为top 的位置 --&gt;</p>
                 	<p>&lt;a href="#top"&gt;回到顶部&lt;/a&gt;&lt;br/&gt;</p>
+                </div>
+                <p>(3). 禁止超链接跳转</p>
+                <div>
+                    
                 </div>
             </div>
             <p class="pStair">HTML 表格标签</p>
