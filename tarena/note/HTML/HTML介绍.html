@@ -34,21 +34,21 @@
             	    <div>
             	        <p>&lt;head&gt;</p>
             	        <div>
-            	        <p>&lt;title&gt;My First Page&lt;/title&gt;</p>
-            	        <p>&lt;meta charset="utf-8" /&gt;</p>
+                	        <p>&lt;title&gt;My First Page&lt;/title&gt;</p>
+                	        <p>&lt;meta charset="utf-8" /&gt;</p>
             	        </div>
             	        <p>&lt;/head&gt;</p>
+                    </div>
+            	    <div>
+            		    <p>&lt;body&gt;</p>
+            	        <div>
+                		    <p>hello html...&lt;br/&gt;</p>
+                		    <p>哈喽...中国</p>
+            	        </div>
+            		    <p>&lt;/body&gt;</p>
+            	    </div>
+            		<p>&lt;/html&gt;</p>
                 </div>
-        	    <div>
-        		    <p>&lt;body&gt;</p>
-        	        <div>
-        		    <p>hello html...&lt;br/&gt;</p>
-        		    <p>哈喽...中国</p>
-        	        </div>
-        		    <p>&lt;/body&gt;</p>
-        	        </div>
-        		    <p>&lt;/html&gt;</p>
-            	</div>
 
                 <p class="pStair">2. 网页的结构</p>
                 <div>
@@ -72,17 +72,20 @@
                 </div>
                 <p>3. HTML 注释</p>
                 <div>
-                    <p></p>
+                    <p>以<span class="comment">&lt;--  --&gt;</span> 之间括起来的部分就是注释 </p>
                 </div>
                 <p>4. 如何在网页中做一个空格或者换行</p>
                 <div>
                     <p>在HTML中，多个连接的空白字符会被当成一个空格来显示</p>
                     <p>所以，如果要用一个换行，可以使用&lt;br/&gt; 标签来代替</p>
-                    <p>如果要做一个空格，可以使用 '&nbsp;' 来代码</p>
+                    <xmp style="text-indent: 2em;">如果要做一个空格，可以使用 '&nbsp;' 来代替</xmp>
                 </div>
                 <p>	5. HTML 和XML 的区别</p>
                 <div>
-                    <p>相同点: 都是标记语言，都是由大量的标记来组织网页结构</p>
+                    <p>相同点: </p>
+                    <div>
+                        <p>都是标记语言，都是由大量的标记来组织网页结构</p>
+                    </div>
                     <p>不同点: </p>
                     <div>
                         <p>(1). XML 是可扩展标记语言，其中的标签可以自己定义，而HTML 中的标签是预定义好的，不能私自添加或修改</p>
@@ -99,24 +102,28 @@
             	<p>&lt;h4&gt;四级标题&lt;/h4&gt;</p>
             	<p>&lt;h5&gt;五级标题&lt;/h5&gt;</p>
 
-            	<p>	&lt;!-- 水平居中 align="center" left(左) right(右) jusity(两端对齐) --&gt;</p>
+            	<p class="comment">	&lt;!-- 水平居中 align="center" left(左) right(右) jusity(两端对齐) --&gt;</p>
             	<p>	&lt;h1 align="center"&gt;马云有没有去过天上人间..., 去过...&lt;/h1&gt;</p>
 
-            	<p>	&lt;!-- ul列表 type指定前面的小加点(disc、square、circle) --&gt;</p>
+            	<p class="comment">	&lt;!-- ul列表 type指定前面的小加点(disc、square、circle) --&gt;</p>
             	<p>	&lt;ul type="circle"&gt;</p>
-            	<p>		&lt;li&gt;中国&lt;/li&gt;</p>
-            	<p>		&lt;li&gt;美国&lt;/li&gt;</p>
-            	<p>		&lt;li&gt;韩国&lt;/li&gt;</p>
-            	<p>		&lt;li&gt;日本&lt;/li&gt;</p>
+            	<div>
+                	<p>&lt;li&gt;中国&lt;/li&gt;</p>
+                	<p>&lt;li&gt;美国&lt;/li&gt;</p>
+                	<p>&lt;li&gt;韩国&lt;/li&gt;</p>
+                	<p>&lt;li&gt;日本&lt;/li&gt;</p>
+            	</div>
             	<p>	&lt;/ul&gt;</p>
-            	<p>	&lt;!-- li 用来定义列表看的条目 --&gt;</p>
+            	<p class="comment">	&lt;!-- li 用来定义列表看的条目 --&gt;</p>
 
-            	<p>	&lt;!-- 图片标签 </p>
-            	<p>		src - 用来指定图片的url 地址 </p>
-            	<p>		width - 指定图片的宽度 </p>
-            	<p>		height - 指定图片的高度 </p>
-            	<p>		border - 指定图片的边框</p>
-            	<p>		--&gt;</p>
+            	<p class="comment">	&lt;!-- 图片标签 </p>
+            	<div>
+                	<p class="comment">src - 用来指定图片的url 地址 </p>
+                	<p class="comment">width - 指定图片的宽度 </p>
+                	<p class="comment">height - 指定图片的高度 </p>
+                	<p class="comment">border - 指定图片的边框</p>
+            	</div>
+            	<p class="comment">--&gt;</p>
             	<p>	&lt;image src="./image/039.jpg" width="500px" height="500px" border="5px"/&gt;</p>
             </div>
             <p class="pStair">HTML 超链接标签</p>
@@ -124,18 +131,21 @@
             	<p>(1). 通过超链接可以实现点击超链接后跳转到另一个文档</p>
             	<div>
                 	<p>	href 用来指定点击超链接的时候跳转到的地址</p>
-                	<p>	&lt;!-- target 指定以什么样的方式打开超链接 _self: 当前窗口 _blank: 新窗口  --&gt;</p>
+                	<p class="comment">	&lt;!-- target 指定以什么样的方式打开超链接 _self: 当前窗口 _blank: 新窗口  --&gt;</p>
                 	<p>	&lt;a href="http://www.baidu.com" target="_blank"&gt;百度一个，你就知道&lt;/a&gt;</p>
             	</div>
             	<p>(2). 通过超链接可以实现</p>
             	<div>
-                	<p>	&lt;!-- 标记name 为top 的位置 --&gt;</p>
-                	<p>	&lt;a name="top"&gt;&lt;/a&gt;</p>
-                	<p>	&lt;!-- 回到name 为top 的位置 --&gt;</p>
-                	<p>	&lt;a href="#top"&gt;回到顶部&lt;/a&gt;&lt;br/&gt;</p>
+                	<p class="comment">&lt;!-- 标记name 为top 的位置 --&gt;</p>
+                	<p>&lt;a name="top"&gt;&lt;/a&gt;</p>
+                	<p class="comment">&lt;!-- 回到name 为top 的位置 --&gt;</p>
+                	<p>&lt;a href="#top"&gt;回到顶部&lt;/a&gt;&lt;br/&gt;</p>
                 </div>
             </div>
-            <p>HTML 表格标签</p>
+            <p class="pStair">HTML 表格标签</p>
+            <div>
+                <p>HTML 表格标签</p>
+            </div>
 
             <p class="pStair">HTML 表单标签</p>
             <div>
@@ -149,7 +159,7 @@
             		<p>在表单中的表单项可以输入信息，通过提交表单可以将表单中输入的数据提交给服务器</p>
                 </div>
 
-            	<p>&lt;!-- 颜色值，使用RGB --&gt;</p>
+            	<p class="comment">&lt;!-- 颜色值，使用RGB --&gt;</p>
             	<p>bgcolor="#D3D3D3"</p>
 
             	<p>如果实现一个表单，需要注意的是: 表单中的表单项都需要指定 name 属性，name 属性的值 就是该项被提交时参数名，该项中输入的值就是参数值</p>
@@ -159,14 +169,14 @@
             <div>
                 <p>&lt;body&gt;</p>
             	<div>
-            		<p>&lt;!-- 其他标签 --&gt;</p>
-            		<p>&lt;!-- DIV 默认和页面一样的宽度，自动收缩 --&gt;</p>
+            		<p class="comment">&lt;!-- 其他标签 --&gt;</p>
+            		<p class="comment">&lt;!-- DIV 默认和页面一样的宽度，自动收缩 --&gt;</p>
             		<p>&lt;div style="border:1px solid red"&gt;这是一个DIV&lt;/div&gt;</p>
             		<p>&lt;div style="border:1px solid red"&gt;这是一个DIV&lt;/div&gt;</p>
-            		<p>&lt;!-- span 默认和文本一样的宽度，行内元素 --&gt;</p>
+            		<p class="comment">&lt;!-- span 默认和文本一样的宽度，行内元素 --&gt;</p>
             		<p>&lt;span style="border:2px solid blue"&gt;这是一个span&lt;/span&gt;</p>
             		<p>&lt;span style="border:2px solid blue"&gt;这是一个span&lt;/span&gt;</p>
-            		<p>&lt;!-- 会有一行空行的样子 --&gt;</p>
+            		<p class="comment">&lt;!-- 会有一行空行的样子 --&gt;</p>
             		<p>&lt;p style="border:2px solid green"&gt;这是一个p&lt;/p&gt;</p>
             		<p>&lt;p style="border:2px solid green"&gt;这是一个p&lt;/p&gt;</p>
             	</div>
