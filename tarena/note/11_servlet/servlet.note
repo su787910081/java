@@ -1,0 +1,107 @@
+tomcat 官网：tomcat.apache.org
+
+tomcat 下载与安装
+    tomcat 分为windows 和linux以及32位和64位版本
+
+    tomcat5 需要 JDK4 以上
+    tomcat6 需要 JDK7 以上
+    tomcat7 需要 JDK6 以上
+    tomcat8 需要 JDK7 以上
+
+    tomcat 压缩版本和安装版本
+
+    启动需要JAVA_HOME 环境变量
+
+    修改TOMCAT 的端口号，在conf/server.xml 中   Connector   标签里面有一个port 
+
+    netstat -noa 查看当前正在使用网络的哪些进程，通过任务管理器找到对应PID 的进程，结束该进程则可以了。
+
+tomcat 目录结构
+    bin - 服务器存放批处理文件的目录
+    conf - 服务器相关的配置
+    lib - 依赖jar 包
+    log - 日志文件
+    temp - 临时文件
+    webapps - 用来存放供外界浏览器访问的web 资源的目录，是localhost 虚拟主机默认管理的目录，将web 应用放在该目录下，可以通过浏览器来访问。
+    work - 用来存放服务器在运行时产生的工作文件的目录。
+
+WEB 应用
+    所谓的WEB 应用，就是将为了实现某一个功能而准备所有WEB 资源根据自己所实现的功能按时一定的目录结构组织起来的就是一个WEB应用。
+    WEB 应用的目录结构
+        如果希望将一些资源发布在虚拟主机中供外界来访问，需要将这些资源组织成一个WEB 应用，将WEB 应用发布在虚拟主机中就可以让外界来访问了。
+        news/
+          |
+          | -- html css js
+          | -- WEB-INF 这是一个特殊的目录，放在该目录下的资源文件不能让浏览器直接访问
+              | 
+              | -- classes 目录  存放 .class 文件
+              | -- lib 目录 - 用来存放web 应用运行时所依赖的jar 包
+              | -- web.xml 文件  - 是WEB 应用的核心配置文件，所有和WEB 应用相关的配置都要在这个文件中进行配置！！
+
+虚拟主机
+    所谓的虚拟主机，就是运行在tomcat 服务器的一个站点(比如百度或者新浪), 在访问时就好像访问一台独立的主机一样。
+    在tomcat 服务器中，可以配置多个站点，每一个站点都是一台虚拟主机。
+
+如何部署WEB 应用到虚拟主机中
+    在tomcat 服务器中提供了一个虚拟主机: localhost(截图: <a href="localhost.png">localhost.png</a>)
+    因此我们可以将WEB 应用部署在localhost 主机上
+
+    部署方式：将组织好的WEB 应用的目录直接丢进localhost 主机默认管理的目录下(webapps)即可，这种方式不需要重启服务器就可以起作用！！
+        部署WEB 应用有三种方式，这里是第三种，第一种基本不用，第二种可以去看一下。
+
+配置缺省的(默认的)WEB 应用
+    如果再访问服务器中的WEB 应用下的资源时，如果不想写WEB 应用的虚拟目录的名称，可以将当前WEB 应用配置成缺省的WEB 应用。配置方式是将WEB 应用的虚拟目录名称改为ROOT 即可。    -- webapps/ROOT
+
+如何为WEB 应用配置主页
+    在WEB-INF/web.xml 中添加一个welcome-file-list 标签 里面再添加一个welcome-file 标签，在此标签下添加主页资源文件就可以了。配置完成之后需要重启TOMCAT 服务器，而且还要清除缓存。
+        <!-- 配置访问主页资源 -->
+        <welcome-file-list>
+            <welcome-file>index.html</welcome-file>
+        </welcome-file-list>
+    如果自己的web.xml 中没有配置，但是在conf/web.xml 中的配置也是有效的。这个文件中的配置是对所有虚拟主机都有效的。
+    如果自己web.xml 中配置了相关的数据，那么conf/web.xml 中的配置将被替换，且不生效。
+
+如何配置虚拟主机
+    需求: 配置一台主机，名称为www.baidu.com 组织一个WEB 应用并部署在baidu 主机中。并将WEB 应用配置为缺省的WEB 应用，最后配置WEB 应用的主页，最终通过www.baidu.com 来访问WEB 应用的主页
+    在conf/server.xml 中添加Host 标签
+    HOST 标签上的name 属性用来指定虚拟主机的名称，后期需要这个名称来访问该虚拟主机
+    Host 标签上的appBase 属性用来批定虚拟主机默认管理的目录(用来部署WEB应用的目录)
+    在配置好虚拟主机后，还不能通过浏览器来访问，因为还需要在hosts 文件中或者DNS 服务器中做域名和IP地址的映射关系。
+    如果通过IP 地址来访问TOMCAT 服务器，服务器不知道客户端要访问哪一个虚拟主机，则会访问转为的虚拟主机。默认的虚拟主机可以通过server.xml 文件中的Engine 标签的defaultHost 属性来指定。
+
+    这些配置好了一定要记得重启服务器，还有就是缓存清理一下。
+
+打war 包
+    $ jar -cvf 名称.war *
+    然后将其放入到localhost 下面，它会自动解压。然后就可以访问了，tomcat 都不需要重启
+
+
+HTTP 协议
+
+2.1.2 HTTP 协议的基本原则
+    1. 基于请求响应模型
+    2. 一次请求对应一次响应
+    3. 请求只能由客户端发出，服务器只能被动的等待请求做出回应。
+
+2.2 HTTP 协议的详解
+    2.2.1 HTTP 请求
+        1. 请求行
+            GET /news3/1.html HTTP/1.1
+            GET: 请求方式，在HTTP 协议中一共规定了7 种请求方式
+            /news3/1.html: 请求资源路径
+            HTTP/1.1: 浏览器发送请求时所使用的协议及版本
+        2. 若干请求头
+            
+        3. 请求实体内容
+            如果请求方式是GET 提交，请求实体中没有数据
+            只有当请求方式为POST 提交，并且请求中携带了数据，才会的实体中有数据
+    2.2.2 HTTP 响应
+        1. 状态行
+        2. 若干响应头
+        3. 响应实体内容
+
+
+
+
+
+

@@ -60,8 +60,13 @@ function initLink(arrChilds, strCurDivPrevIdName) {
     }
 
     for (var i = 0; i < arrChilds.length; i++) {
-        var pNode = arrChilds[i];
-        if (pNode.className != strPStair) {
+        var strDivIdName_i = strCurDivPrevIdName + "_" + i;
+        var curNode = arrChilds[i];
+        if (curNode.tagName == "DIV") {
+            initLink($(curNode).children(), strDivIdName_i);
+            continue;
+        }
+        if (curNode.className != strPStair) {
             continue;
         }
 
@@ -70,13 +75,12 @@ function initLink(arrChilds, strCurDivPrevIdName) {
             return false;
         }
 
-        var strDivIdName_i = strCurDivPrevIdName + "_" + i;
-        var strHTML = pNode.innerHTML;
+        var strHTML = curNode.innerHTML;
         var strNewHTML = '<a href="JavaScript:void(0)" onclick="'
             + strFuncName + '(' + "'" + strDivIdName_i + "'"
             + ')">' + strHTML + '</a>';
 
-        pNode.innerHTML = strNewHTML;
+        curNode.innerHTML = strNewHTML;
 
         divNode.setAttribute("id", strDivIdName_i);
         divNode.setAttribute("class", strDivStair);
