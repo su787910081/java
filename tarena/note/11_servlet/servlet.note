@@ -91,14 +91,132 @@ HTTP 协议
             /news3/1.html: 请求资源路径
             HTTP/1.1: 浏览器发送请求时所使用的协议及版本
         2. 若干请求头
-            
+            Accept: text/html,image/*
+                -- 通知服务器当前浏览器可以接受哪些格式的数据
+            Accept-Charset: ISO-8859-1
+                -- 浏览器可以接受的字符集编码
+            Accept-Encoding: gzip,compress
+                -- 浏览器可以接受的压缩格式
+            !Host: www.tedu.cn:80
+                -- 需要访问的虚拟主机的名称
+            !!Referer: http://www.tedu.cn/index.jsp
+                -- 这是和防盗链相关的头，对当前资源的访问来自哪个页面的超链接
+            User-Agent: Mozilla/4.0 (compatible, MSIE 5.5; Windows)
+                -- 客户端的基本信息
+            !!!Cookie(后面讲)
+                -- 和cookei 相关的头
+            Connection: close/Keep-Alive
+                -- 是否继续保持连接
+            Date: Fri, 17 Feb 2017 18:23:51 GMT
+                -- 当前发送请求的时间
         3. 请求实体内容
             如果请求方式是GET 提交，请求实体中没有数据
-            只有当请求方式为POST 提交，并且请求中携带了数据，才会的实体中有数据
+            只有当请求方式为POST 提交，并且请求中携带了数据时，请求实体才会有内容
     2.2.2 HTTP 响应
         1. 状态行
+            HTTP/1.1 200 OK
         2. 若干响应头
+            HTTP 协议中响应头非常多，下面列出常见的响应头及其功能:
+            !!!Location: http://www.tedu.cn/index.jsp
+                -- 配合302 使用实现请求重定向
+            Server: apache tomcat
+                -- 服务器的基本信息
+            Content-Encoding: gzip
+                -- 服务器发送的数据使用的压缩格式
+            Content-Length: 80
+                -- 服务器发送的数据的大小
+            !!!Content-Type: text/html; charset=GB2312
+                -- 服务器发送的数据是什么格式的，如果是字符格式的数据
+            !!Refresh: 1;url=http://www.tedu.cn
+                -- 定时刷新相关的头，通知浏览器，过几秒后自动刷新访问哪一个网页
+            Content-Disposition: attachment; filename=aaa.zip
+                -- 通知浏览器以附件的形式打开发送过去的数据，是和文件下载相关的
+            !!!Set-Cookie: SS=Q0=5Lb_n!; path=/search
+                -- 和Cookie 相关的头
+            !Expires: -1
+                -- 通知浏览器是否缓存
+            !Cache-Control: no-Cache
+                -- 通知浏览器是否缓存
+            !Pragma: no-Cache
+                -- 通知浏览器是否缓存
+                -- 之所以一个功能有三个头，是因为历史原因。所以为了网页的兼容性，通常这三个头要一起使用
+            Connection: close/Keep-Alive
+                -- 是否保持连接
+            Date: Fri, 17 Feb 2017 18:23:51 GMT
+                -- 当前发送请求的时间
+
         3. 响应实体内容
+            
+
+    3. GET 请求和POST 请求的区别
+        主要体现在请求参数发送过程的不相同
+        GET: 通过请求行拼接参数将数据发送给服务器
+            (1) 通过地址栏携带参数非常不安全；
+            (2) 通过地址栏发送数据，数据量不能太大(不能超过1KB或者4KB);
+        POST: 通过请求实体内容携带参数，数据不会显示在地址栏
+            (1) 参数不会出现在地址栏，相对更安全
+            (2) 数据通过请求实体内容发送，数据量理论上没有限制
+
+
+
+
+
+
+
+==========================================================================================================================================================================================================================
+
+1. Servlet
+1.1 Servlet 概述
+    1.1.1 什么是Servlet?
+        Servlet 是由SUN 公司提供的动态web 资源开发技术，本质上是一段JAVA 程序。这段JAVA 程序无法独立运行，必须放在Servlet 容器(比如: tomcat)中，由容器调用才可以执行。
+    1.1.2 开发一个Servlet 程序的步骤
+        1. 写一个类，实现一个Servlet 接口，并添加未实现的方法;
+        2. 将编译后的类，放在WEB 应用中，并在WEB 应用web.xml 文件中配置Servlet 对外访问的虚拟路径。将WEB 应用部署到虚拟主机中即可;
+    1.1.3 使用记事本开发一个Servlet 程序
+        1. 需求：浏览器向服务器发送一个请求，访问FirstServlet，FirstServlet 将表示当前时间的字符串发送给浏览器;
+        2. 详细开发步骤
+            1). 创建一个FirstServlet.java 文件;
+            2). 编写FirstServlet 类, 实现Servlet 接口，并添加未实现的方法(或者继承自GenericServlet);
+            3). 实现Servlet 中提供的处理请求的servuce 方法，并将表示当前时间的字符串响应给浏览器;
+            4). 打开cmd 窗口编译FirstServlet 类;
+                带包编译: javac -d . FirstServlet.java -- -d 是指带包编译; . 是指当前目录 后面是源文件
+            5). 将FirstServlet 类放在WEB 应用中，并在web.xml 文件中配置Servlet 对外访问的虚拟路径;
+                将编译好的class 文件放到WEB 应用的WEB-INF/classes 目录下
+                在WEB应用的web.xml 中配置servlet 对外访问的虚拟路径
+
+                	<!-- server settings -->
+                	<!-- 两个servlet-name 必须一致 -->
+                	<servlet>
+                		<servlet-name>FirstServlet</servlet-name>
+                		<servlet-class>com.tedu.servlet.FirstServlet</servlet-class>
+                	</servlet>
+                	<servlet-mapping>
+                		<servlet-name>FirstServlet</servlet-name>
+                		<url-pattern>/FirstServlet</url-pattern>
+                	</servlet-mapping>
+
+            6). 将WEB 应用部署到虚拟主机中，启动服务器，通过浏览器访问 FirstServlet;
+
+1.2 Servlet 继承结构
+    MyServlet --> HttpServlet --> GenericServlet-->Servlet
+
+1.3 Servlet 调用过程(以及生命周期)
+    开发一个Servlet，放在WEB 应用中，并将WEB 应用部署在服务器中，启动服务器，通过浏览器 访问Servlet, 可以访问到Servlet 处理的结果，这个Servlet 是如何被调用 的，Servlet 又是如何执行的。
+    Servlet 在第一次被访问的时候创建实例，创建之后服务器会立即调用init 方法进行初始化操作，实例创建之后会一直驻留在服务器的内存中，为后续的请求服务。只要有请求访问这个Servlet，服务器就会调用service 方法来处理该请求。直到服务器关闭或者WEB应用被移出容器，随着WEB 应用的销毁，Servlet 实例也会跟着销毁，在销毁之前，服务器会调用destroy 方法进行善后的处理。
+
+1.4 Servlet 开发细节
+    1.4.1 Servlet 虚拟路径的配置
+        Servlet 在web.xml 文件中虚拟路径的配置方式可以有两种方式: 
+            1. 直接写一个路径，后期就需要通过/SecondsServlet 这个路径来访问该Servlet
+                如：/SecondServlet
+            2. 还可以使用(*) 匹配符来配置一个路径，配置的方式有两种: 
+                a) 以斜杠(/) 开头，以斜杠星(/*) 结尾。
+                    如：/*、/a/*、
+                b) 以星点后缀(*.xxx) 的形式
+                    如: *.html、*.abc、*.jsp
+                使用(*) 匹配符可以使得路径的访问变更更加灵活，但是也可能会导致一个URL 会被多个mapping 所匹配。路径的优先级规则是什么？
+                    i: 哪一个更精准，则优先匹配;
+                    ii: *.xxx 的优先级是最低的; 
 
 
 
