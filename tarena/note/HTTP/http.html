@@ -17,7 +17,7 @@
         <h1>HTTP 协议</h1>
         <div id="divBoss">
 
-            <p class="linkStair">HTTP 简介</p>
+            <p><span class="linkStair">HTTP 简介</span></p>
             <div>
                 <p>HTTP 协议规定了浏览器和服务器之间通信的规则(格式，协议)，规定了浏览器发送请求信息时该 什么样的格式 ，也规定了服务器在响应数据时该符合什么样的格式。</p>
                 <p>HTTP 协议中包括两部分内容: HTTP 请求信息，即浏览器向服务器放的请求信息，和HTTP 响应信息，即向浏览器做出的响应信息。</p>
@@ -29,7 +29,7 @@
                 <p>3. 请求只能由客户端发出，服务器只能被动的等待请求做出回应。</p>
             </div>
 
-            <p class="linkStair">HTTP 请求</p>
+            <p><span class="linkStair">HTTP 请求</span></p>
             <div>
                 <p>(1) 请求行(需要重点关注): GET /index.html HTTP/1.1</p>
                 <div>
@@ -65,14 +65,14 @@
                 </div>
             </div>
 
-            <p class="linkStair">HTPP 响应</p>
+            <p><span class="linkStair">HTPP 响应</span></p>
             <div>
             	<p>(1) 状态行: 响应遵循的协议及版本、状态码、描述信息</p>
             	<div>
                 	<p>HTTP/1.1 200 OK</p>
                 	<p>HTTP.1.1: 服务器做出响应时遵循的协议及版本</p>
             		<p>200: 状态码，一个三位的数字，表示请求处理的结果</p>
-            		<p class="linkStair">常见状态码</p>
+            		<p><span class="linkStair">常见状态码</span></p>
             		<div>
             			<p>200: 表示服务器处理成功的处理了请求</p>
             			<p>302: 和location 响应头配合实现请求重定向</p>
@@ -83,7 +83,7 @@
             	    <p>OK: 描述短语，也是用来表示服务器处理请求的结果</p>
             	</div>
             	<p>(2) 若干响应头</p>
-                <p class="linkStair">常见响应头及其功能</p>
+                <p><span class="linkStair">常见响应头及其功能</span></p>
                 <div>
                     <p class="comment">-- 配合302 使用实现请求重定向<p>
                     <p>!!!Location: http://www.tedu.cn/index.jsp<p>
@@ -95,7 +95,7 @@
                     <p>Content-Length: 80<p>
                     <p class="comment">-- 服务器发送的数据是什么格式的，如果是字符格式的数据<p>
                     <p>!!!Content-Type: text/html; charset=GB2312<p>
-                    <p class="linkStair">常见格式</p>
+                    <p><span class="linkStair">常见格式</span></p>
                     <div>
             			<p>Content-Type:text/html 服务器响应的是一个HTML 的网页</p>
             			<p>Content-Type:image/jpeg 响应的是一个jpg 格式的图片</p>
@@ -124,7 +124,7 @@
             	<p>(3) 响应实体, 在浏览器中实际展示的内容</p>
             </div>
 
-            <p class="linkStair">向客户端浏览器响应网页文件</p>
+            <p><span class="linkStair">向客户端浏览器响应网页文件</span></p>
             <div>
             	<p>1. 在webapps 目录下，编写一个index.html 文件</p>
             	<p>2. 向客户端浏览器响应网页文件(index.html)</p>
