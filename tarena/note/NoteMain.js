@@ -72,7 +72,7 @@ function initLink(arrChilds, strCurDivPrevIdName) {
 
         var divNode = arrChilds[++i];
         if (divNode.tagName != "DIV") {
-            return false;
+            comtinu;
         }
 
         var strHTML = curNode.innerHTML;

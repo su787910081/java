@@ -188,10 +188,12 @@ HTTP 协议
                 	<!-- 两个servlet-name 必须一致 -->
                 	<servlet>
                 		<servlet-name>FirstServlet</servlet-name>
+                		<!-- servlet-name 对应的class 资源 -->
                 		<servlet-class>com.tedu.servlet.FirstServlet</servlet-class>
                 	</servlet>
                 	<servlet-mapping>
                 		<servlet-name>FirstServlet</servlet-name>
+                		<!-- 浏览器上面指定的资源文件路径 -->
                 		<url-pattern>/FirstServlet</url-pattern>
                 	</servlet-mapping>
 

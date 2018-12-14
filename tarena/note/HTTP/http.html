@@ -32,10 +32,26 @@
             		<p>HTTP/1.1: 请求所遵循的协议及版本</p>
                 </div>
                 <p>(2) 若干请求头: </p>
+                <p class="pStair">请求头</p>
                 <div>
-            		<p>Accept: 浏览器能够接收的数据格式</p>
-            		<p>Accept-Language: 浏览器能够接收的语言环境</p>
-            		<p>...</p>
+                    <p class="comment">-- 通知服务器当前浏览器可以接受哪些格式的数据</p>
+                    <p>Accept: text/html,image/*</p>
+                    <p class="comment">-- 浏览器可以接受的字符集编码</p>
+                    <p>Accept-Charset: ISO-8859-1</p>
+                    <p class="comment">-- 浏览器可以接受的压缩格式</p>
+                    <p>Accept-Encoding: gzip,compress</p>
+                    <p class="comment">-- 需要访问的虚拟主机的名称</p>
+                    <p>!Host: www.tedu.cn:80</p>
+                    <p class="comment">-- 这是和防盗链相关的头，对当前资源的访问来自哪个页面的超链接</p>
+                    <p>!!Referer: http://www.tedu.cn/index.jsp</p>
+                    <p class="comment">-- 客户端的基本信息</p>
+                    <p>User-Agent: Mozilla/4.0 (compatible, MSIE 5.5; Windows)</p>
+                    <p class="comment">-- 和cookei 相关的头</p>
+                    <p>!!!Cookie(后面讲)</p>
+                    <p class="comment">-- 是否继续保持连接</p>
+                    <p>Connection: close/Keep-Alive</p>
+                    <p class="comment">-- 当前发送请求的时间</p>
+                    <p>Date: Fri, 17 Feb 2017 18:23:51 GMT</p>
                 </div>
                 <p>(3) 请求实体内容: </p>
                 <div>
@@ -62,17 +78,44 @@
             	    <p>OK: 描述短语，也是用来表示服务器处理请求的结果</p>
             	</div>
             	<p>(2) 若干响应头</p>
-            	<div>
-            		<p>Content-Type: 指明服务器响应的数据格式</p>
-            		<div>
+                <p class="pStair">常见响应头及其功能</p>
+                <div>
+                    <p class="comment">-- 配合302 使用实现请求重定向<p>
+                    <p>!!!Location: http://www.tedu.cn/index.jsp<p>
+                    <p class="comment">-- 服务器的基本信息<p>
+                    <p>Server: apache tomcat<p>
+                    <p class="comment">-- 服务器发送的数据使用的压缩格式<p>
+                    <p>Content-Encoding: gzip<p>
+                    <p class="comment">-- 服务器发送的数据的大小<p>
+                    <p>Content-Length: 80<p>
+                    <p class="comment">-- 服务器发送的数据是什么格式的，如果是字符格式的数据<p>
+                    <p>!!!Content-Type: text/html; charset=GB2312<p>
+                    <p class="pStair">常见格式</p>
+                    <div>
             			<p>Content-Type:text/html 服务器响应的是一个HTML 的网页</p>
             			<p>Content-Type:image/jpeg 响应的是一个jpg 格式的图片</p>
             			<p>Content-Type:image/png 响应的是一个png 格式的图片</p>
             			<p>Content-Type:image/gif 响应的是一个gif 格式的图片</p>
             			<p>Content-Type:image/ico 响应的是一个ico 格式的图片</p>
             		</div>
-            		<p>Content-Length: 指明服务器响应数据的长度，单位是字节</p>
-            	</div>
+                    <p class="comment">-- 定时刷新相关的头，通知浏览器，过几秒后自动刷新访问哪一个网页<p>
+                    <p>!!Refresh: 1;url=http://www.tedu.cn<p>
+                    <p class="comment">-- 通知浏览器以附件的形式打开发送过去的数据，是和文件下载相关的<p>
+                    <p>Content-Disposition: attachment; filename=aaa.zip<p>
+                    <p class="comment">-- 和Cookie 相关的头<p>
+                    <p>!!!Set-Cookie: SS=Q0=5Lb_n!; path=/search<p>
+                    <p class="comment">-- 之所以一个功能有三个头，是因为历史原因。所以为了网页的兼容性，通常这三个头要一起使用<p>
+                    <p class="comment"> -- 通知浏览器是否缓存<p>
+                    <p>!Expires: -1<p>
+                    <p class="comment">-- 通知浏览器是否缓存<p>
+                    <p>!Cache-Control: no-Cache<p>
+                    <p class="comment">-- 通知浏览器是否缓存<p>
+                    <p>!Pragma: no-Cache<p>
+                    <p class="comment">-- 是否保持连接<p>
+                    <p>Connection: close/Keep-Alive<p>
+                    <p class="comment">-- 当前发送请求的时间<p>
+                    <p>Date: Fri, 17 Feb 2017 18:23:51 GMT<p>
+                </div>
             	<p>(3) 响应实体, 在浏览器中实际展示的内容</p>
             </div>
 
