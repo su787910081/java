@@ -157,26 +157,26 @@
                 <p><span class="linkStair">3.6. 属性选择器</span></p>
                 <div>
                     <p><a href="code/selector/06_jQuery_selector_attribute.html">06_jQuery_selector_attribute.html</a></p>
-                    <p>$("div[id^='d1']") - 匹配具有id 属性并且值以d1 开头的元素</p>
-                    <p>$("div[id$='d1']") - 匹配具有id 属性并且值以d1 结尾的元素</p>
+                    <p>$("div[id^='d1']") <span class="comment">- 匹配具有id 属性并且值以d1 开头的元素</span></p>
+                    <p>$("div[id$='d1']") <span class="comment">- 匹配具有id 属性并且值以d1 结尾的元素</span></p>
                 </div>
                 <p><span class="linkStair">3.7. 子元素选择器</span></p>
                 <div>
                     <p><a href="code/selector/06_jQuery_selector_attribute.html">06_jQuery_selector_attribute.html</a></p>
-                    <p>$("div span:first-child") // DIV 第一个span 后代元素</p>
-                    <p>$("div>span:first-child")   // 子元素</p>
+                    <p>$("div span:first-child") <span class="comment">// DIV 第一个span 后代元素</span></p>
+                    <p>$("div>span:first-child")   <span class="comment">// 子元素</span></p>
                     <p>$("div>span:last-child")</p>
-                    <p>$("div>span:nth-child(n)")  // 第n 个span子元素</p>
+                    <p>$("div>span:nth-child(n)")  <span class="comment">// 第n 个span子元素</span></p>
                 </div>
                 <p><span class="linkStair">3.8. 表单选择器</span></p>
                 <div>
                     <p><a href="code/selector/07_jQuery_selector_form.html">07_jQuery_selector_form.html</a></p>
-                    <p>$(":input") -- 匹配所有的表单项元素(包括input,select,textarea 等)</p>
-                    <p>$(":text") -- 匹配所有的单行文本框元素</p>
-                    <p>$(":password") -- 匹配所有的密码框</p>
-                    <p>$(":redio")     -- 匹配所有的单选框</p>
-                    <p>$(":checkbox") -- 匹配所有的复选框</p>
-                    <p>$(":checked")   -- 匹配所有的被选中的单选框、复选框、option(IE 里面是不包含option的)</p>
+                    <p>$(":input")      <span class="comment">-- 匹配所有的表单项元素(包括input,select,textarea 等)</span></p>
+                    <p>$(":text")       <span class="comment">-- 匹配所有的单行文本框元素</span></p>
+                    <p>$(":password")   <span class="comment">-- 匹配所有的密码框</span></p>
+                    <p>$(":redio")      <span class="comment">-- 匹配所有的单选框</span></p>
+                    <p>$(":checkbox")   <span class="comment">-- 匹配所有的复选框</span></p>
+                    <p>$(":checked")    <span class="comment">-- 匹配所有的被选中的单选框、复选框、option(IE 里面是不包含option的)</span></p>
                     <p>$(":selected")</p>
                 </div>
             </div>
@@ -187,9 +187,9 @@
                 <div>
                     <p>1. 创建新元素</p>
                     <div>
-                        <p>$("&lt;div&gt;&lt;/div&gt;") - 创建一个div 元素</p>
+                        <p>$("&lt;div&gt;&lt;/div&gt;") <span class="comment">-- 创建一个div 元素</span></p>
                         <p>$("&lt;div&gt;hello...&lt;/div&gt;")</p>
-                        <p>$("&lt;div&gt;&lt;input type='text' /&gt;&lt;/div&gt;") 包含子元素的div 元素</p>
+                        <p>$("&lt;div&gt;&lt;input type='text' /&gt;&lt;/div&gt;") <span class="comment">包含子元素的div 元素</span></p>
                     </div>
                     <p>2. 添加子元素</p>
                     <div>
@@ -198,11 +198,11 @@
                     </div>
                     <p>3. 删除元素本身</p>
                     <div>
-                        <p>$("div").remove(); -- 删除匹配的所有div 元素</p>
+                        <p>$("div").remove(); <span class="comment">-- 删除匹配的所有div 元素</span></p>
                     </div>
                     <p>4. 替换元素</p>
                     <div>
-                        <p>$("div").replaceWith($span);    // 用$span 来替换所有匹配的div</p>
+                        <p>$("div").replaceWith($span);    <span class="comment">// 用$span 来替换所有匹配的div</span></p>
                     </div>
                 </div>
                 <p><span class="linkStair">4.2 HTML 属性/值操作</span></p>
@@ -210,22 +210,22 @@
                     <p>html() text() attr()</p>
                     <p>1. html() -- 获取或者设置元素的html 内容</p>
                     <div>
-                        <p>    $("div").html();     -- 只能获取到第一个，但是设置的话，则会将所有匹配到的都更改</p>
-                        <p>    $("div").html("&lt;span&gt;xxx&lt;/span&gt;"); -- 将所有匹配到的div 元素的HTML 内容更新。</p>
+                        <p>    $("div").html();     <span class="comment">-- 只能获取到第一个，但是设置的话，则会将所有匹配到的都更改</span></p>
+                        <p>    $("div").html("&lt;span&gt;xxx&lt;/span&gt;"); <span class="comment">-- 将所有匹配到的div 元素的HTML 内容更新。</span></p>
                     </div>
-                    <p>2. text() -- 获取或者设置元素的文本内容</p>
-                    <p>3. attr() -- 获取或者设置元素的属性</p>
+                    <p>2. text() <span class="comment">-- 获取或者设置元素的文本内容</span></p>
+                    <p>3. attr() <span class="comment">-- 获取或者设置元素的属性</span></p>
                 </div>
                 <p><span class="linkStair">4.3 操作css 样式</span></p>
                 <div>
                     <p>1. css() 函数</p>
                     <div>
-                        <p>$("div").css("background-color") - 获取所匹配的div 元素中的第一个div 元素的背景颜色</p>
-                        <p>$("div").css("background-color", "red") - 设置背景色</p>
+                        <p>$("div").css("background-color") <span class="comment">- 获取所匹配的div 元素中的第一个div 元素的背景颜色</span></p>
+                        <p>$("div").css("background-color", "red") <span class="comment">- 设置背景色</span></p>
                     </div>
                     <p>2. hide() 函数</p>
                     <p>3. show() 函数</p>
-                    <p>4. toggle() 函数 -- 切换元素的显示状态，如果显示则切换为隐藏，如果是隐藏则切换为显示</p>
+                    <p>4. toggle() 函数 <span class="comment">-- 切换元素的显示状态，如果显示则切换为隐藏，如果是隐藏则切换为显示</span></p>
                 </div>
             </div>
 
