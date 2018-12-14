@@ -1,11 +1,11 @@
 /* 
- * 所有需要处理为超链接 的P 标签 都需要添加一个值为 "pStair" 的class 并且不能有 a 标签
- * 所有的这样的P 标签 都 需要紧接着一个DIV 标签 ，且不能有ID
+ * 所有需要处理为超链接的元素标签(Element)必须紧跟着一个DIV 标签元素
+ * 同时此Element 或者它的子元素至少有一个添加了class="linkStair"，且这个元素的内容将被直接处理成链接链接
  */
 
 var strDivPrevIdName = "divIdStair";    // 每一个需要展开或者隐藏的DIV ID 名前缀
 var strFuncName = "toggleDiv";          // 每一个需要展开或者隐藏的DIV 添加点击事件
-var strPStair = "pStair";               // 每一个需要展开或者隐藏的P 标签 的class 值
+var strLinkStair = "linkStair";         // 每一个需要展开或者隐藏的元素标签 的class 值
 var strDivStair = "divStair";           // 每一个需要展开或者隐藏的的DIV 添加统一的class 值 
 
 // 隐藏所有CLASS 的值 为 "divStair" 的div
@@ -13,7 +13,7 @@ function hiddenAllDivStair(curParentNode) {
     var divBossChilds = curParentNode.getElementsByTagName("div");
     for (var i = 0; i <divBossChilds.length; i++) {
         var theDiv = divBossChilds[i];
-        if (theDiv.className == "divStair") {
+        if (theDiv.className == strDivStair) {
             theDiv.style.display = "none";
         }
     }
@@ -54,38 +54,92 @@ function init(strDivIdRoot) {
 }
 
 // 对所有该有的超链接 进行初始化
+/*
+ * 1. Element(^DIV) + Element(DIV);
+ * 2. if (Element(^DIV).className == strLinkStair) 则整个Element(%DIV) 添加一个超链接;
+ * 3. else  and if (Element(^DIV).children().className == strLinkStair) 则添加children() 超链接;
+ */
 function initLink(arrChilds, strCurDivPrevIdName) {
     if (!arrChilds) {
         return true;
     }
 
+    // var len = arrChilds.length;
     for (var i = 0; i < arrChilds.length; i++) {
-        var strDivIdName_i = strCurDivPrevIdName + "_" + i;
+        var strDivDefaultIdName_i = strCurDivPrevIdName + "_" + i;
         var curNode = arrChilds[i];
         if (curNode.tagName == "DIV") {
-            initLink($(curNode).children(), strDivIdName_i);
-            continue;
-        }
-        if (curNode.className != strPStair) {
+            // 递归为每一个DIV 做判断，它下面的所有节点是否需要添加展开或者隐藏功能
+            initLink($(curNode).children(), strDivDefaultIdName_i);
             continue;
         }
 
-        var divNode = arrChilds[++i];
+        // assert(curNode.tagName != "DIV");    // 当前节点一定不是DIV 节点
+        var linkNodes = findLinkNode(curNode);
+        if (!linkNodes || linkNodes.length == 0) {
+            continue;
+        }
+
+        // 若当前节点存在符合条件的超链接节点，则检查它的蚂蚱的兄弟节点是否为DIV 节点
+        // 若是DIV 节点 ，则认定该DIV节点为当前节点的超链接节点
+        var divNode = arrChilds[i+1];
         if (divNode.tagName != "DIV") {
-            comtinu;
+            continue;
         }
 
-        var strHTML = curNode.innerHTML;
-        var strNewHTML = '<a href="JavaScript:void(0)" onclick="'
-            + strFuncName + '(' + "'" + strDivIdName_i + "'"
-            + ')">' + strHTML + '</a>';
+        var strDivIdName = strDivDefaultIdName_i;
+        if (divNode.id) {
+            strDivIdName = divNode.id;
+        }
 
-        curNode.innerHTML = strNewHTML;
+        for (var j = 0; j < linkNodes.length; j++) {
+            var linkNode = linkNodes[j];
+            var strHTML = linkNode.innerHTML;
+            var strNewLinkNode = '<a href="JavaScript:void(0)" onclick="'
+                + strFuncName + '(' + "'" + strDivIdName + "'"
+                + ')">' + strHTML + '</a>';
 
-        divNode.setAttribute("id", strDivIdName_i);
+            linkNode.innerHTML = strNewLinkNode;
+
+            // var linkANode = $(strNewLinkNode);
+            // $(linkNode).append(linkANode);
+        }
+
+        // divNode.setAttribute("id", strDivIdName);
+        divNode.id = strDivIdName;
         divNode.setAttribute("class", strDivStair);
-
-        // 递归为每一个DIV 做判断，它下面的所有节点是否需要添加展开或者隐藏功能
-        initLink($(divNode).children(), strDivIdName_i);
     }
+}
+
+// 指定节点元素是否为满足条件的超链接节点为，或者其子节点是否有满足条件的超链接节点
+function findLinkNode(curNode) {
+    var linkNodes = [];
+    if (hasLinkStairClass(curNode)) {
+        linkNodes.push(curNode);
+    } else {
+        var arrChilds = $(curNode).children();
+        if (arrChilds) {
+            for (var i = 0; i < arrChilds.length; i++) {
+                var ch = arrChilds[i];
+                if (hasLinkStairClass(ch)) {
+                    linkNodes.push(ch);
+                }
+            }
+        }
+    }
+
+    return linkNodes;
+}
+
+function hasLinkStairClass(curNode) {
+    if (curNode.className) {
+        var arrClasses = curNode.className.split(/[,\s]/); // 正则拆分子串
+        for (var i = 0; i < arrClasses.length; i++) {
+            if (arrClasses[i] == strLinkStair) {
+                return true;
+            }
+        }
+    }
+
+    return false;
 }
