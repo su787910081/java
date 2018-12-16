@@ -9,4 +9,44 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+  <servlet>
+    <description></description>
+    <display-name>ResponseDemo1</display-name>
+    <servlet-name>ResponseDemo1</servlet-name>
+    <servlet-class>com.tedu.response.ResponseDemo1</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ResponseDemo1</servlet-name>
+    <url-pattern>/ResponseDemo1</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ResponseDemo2</display-name>
+    <servlet-name>ResponseDemo2</servlet-name>
+    <servlet-class>com.tedu.response.ResponseDemo2</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ResponseDemo2</servlet-name>
+    <url-pattern>/ResponseDemo2</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ResponseDemo3</display-name>
+    <servlet-name>ResponseDemo3</servlet-name>
+    <servlet-class>com.tedu.response.ResponseDemo3</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ResponseDemo3</servlet-name>
+    <url-pattern>/ResponseDemo3</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ResponseDemo4</display-name>
+    <servlet-name>ResponseDemo4</servlet-name>
+    <servlet-class>com.tedu.response.ResponseDemo4</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ResponseDemo4</servlet-name>
+    <url-pattern>/ResponseDemo4</url-pattern>
+  </servlet-mapping>
 </web-app>

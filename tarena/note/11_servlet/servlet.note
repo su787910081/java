@@ -222,6 +222,213 @@ HTTP 协议
 
 
 
+==========================================================================================================================================================================================================================
+一、Request 对象
+    代表HTTP 请求的一个对象
+    浏览器向服务器发送一个请求，服务器在调用Servlet 的service 方法之前，会创建代表HTTP 请求的Request 对象，将所有的请求信息封装在Request 对象中。
+    1.1 Request 的继承结构
+        ServletRequest 接口  -- 通用的Request 接口，提供了一个Request 对象应该具有的功能
+            |
+            | -- HttpServletRequest 接口 -- 继承了ServletRequest 接口，在父接口的基础上HttpServletRequest 增加了一些和HTTP 协议的相关方法
+
+    1.2 Request 对象提供的功能
+        1.2.1 获取客户端基本信息、获取请求头信息
+            1). getRequestURL 方法 -- 用于获取发送请求的完整url  // http://localhost/first/RequestDemo1
+            2). getMethod 方法 -- 用于获取发送请求时使用的请求方式，这里只用GET 和POST 提交
+            3). getContextPath 方法 -- 用于获取WEB 应用对外访问的虚拟路径，这个方法非常重要。在开发中当需要书写WEB 应用的虚拟路径时，最好不要写死，而是通过此方法来动态获取。
+            4). getHeader(String name) 方法 // host: localhost
+        1.2.2 获取请求参数(*)
+            1). getParameter(String name); -- 通过请求参数的名字获取对应的参数值
+            2). getParameterValues();
+            3). getParameterMap();
+            4). getParameterNames();
+
+            * 请求参数的乱码问题
+                如果发送方式是POST 提交，还可以通过request 提供的方法来解决乱码: request.setCharacterEncoding("utf-8"); 怕行代码是通知服务器使用UTF-8 来接收请求实体内容中的数据。
+                由于POST 提交的参数刚才在请求实体内容中，所以这行代码可以解决POST 提交时产生乱码的问题
+                但是由于GET 提交 的参数在请求行中的请求资源路径后面拼接着，不在请求行中，所以这行代码对GET 提交产生的乱码不会起作用。
+        1.2.3 实现请求转发(*)
+            请求重定向: 实现资源的跳转
+            请求转发: 实现资源的跳转，并且是服务器内部的同一个WEB 应用内部资源的跳转
+                实现请求转发: 
+                    request.getRequestDispatcher("转到资源的URL 地址").forward(rquest, response);
+                    1). 创建一个RequestDemo4 servlet 接收浏览器的请求，将请求转给RequestDemo5 来处理，RequestDemo5 处理请求，将结果响应给浏览器.
+                        request.getRequestDispatcher("RequestDemo5").forward(request, response);
+                    2). RequestDemo5 处理请求，将结果响应给浏览器.
+                请求转的细节问题: 
+                    1). 在转发时，转发时书写的资源路径是WEB 应用的虚拟路径后面的路径。
+                    2). 在转发时，需要将代表请求的request 对象和代表响应的response 对象作为forward 方法的参数传递给被转发的资源。原因是不管转发多少次这些资源处理的请求和响应都是同一个。服务器针对同一个请求，只会创建一个request 对象和一个response对象，后面的资源在处理请求时又需要这两个对象，所以需要不断的传递这两个对象。
+                    3). 转发不能进行多次，但是可以多重转发(比如：Demo4 转发给Demo5 ，Demo5 处理不了，转给Demo6，Demo6 转发给Demo7).
+                    4). 如果在转发之前向response 缓冲区写入了数据，在转发时response 中的数据会被清空。
+                    5). 如果在转发之前向response 缓冲区写入了数据，并且强制性(response.flushBuffer())发送给了浏览器，这时转发将会失败。
+        1.2.4 作为域对象使用(*)
+            域对象: 如果一个对象具有一个可以被看见的范围，利用这个对象上的map 集合，可以在这个范围内实现数据的共享。
+                request 对象就是一个域对象，request 上提供了很多操作自身map 集合的方法。
+                域对象都有以下几个方法
+                request.setAttribute(String key, Object value);
+                request.getAttribute(String key);
+                request.removeAttribute(String key);
+                request.getAttributeNames();    // 获取域对象中所有属性的名字组成的枚举。
+            生命周期: 
+            作用范围: 
+            主要功能: 
+            需求: 创建两个Servlet RequestDemo6 RequestDemo7, 在RequestDemo6 中将请求转发给RequestDemo7。在转发时负责带参数到RequestDemo7 中，并接收打印在控制台上。
+                1). 创建两个Servlet;
+                2). 在RequestDemo6 中将请求转发给RequestDemo7;
+                3). 在RequestDemo6 中负责将参数带给RequestDemo7;
+                4). 在RequestDemo7 中获取参数并打印在控制台;
+        1.2.5 实现请求包含
+            请求包含是服务器内部资源合并的一种效果
+            假设浏览器发送请求访问服务器中的AServlet, AServlet 在处理请求的过程中，发现自己不能独立的来处理这次请求，需要另外一个Servlet 过来帮忙，这时可以在AServlet 中将BServlet 包含进来。然后由AServlet 和BServlet 共同来处理这次请求，AServlet 处理结果将会和BServlet 处理的结果合并在一起，一起响应给浏览器。
+            示例：编写三个Servlet 分别为AServlet、BServlet、CServlet，实现Servlet 中的doGet 方法来处理请求。在BServlet 中将AServlet 和CServlet 包含进来，共同来处理请求。
+            1). 创建三个Servlet; 
+            2). 编写三个Servlet 的doGet 方法，处理请求;
+            3). 在BServlet 中将AServlet 和CServlet 包含进来;
+            4). 测试：访问BServlet 查看效果;
+
+二、Response 对象
+    代表HTTP 响应对象，用来封装服务器将要发送给浏览器的响应信息。
+    1.1 继承结构
+        ServletResponse 接口 - 提供了一个 response 对象应该具有的功能
+            |
+            |-- HTTPServletResponse 接口，继承了ServletResponse 接口，并添加了很多HTTP 协议相关的方法
+
+    1.2 Response 提供的常用方法
+        状态行
+            HTTP/1.1 200 OK
+
+        若干响应头
+            key : value
+
+        响应实体内容
+            body
+
+        设置状态码的方法
+            setStatus
+        设置响应头的方法
+            setHeader
+        设置响应实体内容的方法
+            getOutputStream
+            getWrite
+
+    1.3 Response 对象提供的功能
+        1.3.1 向客户端发送数据   getOutputStream 与getWrite 是互斥的，不能同时使用
+            getOutputStream(字节流) 发中文数据时乱码解决方案: 将服务器与浏览器的编码都指定为同一个
+                response.setContentType("text/html;charset=utf-8");
+                response.getOutputStream().write("哈喽..response".getBytes("utf-8"));
+                response.setHeader("Content-Type", "text/html;charset=utf-8");  // 通知对端按utf-8 来处理编码
+            getWrite(字符流) 处理乱码
+                response.setContentType("text/html;charset=utf-8"); // 同时处理服务器与浏览器的编码问题
+                在我使用的过程中，如果这个编码设置在写数据的中间，则一样会出现乱码。必须要把它设置在开始部分。
+            注意点: 
+                1. 在一个请求中，getWrite和getOutputStream 不能同时使用，因为两个方法是互斥的，同时使用会抛异常;
+                2. 通过getOutputStream 和getWrite 获取到的流，使用完后不需要关闭，因为服务器会自动帮我们关闭;
+                3. 通过getWrite 和getOutputStream 这两个方法获取到的流，是指向response 缓冲区，而不是直接指向浏览器;
+
+        1.3.2 实现请求重定向
+            请求重定向: 可以实现资源的跳转
+            实现请求重定向: 通过302 状态码和location 响应头可以实现重定向
+                response.setStatus(302);
+                response.setHeader("location", request.getContextPath() + "/index.html");
+                等价于: response.sendRedirect("http://localhost:8080/second/index.html";
+            重定向的特点: 
+                两次请求，两次响应
+                request 对象不是同一个
+                地址栏会发生变化
+
+        1.3.3 实现定时刷新
+            通过refresh 头可以实现在多少秒之后跳转到指定的资源
+            实现定时刷新
+                response.setHeader("refresh", "3;url=" + request.getContextPath() + "/index.html");
+            两次请求，两次响应
+            request 对象不是同一个
+            地址栏会发生变化
+            和重定向的区别在于，重定向是立即发生跳转，而定时刷新是在指定多少秒之后发生跳转。并且在跳转之前，可以向浏览器发送响应，并维持一段时间。
+
+        总结: 
+            1). 三种资源跳转(请求转发、重定向、定时刷新)方式的区别; 
+                请求转发
+                    request.getRequestDispatcher("/index.html").forward(request, response);
+                    一次请求，一次转发(request 对象是同一个)
+                    地址栏不会发生变化
+                    转发只能在同一个WEB 应用内部的资源之间进行跳转，不能在不同的WEB 应用或者不同的虚拟主机之间进行跳转
+                重定向
+                    两次请求，两次响应(request 对象不是同一个)
+                    地址栏地址将会发生变化
+                    重定向既可以在同一个WEB 应用内部的资源之间进行跳转，也可以在不同的WEB 应用或者不同的服务器以及虚拟主机之间进行跳转
+                定时刷新
+                    两次请求，两次响应(request 对象不是同一个)
+                    地址栏会发生变化
+                    重定向既可以在同一个WEB 应用内部的资源之间进行跳转，也可以在不同的WEB 应用或者不同的服务器以及虚拟主机之间进行跳转
+                    定时刷新和重定向主要的区别在于，重定向是立即跳转，而定时刷新则是指定时间之后再进行跳转。并且在跳转之前，可以向浏览器发送响应数据并维持一段时间
+            2). 请求转发、重定向、定时刷新分别在什么情况下使用;
+                a). 如果是同一个WEB 应用内部资源的跳转，三种方式都可以做到。具体使用哪一种:
+                    i). 如果希望在跳转之后地址栏地址不变，这里只能使用请求转发;
+                    ii). 如果希望在跳转之后地址栏地址会发生变化，这里使用重定向或定时刷新;
+                    iii). 如果在跳转的过程中，希望带数据到目的地，这里只能使用请求转发;
+                    iv). 如果没有什么需求，仅仅是做一个跳转，推荐使用转;
+                b). 如果是不同的WEB 应用之间资源的跳转，只能使用重定向和定时刷新，具体使用哪一种: 
+                    i). 重定向是立即跳转，中间没有间隔，而定时刷新可以指定时间之后再进行跳转，而且在跳转之前还可以发送响应到客户端，并维持一段时间。因此如果需要指定多少时间之后再跳转，则可以使用定时刷新，如果跳转之前，
+
+        1.3.4 控制浏览器的缓存行为
+    	    // 通知浏览器不要缓存当前响应的资源
+    	    response.setDateHeader("Expires", -1); // 1970-01-01 + (-1)
+    	    response.setHeader("Cache-Control", "no-cache");
+
+    	    response.setDateHeader("Expires", System.currentTimeMillis() + 1000 * 3600 * 24);
+    	    response.setHeader("Cache-Control", "max-age=5");  // 优先级更高
+
+            不同的浏览器或者相同的浏览器的不同版本，或者是相同的浏览器相同版本做了不同的设置他们之间的缓存行为可能都是不同的。
+            如果我们希望浏览器能够缓存相关资源，或者缓存一段时间的数据
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
