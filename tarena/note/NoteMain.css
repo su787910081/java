@@ -20,6 +20,11 @@ p {
     text-indent: 2em;
 }
 
+/* 一般用来重置p 元素的行高 */
+.pHeight {
+	margin: 4px auto;
+}
+
 /* 文本注释的字体颜色  */
 .comment {
     color: #080;
