@@ -20,7 +20,7 @@ p {
     text-indent: 2em;
 }
 
-/* 一般用来重置p 元素的行高 */
+/* 用来重置p 元素的行高 */
 .pHeight {
 	margin: 4px auto;
 }
