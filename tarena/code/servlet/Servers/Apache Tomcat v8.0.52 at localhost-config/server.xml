@@ -124,7 +124,7 @@
              Note: The pattern used is equivalent to using pattern="common" -->
         <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs" pattern="%h %l %u %t &quot;%r&quot; %s %b" prefix="localhost_access_log" suffix=".txt"/>
 
-      <Context docBase="servlet_6th_jsp" path="/servlet_6th_jsp" reloadable="true" source="org.eclipse.jst.jee.server:servlet_6th_jsp"/></Host>
+      <Context docBase="servlet_6th_jsp" path="/servlet_6th_jsp" reloadable="true" source="org.eclipse.jst.jee.server:servlet_6th_jsp"/><Context docBase="jt_manage" path="/jt_manage" reloadable="true" source="org.eclipse.jst.jee.server:jt_manage"/></Host>
 	  
 	  <!-- 主机配置 -->
 	  <Host appBase="baidu" autoDeploy="true" name="www.baidu.com" unpackWARs="true">

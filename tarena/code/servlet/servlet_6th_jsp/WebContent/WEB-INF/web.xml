@@ -75,8 +75,17 @@
     <servlet-name>ServletDemo3</servlet-name>
     <url-pattern>/ServletDemo3</url-pattern>
   </servlet-mapping>
-  
   <listener>
-  	<listener-class>com.tedu.listener.MyServletContextListener</listener-class>
+    <listener-class>com.tedu.listener.MyServletContextListener</listener-class>
   </listener>
+  <servlet>
+    <description></description>
+    <display-name>ServletDemo555</display-name>
+    <servlet-name>ServletDemo555</servlet-name>
+    <servlet-class>com.tedu.servlet.ServletDemo555</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ServletDemo555</servlet-name>
+    <url-pattern>/ServletDemo555</url-pattern>
+  </servlet-mapping>
 </web-app>
