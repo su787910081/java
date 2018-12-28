@@ -36,20 +36,20 @@
 
 		<!-- 模版数据 -->
 		
-		<tr>
-			<td>10</td>
-			<td>三坑手机</td>
-			<td>电子数码</td>
-			<td>3000.0</td>
-			<td>
-				188
-			</td>
-			<td>三坑手机, 专业坑人三十年, 从未被超越...!!!</td>
-			<td>
-				<a id="delProd" href="#">删除</a> |
-				<a id="updProd" href="#">修改</a>
-			</td>
-		</tr>
+		<c:forEach items="${list}" var="prod">
+			<tr>
+				<td>${ prod.id }</td>
+				<td>${ prod.name }</td>
+				<td>${ prod.category }</td>
+				<td>${ prod.price }</td>
+				<td>${ prod.pnum }</td>
+				<td>${ prod.description }</td>
+				<td>
+					<a id="delProd" href="${pageContext.request.contextPath}/ProdDelServlet?pid=${prod.id}">删除</a>
+					<a id="updProd" href="${pageContext.request.contextPath}/ProdInfServlet?pid=${prod.id}">修改</a>
+				</td>
+			</tr>
+		</c:forEach>
 	</table>
 </body>
 </html>
