@@ -22,6 +22,38 @@
 			}
 		});
 		thd2.start();
+		
+	-- 实例内部类：
+		class Outer {
+			class WorkThread extends Thread {
+				@Override
+				public void run() {
+					Sysout.out.println(Outer.this);
+					Sysout.out.println(this);
+					while (true) {}
+				}
+			}
+		}
+		
+		使用: 
+		Outer o = new Outer();
+		o.new WorkThread();
+		
+		
+	-- 静态内部类: 
+		class Outer {
+			static class WorkThread extends Thread {
+				@Override
+				public void run() {
+					Sysout.out.println(Outer.this);
+					Sysout.out.println(this);
+					while (true) {}
+				}
+			}
+		}
+		
+		使用: 
+		new Outer.WorkThread();
 
 
 

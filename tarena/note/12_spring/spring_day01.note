@@ -1,0 +1,31 @@
+day01
+
+    XML 文件解析： dom4j、DOM 解析、SAX、PULL
+
+    反射机制: 
+    	Class.forname("java.util.Date").newInstance();
+
+    连接池:
+    	C3P0 非常小的连接池
+    	DRUID 阿里的连接池
+
+    MVC 架构应用
+    	Mode(业务层) - View(视图层) - Controller(控制层)
+
+    spring 是什么(框架:IOC,AOP、提供完整的解决方案)
+    spring 整合资源，提供完整的解决方案
+
+    spring ioc 全称 Inversion of Control, 被译为控制反转，是指程序中对象的获取方式发生反转，由最初的new 方式创建，转变为由第三方框架创建、注入(DI)，它降低了对象之间的耦合度。
+    spring 容器是IOC 机制的一种实现，同时IOC 也是spring 框架的基础和核心，它借助DI(Dependency Injection) 方式实现。
+
+    何为元数据?(描述数据的数据)
+        id    name  score       -- 所谓的元数据
+        1001   A     100
+
+        <name>A</name>      -- 标签就是所谓的元数据
+        <婚否>TRUE</婚否>
+
+    什么是IOC？
+        控制反转，由容器来创建对象，从容器来获取，由工厂来管理。
+        Spring Bean 容器
+
