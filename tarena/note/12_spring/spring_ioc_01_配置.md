@@ -100,7 +100,7 @@
 					<constructor-arg value="123456" type="java.lang.Integer"/>
 					<constructor-arg value="1000" type="int"/>
 				</bean>
-5. **单例、多例属性:** 默认情况下，多次获取一个bean 对象都是同一个bean 对象。如果要每次都是不同的对象，则需要用到scope 属性
+5. **<span style="color:red; background-color:#DDA0DD">单例、多例属性:</span>** 默认情况下，多次获取一个bean 对象都是同一个bean 对象。如果要每次都是不同的对象，则需要用到scope 属性
 	- `<bean id="helloService" class="beans.HelloService" scope="prototype" />`
 	- 如果是单例对象时，需要注意单例对象的线程安全问题，主要是对于类里面的一些实现。
 6. 给bean 对象设置初始化与销毁方法
@@ -239,4 +239,34 @@
 - Java 中常用的元数据表示形式？
 	1. XML
 	2. 注解
+
+
+
+
+### FAQ
+1. 何为Spring Bean 容器？
+	- 用于创建Bean 对象，管理Bean 对象的那个容器，我们称为Spring Bean 容器。
+	- `ClassPathXmlApplicationContext`
+2. SpringBean 容器与SpringIOC 容器有什么不同吗?
+	- SpringIOC 容器本质上指的就是SpringBean 容器;
+	- SpringBean 容器中最核心的一个机制是IOC 机制(控制反转)，所以有时候又将SpringBean 容器称之为SpringIOC;
+3. SpringIOC 如何理解？
+	- IOC 是Spring 中提供的一种控制反转<span style="color:red">机制</span>，目的是将我们项目中的对象依赖管理交给Spring 实现，以实现对象关系的解耦，提高程序的可扩展性;
+4. Spring DI(依赖注入) 如何理解？
+	- DI 是Spring 中的依赖注入机制，IOC 的实现需要借助这种机制。我们通常会这样理解，SpringBean 容器中的IOC 思想一种目标，DI 是实现这种思想的目标的手段。
+5. Spring 中配置bean 的方式有几种？
+	- 基于XML
+		> 优点: 代码侵入性小，每次修改只需要修改配置文件然后重启; <br />
+		> 缺点: 但是XML 方式的灵活性不太好 <br />
+	- 基于注解
+		> 优点：灵活性好；<br />
+		> 缺点：存在代码的侵入性(每次修改都需要添加代码处理)；<br />
+	> 提示：基于注解方式虽然具备一定的代码侵入性，但是这种侵入性属于声明式侵入性。这种侵入性在程序中是允许的，它属于弱侵入性。<br />
+6. Spring 中集合的注入的方式? (map, list, set)
+7. Spring 中依赖注入表达式的应用? #{key.fileKey}
+8. Spring 中修饰类的注解常用的有哪些？
+	- `@Controoler` 一般用于描述控制层对象
+	- `@Service` 一般用于描述业务层对象
+	- `@Repository` 一般用于描述数据层对象(dao)
+	- `@Component` 一般用于修饰其他组件
 
