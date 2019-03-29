@@ -12,11 +12,11 @@
 - spring-expression-4.3.9.RELEASE.jar
 
 ## Spring IOC
--  Spring IOC 是实现了控制反转功能的一个容器对象，它要通过这个对象实现对象之间依赖关系的管理，目的是实现对象之间解耦合。以提高程序的可维护及可扩展性。
+-  Spring IOC 是实现了控制反转功能的一个容器对象，它通过这个容器对象实现对象之间依赖关系的管理，目的是实现对象之间解耦合。以提高程序的可维护及可扩展性。
 -  Spring 中的IOC 功能如何实现?(借助DI：依赖注入)
 
 
-## spring 容器
+## spring Bean容器
 - Spring Bean 容器负责创建(底层根据元数据的描述与反射技术进行对象的创建)Bean 对象，并管理Bean 对象。
 - Spring 中提供了一个工厂，这个工厂的作用是根据配置信息创建对象。
 - Spring 中提供了一个容器，这个容器用于存储对象，以及管理对象之间的依赖关系
@@ -59,27 +59,29 @@
 			ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
 			ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
 	2. 获取我们需要的对象<br>
-		1. 默认情况下我们必须要有无参构造函数，如下示例<br>
-			xml 配置文件中配置的Date bean 对象<br>
-			`<bean id="date1" class="java.util.Date" />`<br />
-			- 直接获取对象，然后强转得到对象<br>
-				`Date date1 = (Date)ctx.getBeans("date1");`
-			- 直接指定类型，不使用强转<br>
-				`Date date2 = ctx.getBean("date1", Date.class);`
+		> &emsp;默认情况下我们必须要有无参构造函数，如下示例<br>
+		> &emsp;xml 配置文件中配置的Date bean 对象<br>
+		>> `<bean id="date1" class="java.util.Date" />`
+
+		> 直接获取对象，然后强转得到对象<br>
+		>> `Date date1 = (Date)ctx.getBeans("date1");`
+
+		> 直接指定类型，不使用强转<br>
+		>>`Date date2 = ctx.getBean("date1", Date.class);`
 	3. 释放资源<br>
-		`ctx.close();`
+		> `ctx.close();`
 - 抽象类对象的创建<br>
 	![Alt Text](./img/absctrct.jpg)<br>
 
 
 ## Spring 依赖注入，bean 对象的配置
 1. 直接通过类的构造方法
-	- `<bean id="date1" class="java.util.Date" />`
+	> `<bean id="date1" class="java.util.Date" />`
 2. 类的静态方法
-	- `<bean id="c2" class="java.util.Calendar" factory-method="getInstance" />`
+	> `<bean id="c2" class="java.util.Calendar" factory-method="getInstance" />`
 3. 通过类的实例方法
-	- 此方法依赖已存在的bean 对象"c2"
-	- `<bean id="date2" factory-bean="c2" factory-method="getTime" />`
+	> 此方法依赖已存在的bean 对象"c2"
+	>> `<bean id="date2" factory-bean="c2" factory-method="getTime" />`
 4. 使用带参构造函数构造bean 对象
 	- 按昭顺序给构造函数传入实参
 
@@ -89,7 +91,7 @@
 
 	- 多个参数的构造函数(*<span style="color: red">构造注入</span>*)
 		- 我们可以使用`index="0"` 来指定其实参的位置，**index 的值从0开始**。
-			- *一般情况下我们不会用index 来处理参数的位置。正常我们会按参数的定义的顺序来填写*
+			> *一般情况下我们不会用index 来处理参数的位置。正常我们会按参数的定义的顺序来填写*
 		- `value` 属性后面的值必须用双引号引起来，即使是整数也需要。
 		- 在`constructor` 标签中我们可以为属性指定其数据类型 **<span style="color:red">`type="int"`</span>**
 		
@@ -101,11 +103,12 @@
 					<constructor-arg value="1000" type="int"/>
 				</bean>
 5. **<span style="color:red; background-color:#DDA0DD">单例、多例属性:</span>** 默认情况下，多次获取一个bean 对象都是同一个bean 对象。如果要每次都是不同的对象，则需要用到scope 属性
-	- `<bean id="helloService" class="beans.HelloService" scope="prototype" />`
-	- 如果是单例对象时，需要注意单例对象的线程安全问题，主要是对于类里面的一些实现。
+	> &emsp;`<bean id="helloService" class="beans.HelloService" scope="prototype" />`<br>
+	> &emsp;如果是单例对象时，需要注意单例对象的线程安全问题，主要是对于类里面的一些实现。<br>
 6. 给bean 对象设置初始化与销毁方法
 	- 初始化与销毁bean 对象是，如果对象非singleton 时。其作用域不由spring 控制。所以一般我们给singleton 属性的对象设置。
 	- 当 `scope = prototype 时销毁方法将不会被调用，而初始化方法是可以被调用的。
+		> 问题是：既然多例的不由spring 来管理，那你把它给spring 做什么呢？所以一般情况下我们都不用多例这种模式。
 
 		`<bean id="helloService" class="beans.HelloService" scope="singleton" init-method="init" destroy-method="doDestroy" />`
 7. 依赖注入
@@ -124,13 +127,14 @@
 8. `ref` 属性，引入存在的bean 来作为一个方法的实参 <br>
 	![Alt Text](./img/ref.png)
 9. `autowire` 自动装配注入
-	- **<span style="color:red">实际开发中，这种方法不常用，因为会有不确定性。</span>**
+	- **<span style="color:red">实际开发中，这种方法不常用，因为会有很多不确定性。</span>**
 	- 默认值是`no` 不进行自动装配
 	- `autowire=byName`	按名称装配
 		- 由spring 获取bean 对象中的set 方法，取方法名set 单词后面的内容。
-			- bean 对象能成功创建
-			- 比如：类中有一个setDataSource 方法，则到spring 中去找`id="dataSource"` 对应的bean 对象，用此对象来注入。
-			- 但是如果类型不匹配，则有报错的危险。<br>
+			> &emsp;bean 对象能成功创建<br>
+			> &emsp;比如：类中有一个setDataSource 方法，则到spring 中去找`id="dataSource"` 对应的bean 对象，用此对象来注入。<br>
+			> &emsp;但是如果类型不匹配，则有报错的危险。<br>
+
 			![Alt Text](./img/byNameAutowire.jpg)
 		- 默认空参构造函数
 		- 找此类的所有set 方法，然后在spring 容器中匹配是否有此bean 对象id 相匹配的字符串，如果有就注入，否则不注入。
@@ -202,20 +206,6 @@
 - 引入其它spring bean 配置文件
 	- `<import resource="ioc.xml"/>`
 
-## Spring IOC 容器注解
-- Spring 运行时会扫描此包，包括子包中的.class 文件。然后将有`@Component, @Controller, @Service, @Repository` 注解描述的类构建成对象，然后存储到map, key 默认为类名，类名的第一个字母小写。
-	- `@Controoler` 一般用于描述控制层对象
-	- `@Service` 一般用于描述业务层对象
-	- `@Repository` 一般用于描述数据层对象(dao)
-	- `@Component` 一般用于修饰其他组件
-		- `<context:component-scan base-package="project" />` 对应下面的注解
-
-				package project.service;
-				import org.springframework.stereotype.Component;
-				
-				@Component
-				public class UserService {
-				}
 
 
 ## Spring Bean 对象的作用域
@@ -270,3 +260,17 @@
 	- `@Repository` 一般用于描述数据层对象(dao)
 	- `@Component` 一般用于修饰其他组件
 
+## Spring IOC 容器注解
+- Spring 运行时会扫描此包，包括子包中的.class 文件。然后将有`@Component, @Controller, @Service, @Repository` 注解描述的类构建成对象，然后存储到map, key 默认为类名，类名的第一个字母小写。
+	- `@Controoler` 一般用于描述控制层对象
+	- `@Service` 一般用于描述业务层对象
+	- `@Repository` 一般用于描述数据层对象(dao)
+	- `@Component` 一般用于修饰其他组件
+		- `<context:component-scan base-package="project" />` 对应下面的注解
+
+				package project.service;
+				import org.springframework.stereotype.Component;
+				
+				@Component
+				public class UserService {
+				}
