@@ -26,7 +26,7 @@
 
 		<?xml version="1.0" encoding="UTF-8"?>
 		<beans 
-		    default-lazy-init="default"
+		    default-lazy-init="true"
 		    xmlns="http://www.springframework.org/schema/beans" 
 		    xmlns:p="http://www.springframework.org/schema/p"
 		    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 

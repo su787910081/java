@@ -1,10 +1,10 @@
 # Spring 注解应用-系统组件
 
 ## Spring 中修饰类的注解常用的有哪些？
-- `@Controller` 一般用于描述控制层对象(**controller**)
-- `@Service` 一般用于描述业务层对象(**service**)
-- `@Repository` 一般用于描述数据层对象(**dao**)
-- `@Component` 一般用于修饰其他组件
+- `@Controller` 一般用于描述控制层对象(**控制层组件应用注解**)
+- `@Service` 一般用于描述业务层对象(**业务层组件应用注解**)
+- `@Repository` 一般用于描述数据层对象(**持久层组件应用注解\<dao\>**)
+- `@Component` 一般用于修饰其他组件(**通用注解**)
 > 这四种注解没有语法规则的特定使用地方，它们的使用地方都是一用行为约束。大家都这样默认处理。<br>
 > 这四个注解只要添加在了一个类的上面，就是告诉spring 我这个类交给你来管理了。<br>
 > 当然了除了有这个注解，我们还需要在配置文件中添加相对应包的配置标签。<br>
@@ -150,4 +150,9 @@
         > &emsp;在全用`@Resource(name="impl")` 注解的时候，它首先会去找带参构造函数对应的那个bean 对象。如果你将它注解在变量上面，而此时这个带参构造函数也存在。还有一个条件就是这个bean 对象不只一个的话。那么最终会报错，说是有两个对象，不清楚你要哪一个。<br>
         > &emsp;所以在这里如果你想把`@Resource(name="impl")` 注解在变量上面，那么你就不能添加对应的带参构造函数，以避免出错。<br>
 
+- 延迟加载策略注解`@Lazy(value=true)`
 
+        @Lazy(value=true)
+        @Repository
+        public class MessageDaoImpl implements MessageDao {
+        }
