@@ -18,7 +18,9 @@
 - `ctrl+n`
 	- 调出新建窗口
 	
-
+## 如何导入一个已存在的工程到eclipse
+> `file --> import...`<br>
+> 搜索出: `Existing Projects into Workspace`
 
 
 

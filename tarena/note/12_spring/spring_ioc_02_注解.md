@@ -68,6 +68,7 @@
 
 ## 组件依赖关系
 - 通过`@Autowired` 注解对存在依赖关系的Bean 对象进行注入
+- <span style="color:red">`@Autowired` 配合 `@qualifier` 一般应用在属性或者构造方法上</span>
     - `MessageDaoImpl` 是一个spring bean 对象
     - `MessageServiceImpl` 也是一个bean 对象，但它还有一个成员`private MessageDao msgDao;` 的值需要依赖spring bean 进行注入
         > class MessageDaoImpl
@@ -125,7 +126,7 @@
 
 - 通过`@Resource` 注解对存在依赖关系的Bean 对象进行注入
     > &emsp;使用`@Resource` 注解<br>
-    > &emsp;一般用在属性或set 方法上，用于为对象参数赋值<br>
+    > &emsp;<span style="color:red">一般用在属性或set 方法上，用于为对象参数赋值</span><br>
     > &emsp;spring 发现属性上有此注解时，先查找此类中有没有与此属性对应的set 方法，假如有就优先执行set 方法。<br>
     > &emsp;如果没有则直接通过反射为属性赋值。<br>
     > &emsp;如果spring 发现某个set 方法上有此注解，则会直接调用 set 方法为属性赋值。<br>
@@ -150,9 +151,29 @@
         > &emsp;在全用`@Resource(name="impl")` 注解的时候，它首先会去找带参构造函数对应的那个bean 对象。如果你将它注解在变量上面，而此时这个带参构造函数也存在。还有一个条件就是这个bean 对象不只一个的话。那么最终会报错，说是有两个对象，不清楚你要哪一个。<br>
         > &emsp;所以在这里如果你想把`@Resource(name="impl")` 注解在变量上面，那么你就不能添加对应的带参构造函数，以避免出错。<br>
 
+- `@Autowired` 与 `@Resource` 使用总结: 
+    > 位置使用说明
+    > 1) @Autowired/@Qualifier 应用在属性或构造方法上
+    > 2) @Resource一般应用在属性火set方法上.
+    > 
+    > 应用规则说明:
+    > 
+    > 通过@Autowired实现对象属性值的注入默认是按属性类型进行值的注入,假如: 类中提供了与此属性有对应关的系构造函数则执行这个构造函数直接对属性
+    > 
+    > 初始化,如果没有,底层通过反射获得属性类型以后,然后从容器中查找与此类型匹配的对象为其注入值.当按类型进行注入时,假如容器中存在多个类型相同的对象时可能会注入失败,此时还可以借助@Qualifier这个注解指定
+    > 
+    > 按名字进行注入(提示:在使用@Qualifier注解时前提必须已经使用了@Autowired注解),假如没有使用@Qualifier注解,此按默认属性名进行查找.
+    > 
+    > @Resource 註解一般用在屬性或set方法上用于为对象参数赋值
+    >
+    > 规则是假如这个注解中指定了名称,则只按注解中的name属性对应值查找对象,然后进行值得注入.假如注解中没有指定名称,先按变量名进行查找,假如没找到,则按类型查找.假如Spring发现某个set方法上有此注解,则会直接调用set方法为属性赋值.
+
 - 延迟加载策略注解`@Lazy(value=true)`
 
         @Lazy(value=true)
         @Repository
         public class MessageDaoImpl implements MessageDao {
         }
+
+- `@Value` 注解
+    > 从配置文件中取数据，以及表达式
