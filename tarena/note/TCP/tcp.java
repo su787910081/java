@@ -1,15 +1,15 @@
-IPµØÖ·£º
-	InetAddress ÀàµÄÊ¹ÓÃ
-		»ñÈ¡Ö÷»ú¶ÔÏó£ºInetAddress static InetAddress.getLocalHost();
-		Ö÷»úÃû£ºgetHostname()
+IPåœ°å€ï¼š
+	InetAddress ç±»çš„ä½¿ç”¨
+		è·å–ä¸»æœºå¯¹è±¡ï¼šInetAddress static InetAddress.getLocalHost();
+		ä¸»æœºåï¼šgetHostname()
 		getHostAddress()
 
-	Socket ºÍ ServerSocket Àà
-		ServerSocket ÓÃÓÚ·şÎñ¶Ë£¬Socket ÊÇ½¨Á¢ÍøÂçÊ¹ÓÃµÄ¡£
+	Socket å’Œ ServerSocket ç±»
+		ServerSocket ç”¨äºæœåŠ¡ç«¯ï¼ŒSocket æ˜¯å»ºç«‹ç½‘ç»œä½¿ç”¨çš„ã€‚
 
-	´«ÊäÊı¾İÊ¹ÓÃTLD Ğ­Òé£ºType Length Data 
+	ä¼ è¾“æ•°æ®ä½¿ç”¨TLD åè®®ï¼šType Length Data 
 
-	¶ÁĞ´Á÷£º
+	è¯»å†™æµï¼š
 		DataInputStream
 		DataOutputStream
 

@@ -1,1 +1,1 @@
-round(num) -- 取整四舍五入
+round(num) -- 鍙栨暣鍥涜垗浜斿叆

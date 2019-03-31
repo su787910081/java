@@ -1,108 +1,108 @@
-* mysql ´´Ê¼ÈË£¬ÓÖ¿ª·¢ÁËÒ»¸ömysql µÄ·ÖÖ§mariadb
-	¿ªÔ´ÉçÇøÒÑ¾­·ÅÆúÖ§³Ömysql, ×ªÎªÖ§³Ömariadb
+* mysql åˆ›å§‹äººï¼Œåˆå¼€å‘äº†ä¸€ä¸ªmysql çš„åˆ†æ”¯mariadb
+	å¼€æºç¤¾åŒºå·²ç»æ”¾å¼ƒæ”¯æŒmysql, è½¬ä¸ºæ”¯æŒmariadb
 
-* mysql °²×°
-	* °²×°mysql ÉçÇø°æ community
-	* °²×°mariadb 
-	* linux yum °²×° mariadb
+* mysql å®‰è£…
+	* å®‰è£…mysql ç¤¾åŒºç‰ˆ community
+	* å®‰è£…mariadb 
+	* linux yum å®‰è£… mariadb
 		yum -y install mariadb-server mariadb mariadb-devel
-		systemctl start mariadb   -- Æô¶¯
+		systemctl start mariadb   -- å¯åŠ¨
 
-* mysql µÇÂ¼
+* mysql ç™»å½•
 	mysql -h ip -p 3306 -u root -p
 
-	schema Êı¾İ¿âÖĞÒ»×é¶ÔÏóµÄ¼¯ºÏ£¬¼´Êı¾İ¿â
+	schema æ•°æ®åº“ä¸­ä¸€ç»„å¯¹è±¡çš„é›†åˆï¼Œå³æ•°æ®åº“
 
-* ½øÈëÊı¾İ¿â
+* è¿›å…¥æ•°æ®åº“
 	use test;
 	use db1;
 	show tables;
 
-* ´´½¨Êı¾İ¿â
+* åˆ›å»ºæ•°æ®åº“
 	Linux:
 		cat /var/lib/mysql/db1/db.opt
 	Windows:
-		mysql°²×°Ä¿Â¼\data
+		mysqlå®‰è£…ç›®å½•\data
 	create database xxx charset utf-8;
 	show databses;
-	* ²é¿´Êı¾İ¿âÅäÖÃÎÄ¼ş
-		ÅäÖÃÁ½ÏîÄÚÈİ£º
-			*) Êı¾İ¿âÊ¹ÓÃµÄÄ¬ÈÏ×Ö·û±àÂë
-			*) ×Ö·ûµÄÅÅĞò·½·¨ 
-				-- Ò»°ãÊ¹ÓÃ'gbk_chinses_ci' 'utf8_general_ci'
-				-- Ä¬ÈÏ±»Ñ¡Ôñ
-	* ²é¿´Êı¾İ¿âÖĞµÄÅÅĞò·½Ê½
+	* æŸ¥çœ‹æ•°æ®åº“é…ç½®æ–‡ä»¶
+		é…ç½®ä¸¤é¡¹å†…å®¹ï¼š
+			*) æ•°æ®åº“ä½¿ç”¨çš„é»˜è®¤å­—ç¬¦ç¼–ç 
+			*) å­—ç¬¦çš„æ’åºæ–¹æ³• 
+				-- ä¸€èˆ¬ä½¿ç”¨'gbk_chinses_ci' 'utf8_general_ci'
+				-- é»˜è®¤è¢«é€‰æ‹©
+	* æŸ¥çœ‹æ•°æ®åº“ä¸­çš„æ’åºæ–¹å¼
 		show collation like 'gbk%';
 		show collation like 'utf8\_%';
 
-* ĞŞ¸ÄÊı¾İ¿â
-	ĞŞ¸Ä±àÂë
+* ä¿®æ”¹æ•°æ®åº“
+	ä¿®æ”¹ç¼–ç 
 		alter database db1 charset gbk;
-	ĞŞ¸ÄÅÅĞò
+	ä¿®æ”¹æ’åº
 		alter database db1 collate gbk_bin;
 
-* ´´½¨±í
-	column/field ÁĞ¡¢×Ö¶Î
+* åˆ›å»ºè¡¨
+	column/field åˆ—ã€å­—æ®µ
 	
 	create database xxx charset utf-8;
 	use db1;
 	create table user(
-		name varchar(16), -- varchar ¿É±ä³¤×Ö·û£¬×î³¤16
+		name varchar(16), -- varchar å¯å˜é•¿å­—ç¬¦ï¼Œæœ€é•¿16
 		age int
-	) engine=innodb  -- myisam/innodb Ö»ÓĞÕâÁ½ÖÖÒıÇæ
-	charset=utf8	-- ¶Ô±íµ¥¶ÀÖ¸¶¨×Ö·ûÀàĞÍ
+	) engine=innodb  -- myisam/innodb åªæœ‰è¿™ä¸¤ç§å¼•æ“
+	charset=utf8	-- å¯¹è¡¨å•ç‹¬æŒ‡å®šå­—ç¬¦ç±»å‹
 	;
 
-* Êı¾İ¿âÄ¿Â¼ÖĞµÄ±íÎÄ¼ş
+* æ•°æ®åº“ç›®å½•ä¸­çš„è¡¨æ–‡ä»¶
 	Linux: /var/lib/mysql/db1
-	Windows: ÕÒµ½data\db1
+	Windows: æ‰¾åˆ°data\db1
 
-	ÎÄ¼ş£º
-		user.frm   		-- ±í½á¹¹ÎÄ¼ş
-		user.myd[ata]  	-- Êı¾İ´æ´¢ÎÄ¼ş
-		user.myi		-- Ë÷ÒıÎÄ¼ş(Ô¼Êø)
+	æ–‡ä»¶ï¼š
+		user.frm   		-- è¡¨ç»“æ„æ–‡ä»¶
+		user.myd[ata]  	-- æ•°æ®å­˜å‚¨æ–‡ä»¶
+		user.myi		-- ç´¢å¼•æ–‡ä»¶(çº¦æŸ)
 
-	* ´æ´¢ÒıÇæ
+	* å­˜å‚¨å¼•æ“
 		*) innodb
-			*) Ö§³ÖÊı¾İ¿â¸ß¼¶¹¦ÄÜ:
-				*) ÊÂÎñ
-				*) Íâ¼ü
+			*) æ”¯æŒæ•°æ®åº“é«˜çº§åŠŸèƒ½:
+				*) äº‹åŠ¡
+				*) å¤–é”®
 		*) myisam
-			*) Êı¾İ¿â´æ´¢»ù±¾¹¦ÄÜ
-			*) Ğ§ÂÊ·Ç³£¸ß
-	* ÔÚ±íÖĞ²åÈëÊı¾İ
-		insert into user values('ÕÅÈı', 23);
-		insert into user(age, name) values(24, 'ÀîËÄ');
-	* ĞŞ¸Ä±í
-		*) ĞŞ¸Ä±íÃû
+			*) æ•°æ®åº“å­˜å‚¨åŸºæœ¬åŠŸèƒ½
+			*) æ•ˆç‡éå¸¸é«˜
+	* åœ¨è¡¨ä¸­æ’å…¥æ•°æ®
+		insert into user values('å¼ ä¸‰', 23);
+		insert into user(age, name) values(24, 'æå››');
+	* ä¿®æ”¹è¡¨
+		*) ä¿®æ”¹è¡¨å
 			rename table user to tb_user;  -- user  ==>  tb_user
-		*) ĞŞ¸Ä±íµÄÊôĞÔ(ÒıÇæ¡¢×Ö·û±àÂë)
+		*) ä¿®æ”¹è¡¨çš„å±æ€§(å¼•æ“ã€å­—ç¬¦ç¼–ç )
 			alter table tb_user engine=myisam;
 			alter table tb_user charset=utf8;
-			show create table tb_user;	-- ½«Êı¾İ¿âµÄ½¨±íÓï¾äÏÔÊ¾³öÀ´
-		*) Ìí¼Ó×Ö¶Î
-			*) first  ¼ÓÔÚµÚÒ»¸ö
-			*) after  Ö¸¶¨¼ÓÔÚÄ³¸ö×Ö¶ÎÖ®ºó
-				alter table tb_user add id int first;  -- ÔÚ±ítb_user Ìí¼ÓÒ»¸öid ÁĞ£¬·ÅÔÚµÚÒ»ÁĞ
-				-- Í¬Ê±Ìí¼ÓÁ½¸öÁĞ£¬Ìí¼Óµ½±í×îºóÃæ
+			show create table tb_user;	-- å°†æ•°æ®åº“çš„å»ºè¡¨è¯­å¥æ˜¾ç¤ºå‡ºæ¥
+		*) æ·»åŠ å­—æ®µ
+			*) first  åŠ åœ¨ç¬¬ä¸€ä¸ª
+			*) after  æŒ‡å®šåŠ åœ¨æŸä¸ªå­—æ®µä¹‹å
+				alter table tb_user add id int first;  -- åœ¨è¡¨tb_user æ·»åŠ ä¸€ä¸ªid åˆ—ï¼Œæ”¾åœ¨ç¬¬ä¸€åˆ—
+				-- åŒæ—¶æ·»åŠ ä¸¤ä¸ªåˆ—ï¼Œæ·»åŠ åˆ°è¡¨æœ€åé¢
 				alter table tb_user add(
-					gender char(1),	-- ĞÔ±ğ(m,f)£¬¶¨³¤1¸ö×Ö·û
-					tel char(11)	-- µç»°
+					gender char(1),	-- æ€§åˆ«(m,f)ï¼Œå®šé•¿1ä¸ªå­—ç¬¦
+					tel char(11)	-- ç”µè¯
 				);
-		*) ĞŞ¸Ä×Ö¶Î
-			*) ĞŞ¸Ä×Ö¶ÎÃû
+		*) ä¿®æ”¹å­—æ®µ
+			*) ä¿®æ”¹å­—æ®µå
 				-- gender ==> sex
 				alter table tb_user change gender sex varchar(10);
-			*) ĞŞ¸Ä×Ö¶ÎÊı¾İÀàĞÍ
+			*) ä¿®æ”¹å­—æ®µæ•°æ®ç±»å‹
 				alter table tb_user modify tel varchar(20);
-			*) ĞŞ¸ÄË³Ğò
-				-- ½«Ò»¸ö×Ö¶ÎĞŞ¸Äµ½Ä³¸ö×Ö¶ÎµÄºóÃæ
+			*) ä¿®æ”¹é¡ºåº
+				-- å°†ä¸€ä¸ªå­—æ®µä¿®æ”¹åˆ°æŸä¸ªå­—æ®µçš„åé¢
 				alter table tb_user modify tel varchar(20) after age;
-		*) É¾³ı×Ö¶Î
+		*) åˆ é™¤å­—æ®µ
 			alter table tb_user drop sex;
-	* É¾³ı±í
+	* åˆ é™¤è¡¨
 		drop table tb_user;
-	* É¾³ı¿â
+	* åˆ é™¤åº“
 		drop database db1;
 
 

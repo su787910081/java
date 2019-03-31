@@ -1,48 +1,48 @@
-Êý×éµÄÉùÃ÷£º
+æ•°ç»„çš„å£°æ˜Žï¼š
 	int[] arr;
 	int arr[];
-	// Êý×éµÄÉùÃ÷Ö»ÓÐÉÏÃæµÄÁ½ÖÖ£¬³õÊ¼»¯Êý×éµÄÊ±ºò²»ÔÊÐíÔÚ³õÊ¼»¯µÄÊ±ºòÖ¸¶¨
-	int[4] arr;	// ÕâÑùµÄÉùÃ÷ÊÇ´íÎóµÄ¡£
-	int arr[4];	// ÕâÑùµÄÉùÃ÷Ò²ÊÇ´íÎóµÄ¡£
+	// æ•°ç»„çš„å£°æ˜Žåªæœ‰ä¸Šé¢çš„ä¸¤ç§ï¼Œåˆå§‹åŒ–æ•°ç»„çš„æ—¶å€™ä¸å…è®¸åœ¨åˆå§‹åŒ–çš„æ—¶å€™æŒ‡å®š
+	int[4] arr;	// è¿™æ ·çš„å£°æ˜Žæ˜¯é”™è¯¯çš„ã€‚
+	int arr[4];	// è¿™æ ·çš„å£°æ˜Žä¹Ÿæ˜¯é”™è¯¯çš„ã€‚
 
-Êý×éµÄ³õÊ¼»¯£º
-	int[] arr = { 10, 20, 30 };	// ¾²Ì¬³õÊ¼»¯
-	int[] arr = new int[2];	// ¶¯Ì¬³õÊ¼»¯	¸ø¶¨³¤¶Èµ«²»¸³ÐÞÊ¿£¬ÔªËØ»áÄ¬ÈÏ³õÊ¼»¯
-	int[] arr = new int[]{ 10, 20 };	// ¾²Ì¬³õÊ¼»¯
-	int[] arr = null;	// ½«Õâ¸öÊý×é³õÊ¼»¯Îªnull£¬È»ºó¾Í¿ÉÒÔÊ¹ÓÃ arr == null ½øÐÐÅÐ¶Ï
+æ•°ç»„çš„åˆå§‹åŒ–ï¼š
+	int[] arr = { 10, 20, 30 };	// é™æ€åˆå§‹åŒ–
+	int[] arr = new int[2];	// åŠ¨æ€åˆå§‹åŒ–	ç»™å®šé•¿åº¦ä½†ä¸èµ‹ä¿®å£«ï¼Œå…ƒç´ ä¼šé»˜è®¤åˆå§‹åŒ–
+	int[] arr = new int[]{ 10, 20 };	// é™æ€åˆå§‹åŒ–
+	int[] arr = null;	// å°†è¿™ä¸ªæ•°ç»„åˆå§‹åŒ–ä¸ºnullï¼Œç„¶åŽå°±å¯ä»¥ä½¿ç”¨ arr == null è¿›è¡Œåˆ¤æ–­
 
-Êý×éµÄ³¤¶È£º
-	arr.length Êý×éÓÐÒ»¸öÊôÐÔlength Ö±½ÓÊ¹ÓÃ¾Í¿ÉÒÔµÃµ½³¤¶È£¬·µ»ØÖµÊÇint ÀàÐÍ
+æ•°ç»„çš„é•¿åº¦ï¼š
+	arr.length æ•°ç»„æœ‰ä¸€ä¸ªå±žæ€§length ç›´æŽ¥ä½¿ç”¨å°±å¯ä»¥å¾—åˆ°é•¿åº¦ï¼Œè¿”å›žå€¼æ˜¯int ç±»åž‹
 
-foreach Ñ­»·
+foreach å¾ªçŽ¯
 	int[] ary = new int[10];
 	for (int m : ary) {
 	}
 
-Êý×éÅÅÐò
+æ•°ç»„æŽ’åº
 	import java.util.Arrays;
 	String[] ary = {"d", "a", "c", "b"};
 	Arrays.sort(ary);
 	Arrays.toString(ary);
 	
-Êý×éµÄ¸´ÖÆ
-	Arrays.copyOf() Êý×é¸´ÖÆ
-	// Êý×éµÄÀ©ÈÝ£¬´ËÀ©ÈÝ²¢²»ÊÇÕæÕýµÄÀ©ÈÝ
+æ•°ç»„çš„å¤åˆ¶
+	Arrays.copyOf() æ•°ç»„å¤åˆ¶
+	// æ•°ç»„çš„æ‰©å®¹ï¼Œæ­¤æ‰©å®¹å¹¶ä¸æ˜¯çœŸæ­£çš„æ‰©å®¹
 	ary = Arrays.copyOf(ary, 5);
 
 	System.arraycopy()
 		arraycopy(Object src, int srcPos, Object dest, int destPos, int length);
-		src - Ô´Êý×é
-		srcPos - Ô´Êý×éÖÐµÄÆðÊ¼Î»ÖÃ
-		dest - Ä¿±êÊý×é
-		destPos - Ä¿±êÊý×éÖÐµÄÆðÊ¼Î»ÖÃ
-		length - ¸´ÖÆµÄÔªËØ¸öÊý
+		src - æºæ•°ç»„
+		srcPos - æºæ•°ç»„ä¸­çš„èµ·å§‹ä½ç½®
+		dest - ç›®æ ‡æ•°ç»„
+		destPos - ç›®æ ‡æ•°ç»„ä¸­çš„èµ·å§‹ä½ç½®
+		length - å¤åˆ¶çš„å…ƒç´ ä¸ªæ•°
 
-¶àÎ¬Êý×é
-	·¢¸øÎ¬Êý×éÖÐµÄ¶þ×éÖÐµÄÔªËØ¸öÊý¿ÉÒÔ²»Í¬
+å¤šç»´æ•°ç»„
+	å‘ç»™ç»´æ•°ç»„ä¸­çš„äºŒç»„ä¸­çš„å…ƒç´ ä¸ªæ•°å¯ä»¥ä¸åŒ
 	int[][] arr1 = {{1, 1, 1}, {2, 2}, {3, 3, 3, 3}};
-		JAVA ÖÐÔÊÐíµÚ¶þÎ¬µÄ³¤¶È²»Ò»ÖÂ£¬ÓëC++ µÄÓÐºÜ´óµÄ²»Í¬¡£ÏñÉÏÒ»ÐÐÄÇÑùµÄ£¬Ã¿Ò»¸ö¶þÎ¬Êý×éµÄ¸öÊý¶¼ÊÇ²»Ò»ÑùµÄ¡£
-		Í¨¹ýÑ­»·±éÀú£¬¿ÉÒÔµÃµ½µÚÒ»¸ö¶þÎ¬Êý×éµÄ³¤¶ÈÊÇ3£¬ µÚ¶þ¸öÊÇ2£¬ µÚÈý¸öÊÇ4
+		JAVA ä¸­å…è®¸ç¬¬äºŒç»´çš„é•¿åº¦ä¸ä¸€è‡´ï¼Œä¸ŽC++ çš„æœ‰å¾ˆå¤§çš„ä¸åŒã€‚åƒä¸Šä¸€è¡Œé‚£æ ·çš„ï¼Œæ¯ä¸€ä¸ªäºŒç»´æ•°ç»„çš„ä¸ªæ•°éƒ½æ˜¯ä¸ä¸€æ ·çš„ã€‚
+		é€šè¿‡å¾ªçŽ¯éåŽ†ï¼Œå¯ä»¥å¾—åˆ°ç¬¬ä¸€ä¸ªäºŒç»´æ•°ç»„çš„é•¿åº¦æ˜¯3ï¼Œ ç¬¬äºŒä¸ªæ˜¯2ï¼Œ ç¬¬ä¸‰ä¸ªæ˜¯4
 
 
 
