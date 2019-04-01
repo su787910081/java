@@ -32,6 +32,15 @@
         public class Idgenerator {
             public IdGendenerator() { }
         }
+    > 使用
+
+        public static void main(String[] args) {
+            ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("beans.xml");
+
+            Idgenerator id = ctx.getBean("idgenerator", Idgenerator.class);
+
+            ctx.close();
+        }
 
 - 默认情况下注解Bean 对象是单例的`@Scope("singleton")`
     > 默认单例：`@Scope("singleton")` 单例时需要注意线程安全问题 <br />
@@ -86,7 +95,7 @@
         > spring 会查看有`@Autowired` 注解的带参构造函数，然后去容器中找与参数相对应类型的bean 对象，用此对象作为参数传入，通过此方法对其注入。<br>
         > **同样需要注意的是：如果相同类型的bean 对象有多个，则会失败。**
         >> 解决这个问题，可以利用`@qualifier`注解，指定一个名字<br>
-        >> <span style="color:yellow">其实这个`@Autowired` 不写也是可以的</span><br>
+        >> <span style="color:yellow">如果只有一个带参构造函数的话，这个`@Autowired` 不写也是可以的</span><br>
 
             @Autowired
             public MessageServiceImpl(MessageDao msgDao) {
@@ -177,3 +186,5 @@
 
 - `@Value` 注解
     > 从配置文件中取数据，以及表达式
+
+    
