@@ -28,6 +28,10 @@
 > 搜索出: `Existing Projects into Workspace`
 
 
+- 修改eclipse 中项目的JDK 版本
+	> 右键项目 -->  Build Path  -> Configure Build Path... <br>
+	> Libraries  -->  JRE System Library [xxx]  --> Edit... <br>
+
 
 
 
