@@ -27,8 +27,8 @@
 3. eclipse 中配置 Maven 项目
 
     > 1. windows --> preferences  -->  maven  --> installations  --> Add... 
+    ![Alt Text](./img/maven_install.jpg)
     > 2. windows --> preferences  -->  maven  --> User Settings  --> `GlobalSettings(open file):` --> Browse...  --> `D:\apache-maven-3.3.9\conf\settings.xml`
-    
     ![Alt Text](./img/maven_user_setting.jpg)
 
 
