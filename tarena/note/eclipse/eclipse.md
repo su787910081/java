@@ -29,11 +29,15 @@
 
 
 - 修改eclipse 中项目的JDK 版本
-	> 右键项目 -->  Build Path  -> Configure Build Path... <br>
-	> Libraries  -->  JRE System Library [xxx]  --> Edit... <br>
+	> `右键项目 -->  Build Path  -> Configure Build Path...`  --> `Libraries  -->  JRE System Library [xxx]  --> Edit...` <br>
 
+- 修改eclipse 中jsp 文件的默认编码格式
+	> `Window --> Preferences --> JSP Files` 
 
-
+- 项目有小红叉，但是找不到问题的时候。
+	1. `Project --> Clean...`  强制清理，然后让其重新编译
+	2. `右键项目  -->  Maven  -->  Update Project...  -->  Update dependencies  -->  Force project Of Snapshots/Release ` 强制更新依赖
+	3. `右键项目  -->  Run As  -->  Maven clean`; 将编译的目标文件全部清理，然后eclipse 将会重新为我们生成
 
 
 

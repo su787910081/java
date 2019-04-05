@@ -1,6 +1,6 @@
 
 
-# 切入点表达式: `bean`、`within`、execution
+# 切入点表达式: `bean`、`within`、`execution`
 ## bean 表达式
 - `@Before("bean(userServiceImpl)")`
     > bean 表达式中<span style="color:red">不允许指定方法</span>。bean 表达式中只能是bean 对象的ID；<br>
@@ -8,7 +8,7 @@
 - `@Before("bean(*Service*)")`
 
 ## within 表达式
-> within 表达式是针对包级别的，它可以指定到某一个级别的包。然后包含这个包及其子包中的业务类。<br>
+> within 表达式是针对类级别的，它可以指定到某一个级别的包。然后包含这个包及其子包中的业务类。<br>
 
 - 指定一个具体的类
     > `within(com.project.service.impl.UserServiceImpl)` <br>
@@ -47,7 +47,8 @@
 
 ---
 ## spring aop `Aspect` 中各个注解的一个执行顺序
-    > 下面的 `try ... catch ... finally ... ` 可以帮助我们理解其执行的位置。<br>
+
+- 下面的 `try ... catch ... finally ... ` 可以帮助我们理解其执行的位置。<br>
 
         method() {
             try {
@@ -61,7 +62,7 @@
             }
         }
 
-    1. 首先执行`@Before` 注解的方法，这个方法肯定会被执行; 
+    1. 首先执行`@Before` 注解的方法，这个方法肯定会被执行;
     2. 执行核心业务; 
     3. 执行`@After` 注解的方法；
     4. 执行`@AfterThrowing`  或者 `@AfterReturn`，它们两个是互斥关系。只有一个将会被执行。
@@ -72,7 +73,7 @@
 ## `@After` 后置(最终)通知
 > 在核心业务全部调用完成之后将被执行。<br>
 > 它不会被异常所影响<br>
-> 但是它会在`@AfterThrowing` 之前被执行，这点与`try ... catch ... finally ...` 块不同。<br>
+> 但是它会在`@AfterThrowing` 之前被执行，这点与`try ... catch ... finally ...` 块类似。<br>
 
 ## `@AfterReturn` 业务正常结束
 > 在核心业务return 语句正确调用之后执行<br>
