@@ -170,7 +170,7 @@
 					</list>
 				</property>
 			</bean>
-- map 的注入(`name="phones"` 中r phones 是bean 对象类中的一个成员属性)
+- map 的注入(`name="phones"` 中的 `phones` 是bean 对象类中的一个成员属性)
 	1. 普通类型数据
 	
 			<property name="phones">

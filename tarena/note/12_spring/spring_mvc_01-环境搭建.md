@@ -11,7 +11,7 @@
     > &emsp;右键`Deployment Descriptor: ...`  --> `Generate Deployment Descriptor Stub`<br>
     > &emsp;如果`src/main/webapp/` 下面有了一个`WEB-INF` 目录说明正确了<br>
 - 运行时环境以及编译环境
-    > &emsp; 右键项目  --> `Properties` -->  `Project Facets` --> 修改对象的版本  `Java`  -->  1.8<br>
+    > &emsp;右键项目  --> `Properties` -->  `Project Facets` --> 修改对象的版本  `Java`  -->  1.8<br>
     > &emsp;右键项目  --> `Properties` -->  `Targeted Runtimes` --> 选择一个`tomcat`  如果没有就创建一个<br>
 
 ## 项目依赖
