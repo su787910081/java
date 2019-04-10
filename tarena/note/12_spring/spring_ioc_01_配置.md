@@ -107,12 +107,12 @@
 	> &emsp;如果是单例对象时，需要注意单例对象的线程安全问题，主要是对于类里面的一些实现。<br>
 6. 给bean 对象设置初始化与销毁方法
 	- 初始化与销毁bean 对象是，如果对象非singleton 时。其作用域不由spring 控制。所以一般我们给singleton 属性的对象设置。
-	- 当 `scope = prototype 时销毁方法将不会被调用，而初始化方法是可以被调用的。
+	- 当 `scope = prototype` 时销毁方法将不会被调用，而初始化方法是可以被调用的。
 		> 问题是：既然多例的不由spring 来管理，那你把它给spring 做什么呢？所以一般情况下我们都不用多例这种模式。
 
 		`<bean id="helloService" class="beans.HelloService" scope="singleton" init-method="init" destroy-method="doDestroy" />`
 7. 依赖注入
-	- set 注入: 为指定bean 对象的属性配置相应的值，使用`property` 标签来指定，但是这个需要此类**<span style="color:red">必须对这个属性添加对应的set 方法</span>**
+	- set 注入: 为指定bean 对象的属性配置相应的值，使用`property` 标签来指定，但是这个需要此类<span style="color:red">**必须对这个属性添加对应的set 方法**</span>
 	- **所谓的set 注入也就是调用类对象的set 方法来对其属性进行赋值**
 
 			<bean id="dataSource" class="beans.DataSource">

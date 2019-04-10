@@ -56,6 +56,11 @@ TreeMap - 排序Map
 LinkedHasMap
 	使用Map接口的哈希表和链表实现，具有可预知的迭代顺序。此实现与HashMap的不同之处在于：LinkedHasMap 维护着一个双向循环链表。此链表定义了迭代顺序，该迭代顺序 通常就是存放 顺序。
 
+	// 1. 能按put 顺序存储对象
+	// 2. 能按LRU 算法记录最近最少访问的对象
+	// LinkedHashMap<String, Object> map 
+	//		= new LinkedHashMap<String, Object>(10, 0.75f, true);
+
 	案例：
 		HaspMap中元素取出顺序 和Put的顺序不一定一样。
 		LinkedHashMap 中元素取出顺序和put 的顺序一致。

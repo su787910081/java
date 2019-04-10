@@ -1,0 +1,148 @@
+
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box">
+			<div class="box-header">
+				<h3 class="box-title">Responsive Hover Table</h3>
+
+				<div class="box-tools">
+					<div class="input-group input-group-sm" style="width: 250px;">
+						<input type="text" name="table_search"
+							class="form-control pull-right" placeholder="Search">
+
+						<div class="input-group-btn">
+							<button type="submit" class="btn btn-default">
+								<i class="fa fa-search"></i>
+							</button>
+							<button type="button" class="btn btn-default btn-delete">删除</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- /.box-header -->
+			<div class="box-body table-responsive no-padding">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>name</th>
+							<th>note</th>
+							<th>createdTime</th>
+							<th>modifiedTime</th>
+						</tr>
+					</thead>
+
+					<tbody id="tBodyId">
+
+					</tbody>
+
+				</table>
+			</div>
+			<!-- /.box-body -->
+		</div>
+		<!-- /.box -->
+	</div>
+</div>
+
+<script type="text/javascript">
+	$(function() {
+		doGetObjects();
+		// $(".btn-delete").click(function(){});
+		$(".input-group-btn").on("click", ".btn-delete", doDeleteObject);
+	});
+	
+	// 实现角色的删除操作
+	function doDeleteObject() {
+		console.log("doDeleteObject");
+		// doDeleteObjectByString();
+		doDeleteObjectByArray();
+	}
+	
+	function doDeleteObjectByString() {
+		// 1. 获得选中的角色id
+		var checkedIds = getCheckedIds();
+		if (checkedIds.length == 0) {
+			alert("请选择一个");
+			return;
+		}
+		var params = {
+				"checkedIds": checkedIds.join(",")
+		};
+		console.log("params.checkedIds: " + params.checkedIds);
+		// 2. 将这些ID 值异步传输到服务器，执行删除动作
+		var url = "role/doDeleteObjectByString.do";
+		$.post(url, params, function(result){
+			console.log("result: ");
+			console.log(result);
+			alert("delete ok");
+		});
+	}
+	
+	function doDeleteObjectByArray() {
+		// 1. 获得选中的角色id
+		var checkedIds = getCheckedIds();
+		if (checkedIds.length == 0) {
+			alert("请选择一个");
+			return;
+		}
+		var params = {
+				"checkedIds": checkedIds
+		};
+		console.log(checkedIds);
+		console.log("params.checkedIds: " + params.checkedIds);
+		// 2. 将这些ID 值异步传输到服务器，执行删除动作
+		var url = "role/doDeleteObjectByArray.do";
+		$.post(url, params, function(result){
+			console.log("result: ");
+			console.log(result);
+			alert("delete ok");
+		});
+	}
+	
+	// 获取选中的角色列表中的记录
+	function getCheckedIds() {
+		var checkedIds = [];
+		// 迭代所有tbody 中名字为checkedId 的input 元素
+		$("tbody input[name='checkedId']").each(function(){
+			// $(thid) 就是指的被迭代的checkedId 元素
+			// 指定这个元素的checked 元素为true 
+			if ($(this).prop("checked")) {
+				// checkedIds += $(this).val() + " ";
+				checkedIds.push($(this).val());
+			}
+		});
+		
+		console.log("checkedIds: " + checkedIds);
+		
+		return checkedIds;
+	}
+
+	function doGetObjects() {
+		var url = "role/doFindPageObjects.do";
+		var params = {
+			"pageCurrent" : 1
+		};
+		$.getJSON(url, params, function(result) {
+			doSetTBody(result);
+		});
+	}
+
+	function doSetTBody(data) {
+		// debugger;
+		console.log("doSetTBody(data)");
+		console.log(data);
+
+		var tBody = $("#tBodyId");
+
+		for ( var i in data) {
+			var tr = $("<tr></tr>");
+			tr.append("<td>" + "<input type='checkbox' name='checkedId' value='" + data[i].id + "'/>" + "</td>");
+			tr.append("<td>" + data[i].name + "</td>");
+			tr.append("<td>" + data[i].note + "</td>");
+			tr.append("<td>" + data[i].createdTime + "</td>");
+			tr.append("<td>" + data[i].modifiedTime + "</td>");
+			tBody.append(tr);
+		}
+	}
+</script>
+

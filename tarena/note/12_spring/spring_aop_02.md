@@ -2,13 +2,14 @@
 
 # 切入点表达式: `bean`、`within`、`execution`
 ## bean 表达式
+> bean 表达式指定的是一个具体的bean 对象，范围比较中间层
 - `@Before("bean(userServiceImpl)")`
     > bean 表达式中<span style="color:red">不允许指定方法</span>。bean 表达式中只能是bean 对象的ID；<br>
 - `@After("bean(*ServiceImpl)")`
 - `@Before("bean(*Service*)")`
 
 ## within 表达式
-> within 表达式是针对类级别的，它可以指定到某一个级别的包。然后包含这个包及其子包中的业务类。<br>
+> within 表达式是针对类级别的，它可以指定到某一个级别的包。然后包含这个包及其子包中的业务类。它的范围就比较大，比较粗粒度。<br>
 
 - 指定一个具体的类
     > `within(com.project.service.impl.UserServiceImpl)` <br>
@@ -36,7 +37,7 @@
         }
 
 ## execution 表达式
-> 针对方法<br>
+> 针对方法，它可以直接指定到一个具体类下面的某个方法，它的范围就很小，比较细粒度。<br>
 - 指定任意返回类型，某个包下，任意方法，任意参数
     > `execution(* com.project.service..*.*(..))`
 - 指定参数类型
@@ -46,6 +47,7 @@
 
 
 ---
+
 ## spring aop `Aspect` 中各个注解的一个执行顺序
 
 - 下面的 `try ... catch ... finally ... ` 可以帮助我们理解其执行的位置。<br>

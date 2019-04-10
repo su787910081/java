@@ -71,11 +71,15 @@
 
 ## spring aop 的注解配置
 
-    <!-- 配置组件扫描(将对应包中指定类交给spring 管理) -->
-	<context:component-scan base-package="com.suyh"></context:component-scan>
-	
-	<!-- 使aspectj注解生效，自动为目标对象生成代理对象 -->
-    <aop:aspectj-autoproxy/>
+- 配置说明
+    > 配置组件扫描(将对应包中指定类交给spring 管理)
+
+        <context:component-scan base-package="com.suyh"></context:component-scan>
+
+    > 使aspectj注解生效，自动为目标对象生成代理对象
+
+        <aop:aspectj-autoproxy/>
+
 
 > 核心业务类<br>
 >> 通过`@Service` 添加到spring bean 中管理
@@ -87,14 +91,10 @@
 
     @Service
     public class MessageServiceImpl implements IMessageService {
-
-        public void helloMsg(String msg) {
-            System.out.println("MessageServiceImpl.helloMsg(): " + msg);
-        }
-
+        public void helloMsg(String msg) { }
     }
 
-> 扩展业务类<br>
+> 扩展业务类(横切面)<br>
 >> `@Component` 表示此组件由Spring对象管理 <br>
 >> `@Aspect` 用于定义切面（封装扩展功能） <br>
 >> `@Pointcut` 用于定义切入点（用于织入扩展功能的点） <br>

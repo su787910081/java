@@ -11,22 +11,20 @@
 > 最后在使用的时候需要构造`ClassPathXmlApplicationContext` 对象，通过此对象我们来取bean 对象。<br>
 
 ## 使用注解的配置
-- 我们在使用注解的时候也是需要添加配置文件的，不过注解的配置相对简单。
-    > 我们只需要在配置文件中添加一行如下的配置就可以了。
-    >> 它表示导入指定包`cn.tedu.project` 以及其子包下的所有注解的spring bean 对象
+- 我们在使用注解的时候也是需要添加配置文件的(也可以添加注解类而不使用配置文件)，不过注解的配置相对简单。
+    > 我们只需要在配置文件中添加一行如下的配置就可以了。 它表示导入指定包`cn.tedu.project` 以及其子包下的所有注解的spring bean 对象
 
         <context:component-scan base-package="cn.tedu.project"></context:component-scan>
 
 ## 系统组件
-- 注解Spring 的命名
-    > `@Component`: 默认id 为类名首字母小写 <br />
+- 注解方式spring bean 对象的命名
+    > spring 默认为指定的bean 对象添加id 为类名首字母小写的名字 <br />
 
         @Component
         public class Idgenerator {
             public IdGendenerator() { }
         }
-    > `@Component("idg")`: 如果要给这个注解的bean 自定义一个名字，则直接在后面添加一个字符串就可以了。 <br />
-    > 使用时: `ctx.getBean("idGenerator");` <br />
+    > 如果要给这个注解的bean 自定义一个名字，则直接在后面添加一个字符串就可以了。`@Component("idg")` <br />
 
         @Component("idg")
         public class Idgenerator {
@@ -36,9 +34,7 @@
 
         public static void main(String[] args) {
             ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("beans.xml");
-
             Idgenerator id = ctx.getBean("idgenerator", Idgenerator.class);
-
             ctx.close();
         }
 
@@ -50,7 +46,7 @@
         public class Idgenerator {
             public IdGendenerator() { }
         }
-    > 可以多例：`@Scope("prototype")` 但是多例时需要自己管理对象的生命周期 <br />
+    > 可以多例：`@Scope("prototype")` 但是多例时需要自己管理对象的生命周期，一般不使用 <br />
 
         @Component("idg")
         @Scope("prototype")
@@ -78,14 +74,11 @@
 ## 组件依赖关系
 - 通过`@Autowired` 注解对存在依赖关系的Bean 对象进行注入
 - <span style="color:red">`@Autowired` 配合 `@qualifier` 一般应用在属性或者构造方法上</span>
-    - `MessageDaoImpl` 是一个spring bean 对象
-    - `MessageServiceImpl` 也是一个bean 对象，但它还有一个成员`private MessageDao msgDao;` 的值需要依赖spring bean 进行注入
-        > class MessageDaoImpl
+    - `MessageDaoImpl` 是一个已存在的bean 对象
 
             @Repository
-            public class MessageDaoImpl implements MessageDao {
-            }
-        > class MessageServiceImpl
+            public class MessageDaoImpl implements MessageDao { }
+    - `MessageServiceImpl` 也是一个bean 对象，但它还有一个成员`private MessageDao msgDao;` 的值依赖bean(`MessageDaoImpl`)
 
             @Service
             public class MessageServiceImpl implements MessageService {
@@ -113,13 +106,11 @@
         >> 
 
             @Autowired
-            public MessageServiceImpl() {
-                System.out.println("MessageServiceImpl.MessageServiceImpl()");
-            }
+            public MessageServiceImpl() { }
     2. 直接在变量声明的上方添加`@Autowired` 注解
         > spring 会通过此注解去容器中查找类型匹配的bean 对象，利用反射机制为其注入值。<br>
         > **同样需要注意的是：如果相同类型的bean 对象有多个，则会失败。**
-        >> 解决这个问题，可以利用`@qualifier`注解，指定一个名字<br>
+        >> 解决这个问题，同样是利用`@qualifier`注解，指定一个名字<br>
         >> <span style="background-color:#00F">`@Qualifier` 注解需要依赖`@AutoWire` 注解，它不允许单独存在</span> <br>
         >> <span style="color: red; background-color:#DDA0DD">用得比较多的方法之一</span><br>
         >>> 如果有对应此变量的带参构造方法，那么spring 它会首先利用构造方法处理。当没有对应的带参构造时才会轮到下面的方式来进行注入。<br>

@@ -18,6 +18,10 @@
 	use db1;
 	show tables;
 
+* 引擎 engine
+	mysql 有两种引擎: innodb 、myisam
+	innodb 支持事务，myisam 不支持事务
+
 * 创建数据库
 	Linux:
 		cat /var/lib/mysql/db1/db.opt
@@ -49,7 +53,7 @@
 	create table user(
 		name varchar(16), -- varchar 可变长字符，最长16
 		age int
-	) engine=innodb  -- myisam/innodb 只有这两种引擎
+	) engine=innodb  -- myisam/innodb 只有这两种引擎  innodb 支持事务，myisam 不支持事务
 	charset=utf8	-- 对表单独指定字符类型
 	;
 

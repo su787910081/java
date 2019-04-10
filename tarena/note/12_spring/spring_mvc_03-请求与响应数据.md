@@ -149,8 +149,12 @@
             //  return "response";	// 请求转发
             return "redirect:doWithUI.do";	// 请求重定向
         }
-        
+
         @RequestMapping("doWithUI")
         public String withUI() {
             return "response";
         }
+
+
+
+

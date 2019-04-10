@@ -37,6 +37,32 @@
     > 这个配置文件与spring-bean 的配置文件是一样的。<br>
 
     1. 直接使用XML 配置方法(无注解形式)
+        > `spring_mvc.xml` 模板
+
+            <?xml version="1.0" encoding="UTF-8"?>
+            <beans xmlns="http://www.springframework.org/schema/beans"
+                xmlns:p="http://www.springframework.org/schema/p" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+                xmlns:aop="http://www.springframework.org/schema/aop" xmlns:mvc="http://www.springframework.org/schema/mvc"
+                xmlns:util="http://www.springframework.org/schema/util" xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+                xsi:schemaLocation="  
+                http://www.springframework.org/schema/beans   
+                http://www.springframework.org/schema/beans/spring-beans-4.3.xsd  
+                http://www.springframework.org/schema/mvc   
+                http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd   
+                http://www.springframework.org/schema/tx   
+                http://www.springframework.org/schema/tx/spring-tx-4.3.xsd   
+                http://www.springframework.org/schema/aop 
+                http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+                http://www.springframework.org/schema/util 
+                http://www.springframework.org/schema/util/spring-util-4.3.xsd
+                http://www.springframework.org/schema/data/jpa 
+                http://www.springframework.org/schema/data/jpa/spring-jpa-1.3.xsd
+                http://www.springframework.org/schema/context
+                http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+            </beans>
+            
         > `spring_mvc.xml` 配置文件以及相关说明
 
             <!-- 将我们自己写的一个Controller的一个派生类交给Spring 进行管理 -->
@@ -56,6 +82,7 @@
                 ${prefix} + viewName + ${suffix}  ==> /WEB-INF/pages/hello.jsp
             -->
             <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+                <!-- 自动给后面action的方法return的字符串加上前缀和后缀，变成一个 可用的url地址 -->
                 <property name="prefix" value="/WEB-INF/pages/"></property>
                 <property name="suffix" value=".jsp"></property>
             </bean>

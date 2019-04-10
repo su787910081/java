@@ -30,6 +30,8 @@
                  */
 
                 $("input[name='item']").each(function (i) {
+                    // $(this) 是被迭代到的这个item 元素
+                    // 现在较新的使用 $(this).prop 来代替 $(this).attr
                     var isCheck = $(this).attr("checked");
                     $(this).attr("checked", !isCheck);
                     return true;
