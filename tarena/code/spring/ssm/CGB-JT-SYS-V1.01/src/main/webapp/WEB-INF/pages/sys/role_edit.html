@@ -1,0 +1,111 @@
+
+<!-- Horizontal Form -->
+<div class="box box-info" id="load-role-div-id">
+	<div class="box-header with-border">
+		<h3 class="box-title">添加角色</h3>
+	</div>
+	<!-- /.box-header -->
+	<!-- form start -->
+	<form class="form-horizontal">
+		<div class="box-body">
+			<div class="form-group">
+				<label for="nameid" class="col-sm-2 control-label">名称</label>
+
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="nameid"
+						placeholder="名称">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="noteid" class="col-sm-2 control-label">备注</label>
+
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="noteid"
+						placeholder="备注">
+				</div>
+			</div>
+		</div>
+		<!-- /.box-body -->
+		<div class="box-footer">
+			<button type="button" class="btn btn-default btn-cancel">取消</button>
+			<button type="button" class="btn btn-info pull-right btn-ok">提交</button>
+		</div>
+		<!-- /.box-footer -->
+	</form>
+</div>
+
+<script type="text/javascript">
+	$(function() {
+		$(".box-footer")
+		.on("click", ".btn-cancel", doCancel)
+		.on("click", ".btn-ok", doSaveOrUpdate);
+		
+		var id=$(".container-fluid").data("id");
+		console.log("id=" + id);
+		
+		if (id) {
+			doFindObjectById(id);
+		}
+	});
+	
+	function doFindObjectById(id) {
+		var url = "role/doFindObjectById.do";
+		var params = {
+				"id": id
+		};
+		$.getJSON(url, params, function(result) {
+			doInitEditForm(result);
+		});
+	}
+
+	function doInitEditForm(entity) {
+		console.log("doInitEditForm(entity)");
+		console.log(entity);
+		console.log(entity.name);
+		$("#nameid").val(entity.name);
+		$("#noteid").val(entity.note);
+	}
+	
+	function doCancel() {
+		$(".container-fluid").load("role/listUI.do");
+		// 删除
+		// $(".container-fluid").data("id", '');
+		$(".container-fluid").removeData("id");
+	}
+	
+	function doSaveOrUpdate() {
+		console.log("doSaveOrUpdate");
+		var params = getFormData();
+		console.log("params: " + params);
+		console.log(params);
+		
+		var id=$(".container-fluid").data("id");
+		var url;
+		if (id) {
+			url = "role/doUpdateObject.do";
+		} else {
+			url = "role/doSaveObject.do"; 
+		}
+
+		$.post(url, params, function(result) {
+			alert(result);
+			$(".container-fluid").load("role/listUI.do");
+		});
+
+		// $(".container-fluid").data("id", '');
+		$(".container-fluid").removeData("id");
+	}
+
+	function getFormData() {
+		var params = {
+				"name": $("#nameid").val(),
+				"note": $("#noteid").val()
+		};
+
+		return params;
+	}
+</script>
+
+
+
+

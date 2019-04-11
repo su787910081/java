@@ -15,6 +15,8 @@
 								<i class="fa fa-search"></i>
 							</button>
 							<button type="button" class="btn btn-default btn-delete">删除</button>
+							<button type="button" class="btn btn-default btn-add">添加</button>
+							<button type="button" class="btn btn-default btn-update">修改</button>
 						</div>
 					</div>
 				</div>
@@ -29,6 +31,7 @@
 							<th>note</th>
 							<th>createdTime</th>
 							<th>modifiedTime</th>
+							<th>operator</th>
 						</tr>
 					</thead>
 
@@ -48,7 +51,14 @@
 	$(function() {
 		doGetObjects();
 		// $(".btn-delete").click(function(){});
-		$(".input-group-btn").on("click", ".btn-delete", doDeleteObject);
+		$(".input-group-btn")
+		.on("click", ".btn-delete", doDeleteObject)
+		.on("click", ".btn-add,.btn-update", doLoadEditPage);
+		// $("#tBodyId").on("click", ".btn-primary", doDeleteRow);
+		
+		// 在tBodyId 中反到 ".btn-delete-row" 对象，添加一个click 事件。
+		$("#tBodyId")
+		.on("click", ".btn-delete-row", doDelete);
 	});
 	
 	// 实现角色的删除操作
@@ -56,6 +66,35 @@
 		console.log("doDeleteObject");
 		// doDeleteObjectByString();
 		doDeleteObjectByArray();
+	}
+	
+	function doLoadEditPage() {
+		console.log("doLoadEditPage");
+		var title;
+		var okContent;
+		if ($(this).hasClass("btn-add")) {
+			title = "添加角色";
+			okContent = "保存";
+		} else {
+			title = "修改角色";
+			okContent = "修改";
+			
+			var checkedIds = getCheckedIds();
+			if (checkedIds.length != 1) {
+				alert("必须选择一个");
+				return ;
+			}
+
+			// 在这个元素上面绑定一个"id" 值
+			$(".container-fluid").data("id", checkedIds[0]);
+		}
+
+		var url = "role/editUI.do";
+		$(".container-fluid").load("role/editUI.do", function() {
+			// 页面加载成功之后，将标题修改
+			$(".box-title").html(title);
+			$(".btn-ok").html(okContent);
+		});
 	}
 	
 	function doDeleteObjectByString() {
@@ -72,9 +111,7 @@
 		// 2. 将这些ID 值异步传输到服务器，执行删除动作
 		var url = "role/doDeleteObjectByString.do";
 		$.post(url, params, function(result){
-			console.log("result: ");
-			console.log(result);
-			alert("delete ok");
+			afterDeleteObjects(result, checkedIds);
 		});
 	}
 	
@@ -93,10 +130,15 @@
 		// 2. 将这些ID 值异步传输到服务器，执行删除动作
 		var url = "role/doDeleteObjectByArray.do";
 		$.post(url, params, function(result){
-			console.log("result: ");
-			console.log(result);
-			alert("delete ok");
+			afterDeleteObjects(result, checkedIds);
 		});
+	}
+	
+	function afterDeleteObjects(result, checkedIds) {
+		console.log("result: ");
+		console.log(result);
+		console.log(checkedIds);
+		alert("delete ok");
 	}
 	
 	// 获取选中的角色列表中的记录
@@ -128,21 +170,70 @@
 	}
 
 	function doSetTBody(data) {
-		// debugger;
+		//debugger;
 		console.log("doSetTBody(data)");
 		console.log(data);
 
 		var tBody = $("#tBodyId");
+		
+		// 清空原有数据
+		tBody.empty();
 
 		for ( var i in data) {
 			var tr = $("<tr></tr>");
+			tr.data("id", data[i].id);	// 添加一个ID值
 			tr.append("<td>" + "<input type='checkbox' name='checkedId' value='" + data[i].id + "'/>" + "</td>");
 			tr.append("<td>" + data[i].name + "</td>");
 			tr.append("<td>" + data[i].note + "</td>");
 			tr.append("<td>" + data[i].createdTime + "</td>");
 			tr.append("<td>" + data[i].modifiedTime + "</td>");
+			tr.append("<td><button type='button' class='btn btn-primary btn-delete-row'>删除</button></td>");
+			
 			tBody.append(tr);
 		}
+	}
+	
+	function doDeleteRow(btn) {
+		console.log("doDeleteRow");
+		$(btn).parents("tr").remove();
+	}
+
+	function doDelete() {
+		console.log("doDelete");
+		var tr = $(this).parents("tr");
+
+		var id = tr.data("id");
+		console.log(id);
+		
+		var url ="role/doDeleteObject.do";
+		var params = {
+			"id": id	
+		};
+		$.getJSON(url, params, function(result) {
+			if (result == 1) {
+				console.log("remove row(" + id + ")");
+				tr.remove();
+			}
+		});
+	}
+	
+	function doModifyObject() {
+		console.log("doModifyObject");
+		
+		var checkedIds = getCheckedIds();
+		if (checkedIds.length != 1) {
+			alert("必须选择一个对象");
+			return ;
+		}
+
+		var url = "role/findObjectById.do";
+		var params = {
+				"id": checkedIds[0]
+		};
+		$.getJSON(url, params, function(result) {
+			console.log("doFindObjectById.do result");
+			console.log(result);
+		});
 	}
 </script>
 

@@ -25,10 +25,23 @@ public class SysRoleController {
 	public String listUI() {
 		return "sys/role_list.html";
 	}
+	
+	@RequestMapping("editUI")
+	public String editUI() {
+		return "sys/role_edit.html";
+	}
 
 	@RequestMapping("doRoleTable")
 	public String doRoleTable() {
 		return "sys/role_table.html";
+	}
+
+	@RequestMapping("doDeleteObject")
+	@ResponseBody
+	public int doDeleteObject(Integer id) {
+		System.out.println("SysRoleController.doDeleteObject()");
+		System.out.println(id);
+		return sysRoleService.deleteObject(id);
 	}
 
 	@RequestMapping(value = "doDeleteObjectByString")
@@ -37,13 +50,8 @@ public class SysRoleController {
 		System.out.println("SysRoleController.doDeleteObjectByString()");
 		System.out.println("checkedIds: " + checkedIds);
 		String[] arrIds = checkedIds.split(",");
-		System.out.println(Arrays.toString(arrIds));
-		for (String str : arrIds) {
-			System.out.println(str);
-		}
-		
 		sysRoleService.deleteObjects(arrIds);
-		return "delete ok";
+		return "delete ok by String";
 	}
 
 	@RequestMapping(value = "doDeleteObjectByArray",method = RequestMethod.POST)
@@ -51,8 +59,8 @@ public class SysRoleController {
 	public String doDeleteObjectByArray(@RequestParam(value = "checkedIds[]")String[] checkedIds) {
 		System.out.println("SysRoleController.doDeleteObjectByArray()");
 		System.out.println("checkedIds: " + Arrays.toString(checkedIds));
-		System.out.println(checkedIds);
-		return "delete ok";
+		sysRoleService.deleteObjects(checkedIds);
+		return "delete ok by array";
 	}
 
 	@RequestMapping("doFindPageObjects")
@@ -67,11 +75,31 @@ public class SysRoleController {
 		}
 		return list;
 	}
+	
+	@RequestMapping("doFindObjectById")
+	@ResponseBody
+	public SysRole doFindpageObject(String id) {
+		return sysRoleService.findObjectById(id);
+	}
 
 	@RequestMapping("doRoleList")
 	public String doRoleList() {
 		System.out.println("SysRoleController.doRoleList()");
 		return "suyh/roleList.jsp";
+	}
+	
+	@RequestMapping("doSaveObject")
+	@ResponseBody
+	public String doSaveObject(SysRole entity) {
+		sysRoleService.saveObject(entity);
+		return "save ok";
+	}
+	
+	@RequestMapping("doUpdateObject")
+	@ResponseBody
+	public String doUpdateObject(SysRole entity) {
+		
+		return "update ok";
 	}
 
 }

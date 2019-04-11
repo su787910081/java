@@ -12,23 +12,23 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 public class DateJsonSerializer extends JsonSerializer<Date> {
 
 	/***
-	 * 1. Õâ¸ö·½·¨ºÎÊ±µ÷ÓÃ£¿
-	 * ½«¶ÔÏó×ª»»ÎªJSON ´®Ê±
-	 * ¼ÙÈçÔÚ¶ÔÏóµÄ¶ÔÓ¦µÄGET ·½·¨ÉÏÊ¹ÓÃÁË 
+	 * 1. è¿™ä¸ªæ–¹æ³•ä½•æ—¶è°ƒç”¨ï¼Ÿ
+	 * å°†å¯¹è±¡è½¬æ¢ä¸ºJSON ä¸²æ—¶
+	 * å‡å¦‚åœ¨å¯¹è±¡çš„å¯¹åº”çš„GET æ–¹æ³•ä¸Šä½¿ç”¨äº† 
 	 * @JsonSerializer(using=DataJsonSerializer.class)
-	 * 2. Õâ¸ö·½·¨ÖĞµÄ²ÎÊı¶¼ÊÇÊ²Ã´º¬Òå£¿
-	 * 2.1 value: Òª×ª»»µÄ¶ÔÏó
-	 * 2.2 gen: json Êı¾İ×ª»»Æ÷
-	 * 2.3 serializers ĞòÁĞ»¯Ìá¹©Õß
+	 * 2. è¿™ä¸ªæ–¹æ³•ä¸­çš„å‚æ•°éƒ½æ˜¯ä»€ä¹ˆå«ä¹‰ï¼Ÿ
+	 * 2.1 value: è¦è½¬æ¢çš„å¯¹è±¡
+	 * 2.2 gen: json æ•°æ®è½¬æ¢å™¨
+	 * 2.3 serializers åºåˆ—åŒ–æä¾›è€…
 	 */
 	@Override
 	public void serialize(Date value, JsonGenerator gen, SerializerProvider serializers)
 			throws IOException, JsonProcessingException {
-		// ÈÕÆÚ¸ñÊ½×ª»»Æ÷
+		// æ—¥æœŸæ ¼å¼è½¬æ¢å™¨
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:SS");
-		// ×ª»»ÈÕÆÚ¶ÔÏó
+		// è½¬æ¢æ—¥æœŸå¯¹è±¡
 		String dateStr = sdf.format(value);
-		// ½«´Ë×Ö·û´®Ğ´µ½json ´®ÖĞ
+		// å°†æ­¤å­—ç¬¦ä¸²å†™åˆ°json ä¸²ä¸­
 		gen.writeString(dateStr);
 	}
 }
