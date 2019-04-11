@@ -108,7 +108,7 @@
 
 - `load` 函数应用
 
-    > jquery 中的load函数一般用于在某个位置异步加载某个url页面,
+    > jquery 中的load函数一般用于在某个位置异步加载某个url页面,load 函数异步加载新的内容，后续内容会替换原有内容
 
     > 语法: `load(url,[data],[callback])`
     > 1)	`url` 表示远程一个地址
