@@ -134,8 +134,7 @@
 			> &emsp;bean 对象能成功创建<br>
 			> &emsp;比如：类中有一个setDataSource 方法，则到spring 中去找`id="dataSource"` 对应的bean 对象，用此对象来注入。<br>
 			> &emsp;但是如果类型不匹配，则有报错的危险。<br>
-
-			![Alt Text](./img/byNameAutowire.jpg)
+			>> ![Alt Text](./img/byNameAutowire.jpg)
 		- 默认空参构造函数
 		- 找此类的所有set 方法，然后在spring 容器中匹配是否有此bean 对象id 相匹配的字符串，如果有就注入，否则不注入。
 	- `autowire=byType` 按类型装配
@@ -245,13 +244,15 @@
 4. Spring DI(依赖注入) 如何理解？
 	- DI 是Spring 中的依赖注入机制，IOC 的实现需要借助这种机制。我们通常会这样理解，SpringBean 容器中的IOC 思想一种目标，DI 是实现这种思想的目标的手段。
 5. Spring 中配置bean 的方式有几种？
-	- 基于XML
-		> 优点: 代码侵入性小，每次修改只需要修改配置文件然后重启; <br />
-		> 缺点: 但是XML 方式的灵活性不太好 <br />
-	- 基于注解
-		> 优点：灵活性好；<br />
-		> 缺点：存在代码的侵入性(每次修改都需要添加代码处理)；<br />
-	> 提示：基于注解方式虽然具备一定的代码侵入性，但是这种侵入性属于声明式侵入性。这种侵入性在程序中是允许的，它属于弱侵入性。<br />
+	> - 基于XML
+	>> 优点: 代码侵入性小，每次修改只需要修改配置文件然后重启; <br />
+	>> 缺点: 但是XML 方式的灵活性不太好 <br />
+	> - 基于注解
+	>> 优点：灵活性好；<br />
+	>> 缺点：存在代码的侵入性(每次修改都需要添加代码处理)；<br />
+
+	- 提示：
+		> 基于注解方式虽然具备一定的代码侵入性，但是这种侵入性属于声明式侵入性。这种侵入性在程序中是允许的，它属于弱侵入性。<br />
 6. Spring 中集合的注入的方式? (map, list, set)
 7. Spring 中依赖注入表达式的应用? #{key.fileKey}
 8. Spring 中修饰类的注解常用的有哪些？
@@ -262,15 +263,14 @@
 
 ## Spring IOC 容器注解
 - Spring 运行时会扫描此包，包括子包中的.class 文件。然后将有`@Component, @Controller, @Service, @Repository` 注解描述的类构建成对象，然后存储到map, key 默认为类名，类名的第一个字母小写。
-	- `@Controoler` 一般用于描述控制层对象
-	- `@Service` 一般用于描述业务层对象
-	- `@Repository` 一般用于描述数据层对象(dao)
-	- `@Component` 一般用于修饰其他组件
-		- `<context:component-scan base-package="project" />` 对应下面的注解
-
-				package project.service;
-				import org.springframework.stereotype.Component;
-				
-				@Component
-				public class UserService {
-				}
+	> - `@Controoler` 一般用于描述控制层对象
+	> - `@Service` 一般用于描述业务层对象
+	> - `@Repository` 一般用于描述数据层对象(dao)
+	> - `@Component` 一般用于修饰其他组件
+	>>	- `<context:component-scan base-package="project" />` 对应下面的注解
+	>>>		package project.service;
+	>>>		import org.springframework.stereotype.Component;
+	>>>		
+	>>>		@Component
+	>>>		public class UserService {
+	>>>		}

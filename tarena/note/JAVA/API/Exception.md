@@ -34,3 +34,5 @@
     3. 如果的`finally` 块中有return 语句，那么 `try` 块中的return 将不会被执行。
     4. 如果业务代码中的异常，并且`finally` 块中有return 语句的话。那么这个`catch` 块中的`throw` 语句将不会被抛出了。
         > 这样做的话，`catch` 块中的`throw` 语句就被巧妙的跳过了。
+
+

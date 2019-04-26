@@ -7,50 +7,40 @@
 ## mybatis 配置
 
 - 核心配置文件`mybatis-config.xml`
-    > XML 依赖规则
-
-        <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
-
-    > 开发环境配置 <span style="color:red">**注意`configuration` 是根标签**</span>
-
-        <configuration>
-            <environments default="development">
-                <environment id="development">
-                    <transactionManager type="JDBC" />
-                    <dataSource type="POOLED">
-                        <property name="driver" value="com.mysql.jdbc.Driver" />
-                        <property name="url" value="jdbc:mysql:///test" />
-                        <property name="username" value="root" />
-                        <property name="password" value="password" />
-                    </dataSource>
-                </environment>
-            </environments>
-        </configuration>
-
-    > 添加`mapper` 配置 <span style="color:red">**注意`configuration` 是根标签**</span>
-
-        <configuration>
-            <mappers><mapper resource="mapper/SysUserMapper.xml" /></mappers>
-        </configuration>
-
-    <a name="aliase"></a>
-    > 为`mapper` 配置中的类<span style="color:red">**配置别名**</span>
-
-    >> 为某一个类添加别名 <span style="color:red">**注意`configuration` 是根标签**</span>: 
-    
-        <configuration>
-            <typeAliases>
-                <typeAlias type="com.project.sys.entity.SysUser" alias="sysUser"/>
-            </typeAliases>
-        </configuration>
-
-    >> 为某一个包下所有类添加别名: 默认别名为类首字母小写 <span style="color:red">**注意`configuration` 是根标签**</span>
-
-        <configuration>
-            <typeAliases>
-                <package name="com.project.sys.entity"/>
-            </typeAliases>
-        </configuration>
+    > - XML 依赖规则
+    >>      <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+    > - 开发环境配置 <span style="color:red">**注意`configuration` 是根标签**</span>
+    >>      <configuration>
+    >>          <environments default="development">
+    >>              <environment id="development">
+    >>                  <transactionManager type="JDBC" />
+    >>                  <dataSource type="POOLED">
+    >>                      <property name="driver" value="com.mysql.jdbc.Driver" />
+    >>                      <property name="url" value="jdbc:mysql:///test" />
+    >>                      <property name="username" value="root" />
+    >>                      <property name="password" value="password" />
+    >>                  </dataSource>
+    >>              </environment>
+    >>          </environments>
+    >>      </configuration>
+    > - `mapper` 配置
+    >> 添加`mapper` 配置 <span style="color:red">**注意`configuration` 是根标签**</span>
+    >>>     <configuration>
+    >>>         <mappers><mapper resource="mapper/SysUserMapper.xml" /></mappers>
+    >>>     </configuration>
+    > - <a name="aliase"></a>`mapper` 配置中的类<span style="color:red">**配置别名**</span>
+    >> 1. 为某一个类添加别名 <span style="color:red">**注意`configuration` 是根标签**</span>: 
+    >>>     <configuration>
+    >>>         <typeAliases>
+    >>>             <typeAlias type="com.project.sys.entity.SysUser" alias="sysUser"/>
+    >>>         </typeAliases>
+    >>>     </configuration>
+    >> 2. 为某一个包下所有类添加别名: 默认别名为类首字母小写 <span style="color:red">**注意`configuration` 是根标签**</span>
+    >>>     <configuration>
+    >>>         <typeAliases>
+    >>>             <package name="com.project.sys.entity"/>
+    >>>         </typeAliases>
+    >>>     </configuration>
 
 - `mapper` 映射配置文件`mapper/SysUserMapper.xml`
     > 依赖规则
@@ -133,6 +123,7 @@
     >>> 如果我们需要将表中的自增长的ID 值取回保存在对象中，那么我们需要用到`insert` 标签中的`useGeneratedKeys="true" keyProperty="id"` 属性<br>
     >>> `useGeneratedKeys="true"` 表示要使用自增长的id<br>
     >>> `keyProperty="id"` 表示要将自增长的id 值赋值给`sysUser` 对象的`id` 属性<br>
+    >>> 前提是数据库需要支持自增长的ID
 
         <mapper namespace="com.project.sys.dao.SysUserDao">
             <insert id="insertObject" parameterType="sysUser"
@@ -226,59 +217,39 @@
         > 我们可以为我们的SQL 语句拼接一个列名，或者传入SQL 语句中多个参数时，我们需要为这些参数添加映射关系。通过注解`@Param("...")`
 
         > 注意'#'与'$' 之间的<span style="color:red">**区别**</span>
-
         >> SQL 语句
-
-            select * from sys_users where phone=#{ph} order by ${columnName} desc
-
+        >>>     select * from sys_users where phone=#{ph} order by ${columnName} desc
         >> 接口方法
-
-            import org.apache.ibatis.annotations.Param;
-
-            List<SysUser> findUsers(@Param("columnName") String colName, @Param("ph") String phone);
-        
+        >>>     import org.apache.ibatis.annotations.Param;
+        >>>
+        >>>     List<SysUser> findUsers(@Param("columnName") String colName, @Param("ph") String phone);
         >>> 上面的注解`@Param("columnName")` 就表示定义了一个参数，名为: columnName<br>
-
         >>> 在SQL 语句中我们就可以使用`${columnName}` 来取到这个对应的参数值了<br>
 
 
-## SQL 代码段的复用
-
-    <sql id="orderBy">
-            order by ${columnName}
-    </sql>
-    <select id="findUsers" resultType="sysUser">
-            select * from sys_users
-            <include refid="orderBy"/>
-    </select>
 
 ## Mybatis 的日志配置及应用
 
 - 配置
-    > 添加log4j 依赖
-
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>1.2.17</version>
-        </dependency>
-
-    > 定义一个`log4j.properties`配置文件放在类路径（例如maven项目的resource目录）
-
-        log4j.rootLogger=INFO,stdout
-        # 输出到控制台
-        log4j.appender.stdout=org.apache.log4j.ConsoleAppender
-        log4j.appender.stdout.layout=org.apache.log4j.PatternLayout
-        log4j.appender.stdout.layout.ConversionPattern=%d [%-5p] %c - %m%n
-
-        log4j.logger.com.mybatis3=DEBUG
-        # 指定根包为："com.project"
-        log4j.logger.com.project=DEBUG
-
-    > 然后在mybatis核心的配置文件(`mybatis-config.xml`)中添加此日志配置
-
-		<!-- name="logImpl" 为约定值  value="log4j" 对应文件名 -->
-		<setting name="logImpl" value="log4j"/>
+    > 1. 添加log4j 依赖
+    >>      <dependency>
+    >>          <groupId>log4j</groupId>
+    >>          <artifactId>log4j</artifactId>
+    >>          <version>1.2.17</version>
+    >>      </dependency>
+    > 2. 定义一个`log4j.properties`配置文件放在类路径（例如maven项目的resource目录）
+    >>      log4j.rootLogger=INFO,stdout
+    >>      # 输出到控制台
+    >>      log4j.appender.stdout=org.apache.log4j.ConsoleAppender
+    >>      log4j.appender.stdout.layout=org.apache.log4j.PatternLayout
+    >>      log4j.appender.stdout.layout.ConversionPattern=%d [%-5p] %c - %m%n
+    >>
+    >>      log4j.logger.com.mybatis3=DEBUG
+    >>      # 指定根包为："com.project"
+    >>      log4j.logger.com.project=DEBUG
+    > 3. 然后在mybatis核心的配置文件(`mybatis-config.xml`)中添加此日志配置
+    >>		<!-- name="logImpl" 为约定值  value="log4j" 对应文件名 -->
+    >>		<setting name="logImpl" value="log4j"/>
 
 
 ## 缓存
@@ -296,17 +267,15 @@
     > 二级缓存是基于`SqlSessionFactory` 的，它默认是被关闭的。
 
     > 如果想要打开二级缓存，则需要在核心配置文件(`mybatis-config.xml`)中添加配置
-
-        <settings>
-            <setting name="cacheEnabled" value="true" />
-        </settings>
+    >>      <settings>
+    >>          <setting name="cacheEnabled" value="true" />
+    >>      </settings>
     > 然后再我们的`mapper` 配置文件中添加相应配置。
     >> 1. `eviction="LRU"` 使用LRU 算法, 最近最少访问的优先清理; 
     >> 2. `flushInterval="60000"` 刷新时间(单位: ms); 
     >> 3. `size="512"` 缓存大小(512字节);
     >> 4. `readOnly="true"` 只读;
-
-        <cache eviction="LRU" flushInterval="60000" size="512" readOnly="true"/>
+    >>>     <cache eviction="LRU" flushInterval="60000" size="512" readOnly="true"/>
 
 - 假如希望将来的某个时候,命名空间中共享相同的缓存配置和实例，可以借助cache-ref 元素来引用另外一个缓存。
 
@@ -315,56 +284,163 @@
 
 ## 动态SQL
 
-- if 元素
+- `if` 元素
+    - 说明: 
+        > 这里我们需要注意的是，在`<if test="phone != nulland phone!=’’">`这里面的`phone`， 它只认识dao 接口中方法通过注解`@Param("phone")` 指定的名称，所以必须要加这个注解。
 
-        <select id="findUsers" resultType="sysUser">
-            SELECT * FROM SYS_USERS WHERE id >10
-            <if test="phone != nulland phone!=’’">
-                AND phone like #{phone}
-            </if>
-            <if test="username != null and username !=''">
-                AND username like concat("%",#{username},"%")
-            </if>
-        </select>
+    - 示例: 
+        >       <select id="findUsers" resultType="sysUser">
+        >           SELECT * FROM SYS_USERS WHERE id >10
+        >           <if test="phone != nulland phone!=’’">
+        >               AND phone like #{phone}
+        >           </if>
+        >           <if test="username != null and username !=''">
+        >               AND username like concat("%",#{username},"%")
+        >           </if>
+        >       </select>
 
-- where 元素
-    > where 元素用于定义查询条件,并且可以去除空格或者是and,or等不符合语法要求的字符.
+- `choose` 组合 `choose ... when ... otherwise`
+    - 说明:
+        > 动态SQL 中没有`if ... else ...` 这种语法，它可以用`choose ... when ... otherwise ...` 来代替
 
-    > 添加where 条件，并将第一个判断，去掉前面的and 
+    - 示例: 
+        >       <insert id="insertObject" parameterType="sysRole">
+        >           insert into sys_roles(id, name, note, createdTime, modifiedTime, createdUser, modifiedUser) 
+        >           values(null, #{name}, #{note}, now(), now(), 
+        >           <choose>
+        >               <when test="createdUser == null || createdUser == ''">
+        >                   'admin',
+        >               </when>
+        >               <otherwise>
+        >                   #{createdUser}, 
+        >               </otherwise>
+        >           </choose>
+        >           <choose>
+        >               <when test="modifiedUser == null || modifiedUser == ''">
+        >                   'admin'
+        >               </when>
+        >               <otherwise>
+        >                   #{modifiedUser}
+        >               </otherwise>
+        >           </choose>
+        >           )
+        >       </insert>
+- `where` 元素
+    - 说明: 
+        > where 元素用于定义查询条件,并且可以去除空格或者是and,or等不符合语法要求的字符.
 
-        <select id="findUsers" resultType="sysUser">
-            SELECT * FROM SYS_USERS
-            
-            <where>
-                <if test="id != null">
-                    and id>#{id}
-                </if>
-                <if test="phone != null">
-                    and phone like #{phone}
-                </if>
-                <if test="username != null and username !=''">
-                    AND username like concat("%",#{username},"%")
-                </if>
-            </where>
-        </select>
+    - 示例: 
+        > 添加where 条件，并将第一个判断，去掉前面的and 
+        >>      <select id="findUsers" resultType="sysUser">
+        >>          SELECT * FROM SYS_USERS
+        >>          <where>
+        >>              <if test="id != null">
+        >>                  and id>#{id}
+        >>              </if>
+        >>              <if test="phone != null">
+        >>                  and phone like #{phone}
+        >>              </if>
+        >>              <if test="username != null and username !=''">
+        >>                  AND username like concat("%",#{username},"%")
+        >>              </if>
+        >>          </where>
+        >>      </select>
 
-- foreach 元素
-    > foreach用于迭代mybatis找那个的多个参数数据. 例如根据多个id的值删除多个元素.
-
-    > 定义接口方法
-
-        int deleteObject(@Param("ids") String[] ids);
+- `set` 元素
+    - 说明: 
+        > set 元素用于定义更新字段，并且可以去除多于的','
     
-    > 定义映射sql
+    - 示例: 
+        > 注意每一个if 条件里面最后的',' 不能少，如果是最后一个，系统会帮我们把最后的',' 给去除掉的。
+		>>      update sys_users 
+		>>      <set>
+		>>      	   <if test="username != null and username != ''">
+		>>      	   	username=#{username},
+		>>      	   </if>
+		>>      	   <if test="email != null and email != ''">
+		>>      	   	email=#{email},
+		>>      	   </if>
+		>>      	   <if test="modifiedUser != null and modifiedUser != ''">
+		>>      	   	modifiedUser=#{modifiedUser}, 
+		>>      	   </if>
+		>>      	   <if test="mobile != null and mobile != ''">
+		>>      	   	mobile=#{mobile},
+		>>      	   </if>
+		>>      	   modifiedTime=now()
+		>>      </set>
+		>>      where id=#{id}
 
-        <delete id="deleteObjectById">
-            delete from sys_users where id in
-            <foreach collection="ids" open="(" close=")" separator="," item="it">
-                #{it}
-            </foreach>
-        </delete>
+- `foreach`元素
+    - 说明: 
+        > foreach用于迭代mybatis找那个的多个参数数据. 例如根据多个id的值删除多个元素.
+
+    - 示例: 
+        > 接口方法:
+        >>      int deleteObject(@Param("ids") String[] ids);
+        > 映射sql:
+        >>      <delete id="deleteObjectById">
+        >>          delete from sys_users where id in
+        >>          <foreach collection="ids" open="(" close=")" separator="," item="it">
+        >>              #{it}
+        >>          </foreach>
+        >>      </delete>
+        > 效果: 
+        >>      delete from sys_users where id in (1, 2, 3, 4)
+
+        > 接口方法:
+        >>      int insertObject(@Param("userId") Integer userId, @Param("roleIds") Integer[] roleIds);
+        > 映射sql:
+        >>      <insert id="insertObject">
+        >>          insert into sys_roles_users(user_id, role_id) values
+        >>          <foreach collection="roleIds" separator="," item="it">
+        >>              (#{userId}, #{it})
+        >>          </foreach>
+        >>      </insert>
+        > 效果: 
+        >>      insert into sys_roles_users(user_id, role_id) values (1, 1), (1, 2)
 
 
+
+- sql 元素
+    - 这个元素的功能就是SQL 代码的复用。我们可以先声明一段SQL 代码，并为它指定一个ID，然后在需要这段代码的地方利用这个ID 来将其插入到我们的SQL 代码中。
+
+        > 1. 声明一段SQL 代码
+        >>      <sql id="whereSqlId">
+        >>          <where>
+        >>              <if test="name != null and name != ''">
+        >>                  name like concat("%", #{name}, "%")
+        >>              </if>
+        >>          </where>
+        >>      </sql>
+        > 2. 使用上面声明 的SQL代码.
+        >> 使用: `<include refid="whereSqlId" />`
+        >> - 比如：查询当前页记录
+        >>>     <select id="findPageObjects" resultType="sysRole">
+        >>>         select * from sys_roles
+        >>>         <include refid="whereSqlId" />
+        >>>         order by createdTime desc
+        >>>         limit #{startIndex}, #{pageSize}
+        >>>     </select>
+        >> - 比如： 统计记录数
+        >>>     <select id="getRowCount" resultType="int">
+        >>>         select count(*) from sys_roles
+        >>>         <include refid="whereSqlId" />
+        >>>     </select>
+
+
+
+- 动态SQL 实例
+
+## SQL 示例
+
+- 返回一个`List` 对象
+
+    > dao 层接口
+    >>      List<Integer> findObjectByUserId(Integer userId);
+    > sql
+    >>      <select id="findObjectByUserId" resultType="integer">
+    >>          select role_id from sys_roles_users where user_id=#{userId}
+    >>      </select>
 
 
 

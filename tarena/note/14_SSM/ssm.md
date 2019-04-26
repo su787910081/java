@@ -21,6 +21,15 @@
     - `web.xml`
     - 测试环境
 4. 数据库连接池(DRUID)
+
+        <bean id="druidDataSource" class="com.alibaba.druid.pool.DruidDataSource"
+            init-method="init" destroy-method="close">
+            <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+            <property name="url" value="jdbc:mysql:///jt_sys" />
+            <property name="username" value="root" />
+            <property name="password" value="suyunfei" />
+        </bean>
+
 5. mybatis 配置
 6. 添加mapper 配置
 7. 对应的mapper 接口

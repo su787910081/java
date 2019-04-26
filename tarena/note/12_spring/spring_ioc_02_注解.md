@@ -1,42 +1,43 @@
 # Spring 注解应用-系统组件
 
 ## Spring 中修饰类的注解常用的有哪些？
-- `@Controller` 一般用于描述控制层对象(**控制层组件应用注解**)
-- `@Service` 一般用于描述业务层对象(**业务层组件应用注解**)
-- `@Repository` 一般用于描述数据层对象(**持久层组件应用注解\<dao\>**)
-- `@Component` 一般用于修饰其他组件(**通用注解**)
-> 这四种注解没有语法规则的特定使用地方，它们的使用地方都是一用行为约束。大家都这样默认处理。<br>
-> 这四个注解只要添加在了一个类的上面，就是告诉spring 我这个类交给你来管理了。<br>
-> 当然了除了有这个注解，我们还需要在配置文件中添加相对应包的配置标签。<br>
-> 最后在使用的时候需要构造`ClassPathXmlApplicationContext` 对象，通过此对象我们来取bean 对象。<br>
+- Spring bean 常用注解
+    > - `@Controller` 一般用于描述控制层对象(**控制层组件应用注解**)
+    > - `@Service` 一般用于描述业务层对象(**业务层组件应用注解**)
+    > - `@Repository` 一般用于描述数据层对象(**持久层组件应用注解\<dao\>**)
+    > - `@Component` 一般用于修饰其他组件(**通用注解**)
+- 注解说明
+    > - 这四种注解没有语法规则的特定使用地方，它们的使用地方都是行为约束。大家都这样默认处理。
+    > - 这四个注解只要添加在了一个类的上面，就是告诉spring 我这个类交给你来管理了。
+    > - 除了有这个注解，我们还需要在配置文件中添加相对应包的配置标签。用来告诉spring 扫描这个包以及子包下面的所有spring bean 的相关注解。
+    >>      <context:component-scan base-package="cn.tedu.project"></context:component-scan>
+    > - 最后在使用的时候需要构造`ClassPathXmlApplicationContext` 对象，通过此对象我们来取bean 对象。
 
-## 使用注解的配置
+## spring 注解的使用
+- 配置
 - 我们在使用注解的时候也是需要添加配置文件的(也可以添加注解类而不使用配置文件)，不过注解的配置相对简单。
     > 我们只需要在配置文件中添加一行如下的配置就可以了。 它表示导入指定包`cn.tedu.project` 以及其子包下的所有注解的spring bean 对象
+    >>      <context:component-scan base-package="cn.tedu.project"></context:component-scan>
 
-        <context:component-scan base-package="cn.tedu.project"></context:component-scan>
-
-## 系统组件
+## 系统组件注解示例(`Component`)
 - 注解方式spring bean 对象的命名
-    > spring 默认为指定的bean 对象添加id 为类名首字母小写的名字 <br />
-
-        @Component
-        public class Idgenerator {
-            public IdGendenerator() { }
-        }
-    > 如果要给这个注解的bean 自定义一个名字，则直接在后面添加一个字符串就可以了。`@Component("idg")` <br />
-
-        @Component("idg")
-        public class Idgenerator {
-            public IdGendenerator() { }
-        }
-    > 使用
-
-        public static void main(String[] args) {
-            ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("beans.xml");
-            Idgenerator id = ctx.getBean("idgenerator", Idgenerator.class);
-            ctx.close();
-        }
+    > - 一个组件`spring bean` 对象
+    >>      @Component
+    >>      public class Idgenerator {
+    >>          public IdGendenerator() { }
+    >>      }
+    >> 1. spring 默认为指定的bean 对象添加id, 且命名为类名首字母小写(`idgenerator`)
+    > - 如果要给这个注解的bean 自定义一个名字，则直接在后面添加一个字符串就可以了。`@Component("idg")` <br />
+    >>      @Component("idg")
+    >>      public class Idgenerator {
+    >>          public IdGendenerator() { }
+    >>      }
+    > - 使用时
+    >>      public static void main(String[] args) {
+    >>          ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("beans.xml");
+    >>          Idgenerator id = ctx.getBean("idgenerator", Idgenerator.class);
+    >>          ctx.close();
+    >>      }
 
 - 默认情况下注解Bean 对象是单例的`@Scope("singleton")`
     > 默认单例：`@Scope("singleton")` 单例时需要注意线程安全问题 <br />
@@ -85,42 +86,37 @@
                 private MessageDao msgDao;
             }
     1. 带参构造函数
-        > spring 会查看有`@Autowired` 注解的带参构造函数，然后去容器中找与参数相对应类型的bean 对象，用此对象作为参数传入，通过此方法对其注入。<br>
-        > **同样需要注意的是：如果相同类型的bean 对象有多个，则会失败。**
-        >> 解决这个问题，可以利用`@qualifier`注解，指定一个名字<br>
-        >> <span style="color:yellow">如果只有一个带参构造函数的话，这个`@Autowired` 不写也是可以的</span><br>
-
-            @Autowired
-            public MessageServiceImpl(MessageDao msgDao) {
-                this.msgDao = msgDao;
-            }
-        > 构造函数注解时，还可以直接写在构造函数的参数上面<br>
-        > <span style="color: red; background-color:#DDA0DD">用得比较多的方法之一: </span>有的公司会要求这样做。<br>
-
-            @Autowired
-            public MessageServiceImpl(@Qualifier("messageDaoImpl") MessageDao msgDao) {
-                this.msgDao = msgDao;
-            }
-        > **<span style="color:red">错误的情况: 无参构造函数是不会给赋值的</span>**
+        > - spring 会查看有`@Autowired` 注解的带参构造函数，然后去容器中找与参数相对应类型的bean 对象，用此对象作为参数传入，通过此方法对其注入。<br>
+        > - **同样需要注意的是：如果相同类型的bean 对象有多个，则会失败。**
+        >> - 解决这个问题，可以利用`@qualifier`注解，指定一个名字<br>
+        >> - <span style="color:yellow">如果只有一个带参构造函数的话，这个`@Autowired` 不写也是可以的</span><br>
+        >>>     @Autowired
+        >>>     public MessageServiceImpl(MessageDao msgDao) {
+        >>>         this.msgDao = msgDao;
+        >>>     }
+        > - 构造函数注解时，还可以直接写在构造函数的参数上面<br>
+        > - <span style="color: red; background-color:#DDA0DD">用得比较多的方法之一: </span>有的公司会要求这样做。<br>
+        >>      @Autowired
+        >>      public MessageServiceImpl(@Qualifier("messageDaoImpl") MessageDao msgDao) {
+        >>          this.msgDao = msgDao;
+        >>      }
+        > - **<span style="color:red">错误的情况: 无参构造函数是不会给赋值的</span>**
         >> 这个会导致msgDao 为空指针<br>
-        >> 
-
-            @Autowired
-            public MessageServiceImpl() { }
+        >>>     @Autowired
+        >>>     public MessageServiceImpl() { }
     2. 直接在变量声明的上方添加`@Autowired` 注解
-        > spring 会通过此注解去容器中查找类型匹配的bean 对象，利用反射机制为其注入值。<br>
-        > **同样需要注意的是：如果相同类型的bean 对象有多个，则会失败。**
-        >> 解决这个问题，同样是利用`@qualifier`注解，指定一个名字<br>
-        >> <span style="background-color:#00F">`@Qualifier` 注解需要依赖`@AutoWire` 注解，它不允许单独存在</span> <br>
-        >> <span style="color: red; background-color:#DDA0DD">用得比较多的方法之一</span><br>
-        >>> 如果有对应此变量的带参构造方法，那么spring 它会首先利用构造方法处理。当没有对应的带参构造时才会轮到下面的方式来进行注入。<br>
-
-            @Qualifier("messageDaoImpl")
-            @Autowired
-            private MessageDao msgDao;
+        > - spring 会通过此注解去容器中查找类型匹配的bean 对象，利用反射机制为其注入值。<br>
+        > - **同样需要注意的是：如果相同类型的bean 对象有多个，则会失败。**
+        >> - 解决这个问题，同样是利用`@qualifier`注解，指定一个名字<br>
+        >> - <span style="background-color:#00F">`@Qualifier` 注解需要依赖`@AutoWire` 注解，它不允许单独存在</span> <br>
+        >> - <span style="color: red; background-color:#DDA0DD">用得比较多的方法之一</span><br>
+        >>> - 如果有对应此变量的带参构造方法，那么spring 它会首先利用构造方法处理。当没有对应的带参构造时才会轮到下面的方式来进行注入。<br>
+        >>>>        @Qualifier("messageDaoImpl")
+        >>>>        @Autowired
+        >>>>        private MessageDao msgDao;
 
     - **小结：**
-        > `@Autowired` 注解的原理: 
+        > - `@Autowired` 注解的原理: 
         >> 1. spring 首先会去找是否有与此属性类型对应的带参构造函数，如果有那么它就通过此构造函数来构造注入。这个时候他只管调用此函数，如果此函数内部没有实现`this.msgDao = msgDao` 的话，那spring 是不负责的。<br>
         >> 2. 没有相应的带参构造函数的话，spring 会通过反射机制给它注入值。<br>
 

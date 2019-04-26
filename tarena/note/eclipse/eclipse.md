@@ -47,8 +47,12 @@
 	3. `右键项目  -->  Run As  -->  Maven clean`; 将编译的目标文件全部清理，然后eclipse 将会重新为我们生成
 
 - 禁止验证
-
 	> `Window --> Preferences --> Validation  -->  Enable project specific settings  -->  Disable All`
+
+- 处理tab 为4 个空格
+	> - 首先在 `window->preference`
+	>> 1. `General->Editors->Text Editors`  勾选  `insert space for tabs`
+	>> 2. `java（或C++）->code style ->formatter` --> `edit`  -->  tab policy  修改为 `spaces only` 若不能修改，则需要自己新建一个
 
 ## 常见项目错误处理
 
@@ -70,6 +74,9 @@
 		2) `tomcat --> clean`
 		3) `tomcat --> publish `
 	4)	….
+
+
+
 
 
 
