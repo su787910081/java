@@ -26,7 +26,7 @@ public class DateJsonSerializer
 			throws IOException, JsonProcessingException {
 		//定义一个日期格式转换器
 		SimpleDateFormat sdf=
-		new SimpleDateFormat("yyyy/MM/dd HH:mm:SS");
+		new SimpleDateFormat("yyyy-MM-dd HH:mm:SS");
 		//转换日期对象
 		String dateStr=sdf.format(value);
 		//将此字符串写到json串中

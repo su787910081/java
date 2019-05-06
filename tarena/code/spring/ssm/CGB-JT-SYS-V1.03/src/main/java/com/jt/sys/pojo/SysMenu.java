@@ -3,6 +3,11 @@ package com.jt.sys.pojo;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.jt.common.DateJsonDeserializer;
+import com.jt.common.DateJsonSerializer;
+
 public class SysMenu implements Serializable{
 	private static final long serialVersionUID = 6880195210216766454L;
 	private Integer id;
@@ -65,15 +70,19 @@ public class SysMenu implements Serializable{
 	public void setPermission(String permission) {
 		this.permission = permission;
 	}
+	@JsonSerialize(using=DateJsonSerializer.class)
 	public Date getCreatedTime() {
 		return createdTime;
 	}
+	@JsonDeserialize(using=DateJsonDeserializer.class)
 	public void setCreatedTime(Date createdTime) {
 		this.createdTime = createdTime;
 	}
+	@JsonSerialize(using=DateJsonSerializer.class)
 	public Date getModifiedTime() {
 		return modifiedTime;
 	}
+	@JsonDeserialize(using=DateJsonDeserializer.class)
 	public void setModifiedTime(Date modifiedTime) {
 		this.modifiedTime = modifiedTime;
 	}
