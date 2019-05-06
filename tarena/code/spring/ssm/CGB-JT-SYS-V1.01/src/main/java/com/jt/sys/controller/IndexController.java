@@ -11,4 +11,10 @@ public class IndexController {
 	public String indexUI() {
 		return "starter.html";
 	}
+
+	@RequestMapping("pageUI")
+	public String pageUI() {
+		System.out.println("IndexController.pageUI()");
+		return "sys/common/page.html";
+	}
 }

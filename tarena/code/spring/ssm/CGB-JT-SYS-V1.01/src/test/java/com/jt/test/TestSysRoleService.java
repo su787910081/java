@@ -1,11 +1,14 @@
 package com.jt.test;
 
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.jt.common.vo.CheckBox;
 import com.jt.sys.pojo.SysRole;
 import com.jt.sys.service.SysRoleService;
 
@@ -28,6 +31,14 @@ public class TestSysRoleService {
 		
 		int res = sysRoleService.saveObject(entity);
 		Assert.assertEquals(1, res);
+	}
+	
+	@Test
+	public void testFindRoleNames() {
+		SysRoleService sysRoleService = ctx.getBean("sysRoleServiceImpl", SysRoleService.class);
+		
+		List<CheckBox> list = sysRoleService.findRoleNames();
+		System.out.println("testFindRoleNames: " + list);
 	}
 	
 	@After

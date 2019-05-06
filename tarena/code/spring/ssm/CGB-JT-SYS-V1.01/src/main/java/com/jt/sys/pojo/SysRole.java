@@ -36,7 +36,6 @@ public class SysRole implements Serializable {
 	}
 	@JsonSerialize(using=DateJsonSerializer.class)
 	public Date getCreatedTime() {
-		System.out.println("SysRole.getCreatedTime()");
 		return createdTime;
 	}
 	public void setCreatedTime(Date createdTime) {
@@ -63,6 +62,12 @@ public class SysRole implements Serializable {
 	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+	@Override
+	public String toString() {
+		return "SysRole [id=" + id + ", name=" + name + ", note=" + note + ", createdTime=" + createdTime
+				+ ", modifiedTime=" + modifiedTime + ", createdUser=" + createdUser + ", modifiedUser=" + modifiedUser
+				+ "]";
 	}
     
     

@@ -3,9 +3,33 @@
       "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.jt.sys.dao.SysRoleDao">
+	<sql id="whereSqlId">
+		<where>
+			<if test="name != null and name != ''">
+				name like concat("%", #{name}, "%")
+			</if>
+		</where>
+	</sql>
+	
+	<!-- 查询当前页记录 -->
 	<select id="findPageObjects" resultType="sysRole">
 		select * from sys_roles
+		<include refid="whereSqlId" />
+		order by createdTime desc
+		<!-- startIndex 是查询数+1 -->
+		limit #{startIndex}, #{pageSize}
 	</select>
+	
+	<select id="findRoleNames" resultType="checkBox">
+		select id, name from sys_roles
+	</select>
+	
+	<!-- 统计记录数 -->
+	<select id="getRowCount" resultType="int">
+		select count(*) from sys_roles
+		<include refid="whereSqlId" />
+	</select>
+
 	<select id="findObjectById" resultType="sysRole">
 		select * from sys_roles where id = #{id}
 	</select>
@@ -20,7 +44,29 @@
 	</delete>
 	<insert id="insertObject" parameterType="sysRole">
 		insert into sys_roles(id, name, note, createdTime, modifiedTime, createdUser, modifiedUser) 
-		values(null, #{name}, #{note}, now(), now(), #{createdUser}, #{modifiedUser})
+		values(null, #{name}, #{note}, now(), now(), 
+		<choose>
+			<when test="createdUser == null || createdUser == ''">
+				'admin',
+			</when>
+			<otherwise>
+				#{createdUser}, 
+			</otherwise>
+		</choose>
+		<choose>
+			<when test="modifiedUser == null || modifiedUser == ''">
+				'admin'
+			</when>
+			<otherwise>
+				#{modifiedUser}
+			</otherwise>
+		</choose>
+		)
 	</insert>
+	<update id="updateObject" parameterType="sysRole">
+		update sys_roles set 
+		name=#{name}, note=#{note}, modifiedTime=now()
+		where id=#{id}
+	</update>
 </mapper>
 

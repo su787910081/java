@@ -1,9 +1,8 @@
 package com.jt.sys.controller;
 
-import java.util.Arrays;
+
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +10,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.jt.common.vo.CheckBox;
+import com.jt.common.vo.JsonResult;
+import com.jt.common.vo.PageObject;
 import com.jt.sys.pojo.SysRole;
 import com.jt.sys.service.SysRoleService;
 
@@ -23,9 +25,9 @@ public class SysRoleController {
 
 	@RequestMapping("listUI")
 	public String listUI() {
-		return "sys/role_list.html";
+		return "sys/show_list.html";
 	}
-	
+
 	@RequestMapping("editUI")
 	public String editUI() {
 		return "sys/role_edit.html";
@@ -35,7 +37,18 @@ public class SysRoleController {
 	public String doRoleTable() {
 		return "sys/role_table.html";
 	}
+	
+	@RequestMapping("doRoleList")
+	public String doRoleList() {
+		System.out.println("SysRoleController.doRoleList()");
+		return "suyh/roleList.jsp";
+	}
 
+	
+	// #################################################################
+	
+	
+	
 	@RequestMapping("doDeleteObject")
 	@ResponseBody
 	public int doDeleteObject(Integer id) {
@@ -44,62 +57,55 @@ public class SysRoleController {
 		return sysRoleService.deleteObject(id);
 	}
 
-	@RequestMapping(value = "doDeleteObjectByString")
-	@ResponseBody
-	public String doDeleteObjectByString(String checkedIds) {
-		System.out.println("SysRoleController.doDeleteObjectByString()");
-		System.out.println("checkedIds: " + checkedIds);
-		String[] arrIds = checkedIds.split(",");
-		sysRoleService.deleteObjects(arrIds);
-		return "delete ok by String";
-	}
-
 	@RequestMapping(value = "doDeleteObjectByArray",method = RequestMethod.POST)
 	@ResponseBody
-	public String doDeleteObjectByArray(@RequestParam(value = "checkedIds[]")String[] checkedIds) {
-		System.out.println("SysRoleController.doDeleteObjectByArray()");
-		System.out.println("checkedIds: " + Arrays.toString(checkedIds));
+	public JsonResult doDeleteObjectByArray(@RequestParam(value = "checkedIds[]")String[] checkedIds) {
 		sysRoleService.deleteObjects(checkedIds);
-		return "delete ok by array";
+		return new JsonResult(1, "delete ok by array");
 	}
 
 	@RequestMapping("doFindPageObjects")
 	@ResponseBody
-	public List<SysRole> doFindPageObjects(@RequestParam("pageCurrent") String pageCurrent) {
+	public JsonResult doFindPageObjects(@RequestParam("pageCurrent") Integer pageCurrent, String name) {
+		System.out.println("SysRoleController.doFindPageObjects()");
+		System.out.println("name: " + name);
+		PageObject<SysRole> po = sysRoleService.findPageObjects(pageCurrent, name);
+		return new JsonResult(1, "query ok", po);
+	} // {pageCount:10,..., records:[{记录数据}, {}, ...]}
 
-		List<SysRole> list = sysRoleService.findPageObjects();
-		System.out.println("SysRoleController.doFindPageObjects(), pageCurrent: " + pageCurrent);
-		System.out.println(list);
-		for (SysRole role : list) {
-			System.out.println(role);
-		}
-		return list;
-	}
-	
 	@RequestMapping("doFindObjectById")
 	@ResponseBody
-	public SysRole doFindpageObject(String id) {
-		return sysRoleService.findObjectById(id);
+	public JsonResult doFindpageObject(String id) {
+		SysRole sysRole = sysRoleService.findObjectById(id);
+		return new JsonResult(1, "findObjectById ok", sysRole);
 	}
 
-	@RequestMapping("doRoleList")
-	public String doRoleList() {
-		System.out.println("SysRoleController.doRoleList()");
-		return "suyh/roleList.jsp";
-	}
-	
+
 	@RequestMapping("doSaveObject")
 	@ResponseBody
-	public String doSaveObject(SysRole entity) {
+	public JsonResult doSaveObject(SysRole entity) {
+		entity.setCreatedUser("admin-suyh");
+		entity.setModifiedUser("admin-suyh");
 		sysRoleService.saveObject(entity);
-		return "save ok";
+		return new JsonResult(1, "save ok");
 	}
-	
+
 	@RequestMapping("doUpdateObject")
 	@ResponseBody
-	public String doUpdateObject(SysRole entity) {
-		
-		return "update ok";
+	public JsonResult doUpdateObject(SysRole entity) {
+		sysRoleService.updateObject(entity);
+		return new JsonResult(1, "update ok");
+	}
+	
+	@RequestMapping("doFindObjects")
+	@ResponseBody
+	public JsonResult doFindObjects() {
+		List<CheckBox> list = sysRoleService.findRoleNames();
+		return new JsonResult(1, "find roles ok", list);
 	}
 
 }
+
+
+
+
