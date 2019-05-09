@@ -1,7 +1,7 @@
 
 
 
-## 雪崩 与 缓存击穿(数据大量未命中)
+- > ## 雪崩 与 缓存击穿(数据大量未命中)
 
 - 海量数据的访问请求,一旦发起,将会涌入系统,如果缓存数据可命中率高,数据库压力减小,可以提供对外正常的数据处理的能力.当缓存由于各种原因,造成大量数据未命中,海量数据请求涌入数据库;造成数据库宕机--恢复重启--海量请求未消失--宕机--重启;
 
@@ -9,7 +9,11 @@
 
 
 
-
+- 关闭防火墙
+    > - `service iptables stop`
+    > - 如果是CENTOS 7 的话需要使用下面两个命令，或者安装iptables 命令
+    > - `systemctl stop firewalld.service`
+    > - `systemctl disable firewalld.service`
 
 
 - 安装redis 
@@ -19,12 +23,14 @@
     > - make && make install 
 
 - 启动redis
-    > - 默认启动
-    >> - redis-server
+    > - `redis-server redis.conf`
+    > - `redis-server` 默认启动
 
 
 - 使用redis
     > - redis-cli
+    >> - redis-cli -h 10.9.17.153 -p 6379
+    >>> - 指定连接的IP 以及端口
 
     > - 退出
     >> - quit  |  exit
@@ -132,7 +138,41 @@
     >>> - `rpoplpush mylist mylist1`
 
 
+- > ##  redis-server 配置文件
+
+    > - 通过配置文件启动
+    >> - `redis-server [redis 配置文件]`
+    >> - `redis根目录/redis.conf` 是根目录的模板配置文件
+    > - 修改配置文件
+    >> - p61 行 --> 注释
+    >> - 指定哪些IP 地址可以连接到此服务器
+    >>> ![](./img/redis-conf-bind-01.jpg)
+    >> - p80 行  --> 修改为no 不启用保护模式
+    >> - 如果开启了保护模式，则需要登录密码
+    >>> ![](./img/redis-conf-protected-02.jpg)
+    >> - p84 行  -->  6379是默认端口(要启动其他的redis实例需要修改端口)
+    >>> ![](./img/redis-conf-port-03.jpg)
+    >> - p105 行 -->  当客户端空闲时间达到一小时,就会自动断开连接,0秒表示不启用超时配置
+    >>> ![](./img/redis-conf-timeout-04.jpg)
+    >> - 128 行 --> 启动时是否守护进行
+    >>> redis-conf-daemonize-05.jpg
+    >> - p150  -->  对应不同的redis实例,pid的文件名称.需要和端口同名
+    >> - P164  -->  指定到redis跟目录生成当前进程的log文件
+    >> 
+    >> - p178   -->   指定默认开起的数据库个数
+    >>> ![](./img/redis-conf-databases-06.jpg)
+    >> - save 900(秒) 1(变动的数据条数)
+    >> - 当900以内,至少有1条数据变动,看是flush保存数据到文件
+    >> - save 300 10
+    >> - 300秒以内至少10条数据变动,保存文件
+    >> - save 60 10000
+    >> 
+    >> - P238 指定当前进程对应的持久化rdb文件,redis根目录
+    >>> ![](./img/redis-conf-dbfilename.jpg)
 
 
+- > HASH 一致性
+    >> `G:\terena\java\java-1803-课程\day03\day03all.pdf`
+    >> ![](./img/hash-01.jpg)
 
 

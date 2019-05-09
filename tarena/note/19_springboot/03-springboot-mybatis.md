@@ -36,6 +36,7 @@
     >>      spring.datasource.username=root
     >>      spring.datasource.password=root
     >> </details>
+    >>
     >> <details>
     >> <summary><mark><font color=darkred>mybatis 配置</font></mark></summary>
     >> 
@@ -62,7 +63,8 @@
     >>      }
     >> </details>
 
-
+- 其他
+    > - 上面的这些准备工作完成之后，其他的mapper 该怎么写还是跟mybatis 一样的写。
 
 
 

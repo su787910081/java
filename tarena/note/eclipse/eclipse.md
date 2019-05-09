@@ -54,6 +54,20 @@
 	>> 1. `General->Editors->Text Editors`  勾选  `insert space for tabs`
 	>> 2. `java（或C++）->code style ->formatter` --> `edit`  -->  tab policy  修改为 `spaces only` 若不能修改，则需要自己新建一个
 
+
+## 新建eclipse 工作空间的准备工作
+> - 1. 字体, 搜索(`Colors and fonts`):  `Basic  -->  Text Font  -->  Edit`
+> - 2. 编码格式, 搜索(`Workspace`): 指定编码格式
+> - 3. 禁用一些不需要的校验，一般情况下不写前端的代码全部都禁用就可以了。(`Validation`)
+> - 4. JDK，搜索(`Installed JREs`): `Add...  -->  Standard VM `  为JRE HOME 指定JDK 的根目录
+> - 5. `maven -> installations`  -->  `Add...`   --> 找到maven 的根目录添加。 `最后不要忘记勾选`
+>> - maven 添加好了之后，还需要添加一个maven 的用户设置
+>> - `maven -> user settings`   -->  maven 的根目录下面的`conf/settings.xml`   然后`Update Settings`
+> - 6. 修改tab 插入空格以及代码风格
+>> - `General  -->  Editors  -->  Text Editors  -->  勾选"Insert spaces for tabs"`
+>> - `Java  -->  Code Style  -->  Formater  -->  New.. `  然后跟着步骤做就好了。
+
+
 ## 常见项目错误处理
 
 - 编码问题
@@ -73,7 +87,7 @@
 		1) `project --> clean`
 		2) `tomcat --> clean`
 		3) `tomcat --> publish `
-	4)	….
+	4)	…. 其他
 
 
 
