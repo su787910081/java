@@ -22,6 +22,8 @@
 	> 调出新建窗口
 - `ctrl+shift+o`
 	> 快速导入包
+- `Alt + Shift + l`
+	> 直接创建一个变量，通过方法的返回值类型
 	
 ## 如何导入一个已存在的工程到eclipse
 > `file --> import...`<br>

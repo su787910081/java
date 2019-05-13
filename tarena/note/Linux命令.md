@@ -107,3 +107,14 @@ vim
 	:set noic 区分大小写
 
 
+
+
+
+- ## 防炎墙
+	- > 临时关闭
+		>> service iptables stop
+	- > 永久关闭
+		>> chkconfig iptables off
+
+
+
