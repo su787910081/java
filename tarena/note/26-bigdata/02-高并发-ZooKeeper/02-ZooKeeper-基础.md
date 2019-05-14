@@ -21,7 +21,10 @@
         >> 2. ZooKeeper 本身是用于做分布式的协调服务的框架
         >>> - 如果 存储大量数据占用大量内存，则会降低协调服务的效率
     - > 在ZooKeeper 中，会对每一次的写操作(创建、更新与删除)分配一个全局递增的编号，称之为事务ID: Zxid(cZxid、pZxid、mZxid)
+        >> - 事务ID 是一个64位二进制数，高32 位是EPOCHID，低32位才是实际的事务ID
     - > 临时节点不能挂载子节点
+
+
 
 
 - ## 查看服务是否正常运行
@@ -63,66 +66,46 @@
         >> - 递归删除，可以将其下的子节点一起删除
     - > zk: `get /picture`
         >> - 获取picture 节点的数据以及节点信息
-        >> <details>
-        >> <summary><mark><font color=darkred>详细说明</font></mark></summary>
-        >> 
-        >> - 节点数据
-        >>> - `picture servers`
-        >> - 节点信息: 
-        >>> - `cZxid = 0x2`  创建事务ID
-        >>> - `ctime = Sun May 12 18:55:30 PDT 2019`  创建时间
-        >>> - `mZxid = 0x2`  修改事务ID
-        >>> - `mtime = Sun May 12 18:55:30 PDT 2019` 修改时间
-        >>> - `pZxid = 0x2`  子节点的增删(更新时不会变化)事务ID
-        >>> - `cversion = 0` 记录子节点增删次数
-        >>> - `dataVersion = 0`  当前节点更新次数(即：使用set 命令的次数)
-        >>> - `aclVersion = 0`  记录节点的权限改变次数
-        >>> - `ephemeralOwner = 0x0`   节点类型持久节点，此值为：`0x0` 临时节点，此值为: sessionid
-        >>> - `dataLength = 15`    数据的字节个数
-        >>> - `numChildren = 0`    子节点个数
-        >> </details>
-        >>
-
     - > zk: `set /picture 'hello picture'`
         >> - 更新节点数据
 
+- ## 节点信息详细说明
+    >> - 节点数据
+    >>> - `picture servers`
+    >> - 节点信息: 
+    >>> - `cZxid = 0x2`  创建事务ID
+    >>> - `ctime = Sun May 12 18:55:30 PDT 2019`  创建时间
+    >>> - `mZxid = 0x2`  修改事务ID
+    >>> - `mtime = Sun May 12 18:55:30 PDT 2019` 修改时间
+    >>> - `pZxid = 0x2`  子节点的增删(更新时不会变化)事务ID
+    >>> - `cversion = 0` 记录子节点增删次数
+    >>> - `dataVersion = 0`  当前节点更新次数(即：使用set 命令的次数)
+    >>> - `aclVersion = 0`  记录节点的权限改变次数
+    >>> - `ephemeralOwner = 0x0`   节点类型持久节点，此值为：`0x0` 临时节点，此值为: sessionid
+    >>> - `dataLength = 15`    数据的字节个数
+    >>> - `numChildren = 0`    子节点个数
+
+
 - ## 节点类型
-    > <table>
-    > <thead>
-    > <tr><td></td><td>持久</td><td>临时</td></tr>
-    > </thead>
-    > <tbody>
-    > <tr><td>非顺序</td><td>Persistent</td><td>Ephemeral_Sequential</td></tr>
-    > <tr><td>顺序</td><td>Persistent_Sequential</td><td>Ephemeral</td></tr>
-    > </tbody>
-    > </table>
-
----
 
 
-- ## ZooKeeper 选举机制
-    - > 数据恢复阶段: 
-        >> - 当ZooKeeper 节点启动之后，每一个ZooKeeper 服务器都会找到当前节点中最大的事务ID(mzxid或pzxid);
-    - > 选举阶段
-        >> - 每一个节点都会选举自己当leader，并且将当前节点的选举信息发送给其他节点;
-        >>> - 选举信息: 
-        >>>> - 节点的最大事务ID;
-        >>>> - 选举编号/节点编号 - myid
-        >>>> - 逻辑时钟值 - 确定所有的节点选举是牌同一轮上
-        >> - 比较原则:
-        >>> - 先比较两个节点的最大事务ID，谁的事务ID 大谁就胜出
-        >>> - 如果两个节点的事务ID 一致，则比较两个节点的myid。谁的myid 大谁就胜出。
-        >> - 如果某个节点胜出了一半及以上的节点，那么这个节点就会成为leader
-        >> - 节点状态: 
-        >>> - looking - 选举状态
-        >>> - follower - 追随者
-        >>> - leader - 领导者
-        >>> - abserver - 观察者
-        >> - 过半选举，以配置数量为准，不管是否挂了几个。
-    - > 如果集群中确定了leader,那么后续添加的节点的事务ID或者MYID 无论是多少，都只能成为follower
-    - > 集群中的节点最好是奇数个，奇数个节点能够有效的进行选举，也能够防止脑裂
+
+|           | 持久                      | 临时                          |
+|  ----     | ---                       | ----                          |
+| 非顺序    | Persistent                |  Ephemeral_Sequential         |
+| 顺序      | Persistent_Sequential     | Ephemeral                     |
 
 
+
+- ##  总结 - 特性
+    - > 数据一致性：原子广播
+    - > 顺序性：队列
+    - > 实时性
+    - > 可靠性：同步
+    - > 原子性：一个请求在ZooKeeper要么执行要么不执行
+    - > 过半性: 过半选举，过兴存活，过半服务
+
+- ## 扩展：ZooKeeper 的危害
 
 
 
