@@ -14,13 +14,13 @@
     - > 每一个Znode 节点都必须存储数据(可以是空数据，不能是null)
     - > 每一个路径都是唯一的
     - > Znode 树维系在内存以及磁盘上
-        >> Znode 树维系在内存中，目的是为了快速查询
-        >> Znode 树维系在磁盘上，是以Snapshot -- 快照形式存在的
+        >> - 在内存中，目的是为了快速查询
+        >> - 在磁盘上，是以Snapshot -- 快照形式存在的
     - > 理论上可以利用ZooKeeper 来存储大量的数据构建一个缓存机制，实际上很少这么做。
         >> 1. 每一个节点虽然可以存储数据，但是数据量有限(好像最多1M)
         >> 2. ZooKeeper 本身是用于做分布式的协调服务的框架
-        >>> - 如果 存储大量数据占用大量内存，则会降低协调服务的效率
-    - > 在ZooKeeper 中，会对每一次的写操作(创建、更新与删除)分配一个全局递增的编号，称之为事务ID: Zxid(cZxid、pZxid、mZxid)
+        >>> - 如果存储大量数据占用大量内存，则会降低协调服务的效率
+    - > 在ZooKeeper 中，会对每一次的写操作(创建、更新与删除)分配一个全局递增的编号，称之为事务ID: Zxid(cZxid、mZxid、pZxid)
         >> - 事务ID 是一个64位二进制数，高32 位是EPOCHID，低32位才是实际的事务ID
     - > 临时节点不能挂载子节点
 
@@ -36,9 +36,11 @@
         >>      Mode: standalone
     - > 集群模式时，使用`sh zkServer.sh status` 查看状态时，Mode: 有两个结果(`follower` 或者`leader`)
 
+- ## 远程连接到ZooKeeper 服务器
+    - > `zkCli.sh -server 192.168.220.133:2181`
+
 - ## 配置
     - > 修改`dataDir=/home/software/zookeeper-3.4.8/tmp`
-
 
 - ## 命令
     - > zk: `create /picture 'picture servers'`
@@ -70,30 +72,28 @@
         >> - 更新节点数据
 
 - ## 节点信息详细说明
-    >> - 节点数据
-    >>> - `picture servers`
-    >> - 节点信息: 
-    >>> - `cZxid = 0x2`  创建事务ID
-    >>> - `ctime = Sun May 12 18:55:30 PDT 2019`  创建时间
-    >>> - `mZxid = 0x2`  修改事务ID
-    >>> - `mtime = Sun May 12 18:55:30 PDT 2019` 修改时间
-    >>> - `pZxid = 0x2`  子节点的增删(更新时不会变化)事务ID
-    >>> - `cversion = 0` 记录子节点增删次数
-    >>> - `dataVersion = 0`  当前节点更新次数(即：使用set 命令的次数)
-    >>> - `aclVersion = 0`  记录节点的权限改变次数
-    >>> - `ephemeralOwner = 0x0`   节点类型持久节点，此值为：`0x0` 临时节点，此值为: sessionid
-    >>> - `dataLength = 15`    数据的字节个数
-    >>> - `numChildren = 0`    子节点个数
+    > - 节点数据
+    >> - `picture servers`
+    > - 节点信息: 
+    >> - `cZxid = 0x2`  创建事务ID
+    >> - `ctime = Sun May 12 18:55:30 PDT 2019`  创建时间
+    >> - `mZxid = 0x2`  修改事务ID
+    >> - `mtime = Sun May 12 18:55:30 PDT 2019` 修改时间
+    >> - `pZxid = 0x2`  [子节点最新事务ID] 子节点的增删事务ID (更新时此值不会变化)
+    >> - `cversion = 0` 记录子节点增删次数
+    >> - `dataVersion = 0`  当前节点更新次数(即：使用set 命令的次数)
+    >> - `aclVersion = 0`  记录节点的权限改变次数
+    >> - `ephemeralOwner = 0x0`   节点类型持久节点，此值为：`0x0` 临时节点，此值为: sessionid
+    >> - `dataLength = 15`    数据的字节个数
+    >> - `numChildren = 0`    子节点个数
 
 
 - ## 节点类型
 
-
-
-|           | 持久                      | 临时                          |
-|  ----     | ---                       | ----                          |
-| 非顺序    | Persistent                |  Ephemeral_Sequential         |
-| 顺序      | Persistent_Sequential     | Ephemeral                     |
+    > |           | 持久                      | 临时                          |
+    > |  ----     | ---                       | ----                          |
+    > | 非顺序    | Persistent                |  Ephemeral_Sequential         |
+    > | 顺序      | Persistent_Sequential     | Ephemeral                     |
 
 
 
