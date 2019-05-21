@@ -35,6 +35,7 @@
     - > `vim ${HADOOP_DIR}/etc/hadoop/core-site.xml`
         > - `fs.defaultFS` 指定nameNode 所在节点
         > - `hadoop.tmp.dir` 指定元数据的存储目录
+        > - `fs.trash.interval` 回收站
         >>      <configuration>
         >>          <property>
         >>              <name>fs.defaultFS</name>
@@ -43,6 +44,12 @@
         >>          <property>
         >>              <name>hadoop.tmp.dir</name>
         >>              <value>/root/software/hadoop-2.7.1/tmp</value>
+        >>          </property>
+        >>          <property>
+        >>              <!-- 开启回收站，属性表示文件在回收站中存在多长时间，单位：分钟 -->
+        >>              <!-- 时间到了会被清除 -->
+        >>              <name>fs.trash.interval</name>
+        >>              <value>1440</value>
         >>          </property>
         >>      </configuration>
     - > `vim ${HADOOP_DIR}/etc/hadoop/hdfs-site.xml`
@@ -75,14 +82,14 @@
         >>          </property>
         >>      </configuration>
     - > `vim ${HADOOP_DIR}/etc/hadoop/slaves `
-        > - 主机名
+        > - DataNode 所在的主机名
         >>      hadoopalone
     - > `vim /etc/profile` 环境变量
         >>      export HADOOP_HOME=/root/software/hadoop-2.7.1
         >>      export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
 
 - ## 启动hadoop
-    - > <mark>第一次启动时需要格式化hadoop</mark>
+    - > <mark>第一次启动时需要格式化NameNode</mark>
         > - `hadoop namenode -format`
         > - 成功提示
         >>      common.Storage: Storage directory /root/software/hadoop-2.7.1/tmp/dfs/name has been successfully formatted.
@@ -94,6 +101,14 @@
         >>      2919 SecondaryNameNode
         >>      3064 ResourceManager
         >>      2735 DataNode
+        - > `NameNode` HDFS 核心节点，负责管理DataNode 以及存储元数据的
+            > - 全分布式中也最多只能有两个
+        - > `DataNode` HDFS 存储单元
+            > - 负责存储实际的分块数据
+        - > `ResouceManage` 在1.0 中被 称为`JobTracker` 
+            > - 负责管理NodeManager 同时对外接收请求
+        - > `NodeManager` 在1.0 中被称为`TaskTracker`
+            > - 负责执行计算任务，它包括mapTask 和reduceTask
     - > 浏览器管理
         > - `http://192.168.220.130:50070`
 

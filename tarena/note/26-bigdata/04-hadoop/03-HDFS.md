@@ -10,6 +10,7 @@
 
 - ## HDFS
     - > 是Hadoop 的组件，用于完成分布式存储
+    - > 全称为`Hadoop Distributed File System` ，Hadoop分布式文件存储系统。
 
 - ## HDFS 特点
     - > 存储超大文件 - 切块
@@ -30,6 +31,7 @@
     - > 切块的意义
         > - 能够存储超大文件
         > - 快速备份
+    - > 当对文件进行切块的时候，会为它分配一个全局递增的ID
 
 - ## DataNode
     - > 用于进行数据的存储
@@ -78,11 +80,11 @@
         > - 这个过程称之为安全模式
     - > 当启动HDFS 的时候，如果发现其处在安全模式，需要等待一会儿。如果校验成功它会自动退出安全模式。
         > - HDFS 处于安全模式时，不对外提供服务。
-        > - 若HDFS 一直处在安全模式中，说明有数据丢失。此时强制退出安全模式
+        > - 若HDFS 一直处在安全模式中，说明有数据丢失。此时可以使用如下命令强制退出安全模式
         >> - `hadoop dfsadmin -safemode leave`
 
 - ## 复本放置策略
-    - > 默认香醇数量是3
+    - > 默认复本数量是3
         >> - 第一个复本
         >>> - 如果是从集群内部上传，哪个DataNode 上传，则每一个复本就放在DataNode 上
         >>> - 如果是从外部上传，则找一个比较空闲的节点存储第一个复本
@@ -98,15 +100,28 @@
         > - 可以将不同的物理机架上的节点映射到同一个逻辑机架上
         > - 实际开发中，一般会将同一个物理机架上的节点放在同一个逻辑机架上面。
 
+- ## 操作命令
+    - > `hadoop fs -put a.txt /`
+        >> 上传
+    - > `hadoop fs -get /a.txt`
+        >> 下载
+    - > `hadoop fs -ls /`
+        >> 查看
+    - > `hadoop fs -lsr /`
+        >> 递归查看
+    - > 
 
+- ## 回收站策略
+    - > 在HDFS 中，当删除文件或者目录的时候是立即删除，这是因为Hadoop 中回收站策略默认是不开启。
+        >> - 配置`core-site.xml`
+        >> - 移动到回收站，在指定时间内没有被还原，则会被清除
 
+- ## SecondaryNameNode
+    - > 既不管理DataNode 也不负责存储元数据，并不是NameNode 的热备份，在早期版本中只是辅助NameNode 进行元数据的合并 -edits 和fsimage 在1.0 中合并时发生在SecondaryNameNode 上，但是在Hadoop 的2.0 的完全分布式中，舍弃了SecondaryNameNode,  为了保证NameNode 的高可用，通过舍弃SecondaryNameNode 的方式来设置2个NameNode
 
-hadoop fs -mkdir /test
-
-
-
-
-
+- ## 扩展
+    - > Federation HDFS - 联邦HDFS
+    - > 分流 NameNode
 
 
 
