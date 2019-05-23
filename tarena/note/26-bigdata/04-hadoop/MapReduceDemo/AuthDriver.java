@@ -32,10 +32,11 @@ public class AuthDriver {
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(IntWritable.class);
 
+        // 自定义 inputformat
         // 指定Mapper 输入的处理方式，也就是将分片做怎么的处理，然后将处理的结果作为mapper 的输入
         job.setInputFormatClass(AuthInputFormat.class);
 
-        // 设置合并类
+        // 自定义 Combiner -> AuthReducer
         // MapTask在算完之后会将结果先进行合并，然后再将合并后的数据发给ReduceTask
         // Combine：减少数据量但是不影响结果
         // 我们可以实现一个自定义的合并类，这里我直接使用Reducer

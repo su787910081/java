@@ -1,15 +1,7 @@
 
 
-- ## 安装模式
-    - > 单机模式
-        >> 只能启用mapReduce,不能启用HDFS 以及Yarn
-    - > 伪分布式
-        >> 在一台机器 来模拟集群，启动Hadoop的所有进程
-    - > 全分布式
-        >> 多台机器来搭建
 
-
-- ## 主机名
+- ## 配置主机名
     - > `vim /etc/sysconfig/network`
         >>      HOSTNAME=hadoopalone
     - > `vim /etc/hosts`
@@ -18,16 +10,18 @@
     - > <mark>注意：</mark>
         >> - 主机名里不能有下滑线，或者特殊字符 `"_ - # $"`，不然会找不到主机导致无法启动
         >> - 这种方式更改主机名需要重启才能永久生效，因为主机名属于内核参数。
-        >> - 如果不想重启，可以执行：hostname hadoopalone。
+        >> - 如果不想重启，可以执行：`hostname hadoopalone`。
         >> - 但是这种更改是临时的，重启后会恢复原主机名。
-        >> - 所以可以结合使用。先修改配置文件，然后执行:hostname hadoopalone 。可以达到不重启或重启都是主机名都是同一个的目的
+        >> - 所以可以结合使用。先修改配置文件，然后执行:`hostname hadoopalone` 。可以达到不重启或重启都是主机名都是同一个的目的
 
-- ## 配置免密登录
-    - > ssh-keygen
+- ## 配置ssh 免密登录
+    - > `ssh-keygen`   生成密钥
         >>      (/root/.ssh/id_rsa)
-    - > ssh-copy-id root@hadoopalone
+    - > `ssh-copy-id root@hadoopalone`
+        > - 发送密钥到目标服务器，这样使用ssh 协议登录目标服务器就可以只在第一次输入密码，之后就不再需要密码了。
 
-- ## 伪分布式配置
+- ## 配置文件(伪分布式)
+    - ### 约定`${HADOOP_DIR}` 为Hadoop 的安装 根目录，下面的这些配置文件都是基于这个目录的。
     - > `vim ${HADOOP_DIR}/etc/hadoop/hadoop-env.sh`
         >>     export JAVA_HOME=/usr/local/src/java/jdk1.8.0_51
         >>     export HADOOP_CONF_DIR=/root/software/hadoop-2.7.1/etc/hadoop
@@ -36,6 +30,9 @@
         > - `fs.defaultFS` 指定nameNode 所在节点
         > - `hadoop.tmp.dir` 指定元数据的存储目录
         > - `fs.trash.interval` 回收站
+        > <details>
+        > <summary><mark><font color=darkred>core-site.xml</font></mark></summary>
+        > 
         >>      <configuration>
         >>          <property>
         >>              <name>fs.defaultFS</name>
@@ -52,16 +49,26 @@
         >>              <value>1440</value>
         >>          </property>
         >>      </configuration>
+        > </details>
+        > 
     - > `vim ${HADOOP_DIR}/etc/hadoop/hdfs-site.xml`
         > - `dfs.replication` 复本数量，默认情况下是3。这里指定为1(伪分布式必须为1，否则它将处于安全模式无法退出)
+        > <details>
+        > <summary><mark><font color=darkred>hdfs-site.xml</font></mark></summary>
+        > 
         >>      <configuration>
         >>          <property>
         >>              <name>dfs.replication</name>
         >>              <value>1</value>
         >>          </property>
         >>      </configuration>
+        > </details>
+        > 
     - > `cp mapred-site.xml.template mapred-site.xml   vim `
         > - 这两个值不能随便改变
+        > <details>
+        > <summary><mark><font color=darkred>mapred-site.xml</font></mark></summary>
+        > 
         >>
         >>      <configuration>
         >>          <property>
@@ -69,8 +76,13 @@
         >>              <value>yarn</value>
         >>          </property>
         >>      </configuration>
+        > </details>
+        > 
     - > `vim ${HADOOP_DIR}/etc/hadoop/yarn-site.xml`
         > - 第一个是主机名，第二个配置固定
+        > <details>
+        > <summary><mark><font color=darkred>yarn-site.xml</font></mark></summary>
+        > 
         >>      <configuration>
         >>          <property>
         >>              <name>yarn.resourcemanager.hostname</name>
@@ -81,6 +93,8 @@
         >>              <value>mapreduce_shuffle</value>
         >>          </property>
         >>      </configuration>
+        > </details>
+        > 
     - > `vim ${HADOOP_DIR}/etc/hadoop/slaves `
         > - DataNode 所在的主机名
         >>      hadoopalone
@@ -93,7 +107,7 @@
         > - `hadoop namenode -format`
         > - 成功提示
         >>      common.Storage: Storage directory /root/software/hadoop-2.7.1/tmp/dfs/name has been successfully formatted.
-        > - 如果配置出错，则需要则配置的`vim core-site.xml` 中的 `hadoop.tmp.dir` 的目录删除之后再重新执行格式化 `hadoop namenode -format`
+        > - <mark>如果配置出错</mark>，则需要则配置的`vim core-site.xml` 中的 `hadoop.tmp.dir` 的目录删除之后再重新执行格式化 `hadoop namenode -format`
     - > `start-all.sh`
         > - 若成功，使用JPS 会有以下5 个进程
         >>      3155 NodeManager

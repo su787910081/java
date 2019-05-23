@@ -14,6 +14,8 @@
     > </details>
     > 
 
+
+
 - ## 准备工作
     - > JDK 环境安装
 
@@ -29,8 +31,7 @@
         > - 然后重启，使其生效
 
 - ## 配置 hosts 文件
-    - > 将每台主机的IP 与主机名做映射 
-        > - `vim /etc/hosts`
+    - > 将每台主机的IP 与主机名做映射  `vim /etc/hosts`
         > <details>
         > <summary><mark><font color=darkred>示例</font></mark></summary>
         > 
@@ -46,20 +47,21 @@
 - ## 免密登录
     - > 为每台机器配置ssh免秘钥登录
         > - `ssh-keygen`
-        > - `ssh-copy-id root@hadoop01`  （分别发送到6台节点上）
+        > - `ssh-copy-id root@hadoop01`  （分别发送到其他节点上）
 
 - # ZooKeeper 配置
+    - ## ZooKeeper 集群配置
 
 - # Hadoop
 
     - <mark>hadoop 的配置各个节点的配置基本相同，可以配置一份，然后拷贝到其他几个节点主机上面。</mark>
     - ## Hadoop 配置
         - > 配置 hadoop-env.sh
-            - > 编辑 hadoop-env.sh 主要有两个
-                > - `export JAVA_HOME=/usr/local/src/java/jdk1.8.0_51`
-                > - `export HADOOP_CONF_DIR=/root/software/hadoop-2.7.1/etc/hadoop`
-            - > 生效
-                > - `source hadoop-env.sh`
+            > - 编辑 hadoop-env.sh 主要有两个
+            >> - `export JAVA_HOME=/usr/local/src/java/jdk1.8.0_51`
+            >> - `export HADOOP_CONF_DIR=/root/software/hadoop-2.7.1/etc/hadoop`
+            > - 使其生效
+            >> - `source hadoop-env.sh`
         - > 配置core-site.xml
         - > 配置hdfs-site.xml
         - > 配置mapred-site.xml
@@ -210,4 +212,20 @@
     - ## hadoop 启动与停止
         - > 除了第一次启动比较麻烦之外，之后的启动直接使用`start-all.sh` 即可
         - > 停止: `stop-all.sh`
+
+- ## 启动成功之后
+    - > `hdfs-site.xml` - > `dfs.namenode.support.allow.format` 
+        > - 这个属性是指是否允许格式化。<mark>我们只有在第一次启动的时候需要格式化。之后我们就不需要再格式化了。</mark>
+        > - 所以我们在第一次启动成功之后都会将它的值置为false
+
+
+- ## 通过浏览器查看
+    - > namenode
+        > - URL：http://192.168.234.21:50070，
+        >> - 一个是 `active状态` 另一个是`standby状态`
+    - > yarn的管理地址
+        > - URL: http://192.168.234.21:8088
+
+
+
 

@@ -1,5 +1,22 @@
 
 
+- ## Haddop 生态系统圈
+    > <details>
+    > <summary><mark><font color=darkred>图示</font></mark></summary>
+    > 
+    >> - ![](./img/Hadoop生态系统圈.png)
+    > </details>
+    > 
+
+- ## 安装模式
+    - > 单机模式(<mark>没什么用</mark>)
+        >> 只能启用mapReduce,不能启用HDFS 以及Yarn
+    - > 伪分布式
+        >> 在一台机器来模拟集群，启动Hadoop的所有进程
+    - > 全分布式
+        >> 多台机器来搭建
+
+
 - ## Hadoop 简介
     - > 适用于进行离线分析的框架
 

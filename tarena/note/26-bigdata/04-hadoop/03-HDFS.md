@@ -7,6 +7,25 @@
     > ![](./img/01-hdfs体系结构.bmp)
     > </details>
     > 
+    > <details>
+    > <summary><mark><font color=darkred>HDFS体系结构</font></mark></summary>
+    > 
+    > ![](./img/hdfs体系结构.png)
+    > </details>
+    > 
+    > <details>
+    > <summary><mark><font color=darkred>HDFS下载文件</font></mark></summary>
+    > 
+    > ![](./img/hdfs下载文件过程.png)
+    > </details>
+    > 
+    > <details>
+    > <summary><mark><font color=darkred>HDFS上传文件</font></mark></summary>
+    > 
+    > ![](./img/上传文件到HDFS.png)
+    > </details>
+    > 
+    
 
 - ## HDFS
     - > 是Hadoop 的组件，用于完成分布式存储
@@ -14,16 +33,16 @@
 
 - ## HDFS 特点
     - > 存储超大文件 - 切块
-    - > 能够快速的应对和检测故障 - 心跳
+    - > 能够快速的应对和检测故障 - 通过心跳机制
 
 - ## 存储文件
-    - > 在存储数据时会将数据进行切分，切出来的每一个块称之为Block
+    - > 在存储数据时会将数据进行切块(Block)
     - > 包含两类主要的节点：NameNode 和DataNode
         > - DataNode 负责存储具体数据，NameNode负责记录数据以及管理DataNode
     - > 在HDFS 中，为了保证数据的完整性，将每一个Block 进行备份，每一个备份称之为一个复本。默认的复本数量为3 (1 + 2)。
 
 - ## Block
-    - > 一个数据埠，是HDFS 中数据存储的基本单位
+    - > 一个数据块，是HDFS 中数据存储的基本单位
     - > 每一个文件上传到HDFS 中，都会切成一个或者多个Block
     - > 在Hadoop1.0 中，每一个Block 大小是64M，在haddop2.0 中，每一个Block 大小是128M。
         >> - 128 M 是指的是最大块大小
@@ -36,11 +55,13 @@
 - ## DataNode
     - > 用于进行数据的存储
     - > 以Block 的形式存储
-    - > DataNode 会每隔3s 给NameNode 发送一次心跳
+    - > DataNode 默认情况下每隔3s 会给NameNode 发送一次心跳
+        > - 以报告自己的状态以及查询自己在NameNode 上的元数据是否正确
+        > - 如果自己在NameNode 上的元数据异常那么它会以NameNode上面的为准来更新自己的数据(备份或者删除)
 
 - ## NameNode
     - > 核心节点
-        > - 在1.0 中只能存在一个。在2.0 中最多也只能存在2 个
+        > - 在1.0 中只能存在一个。在2.0 中最多也只能存在2 个(这个不确定，我看了两个老师的讲法，其中一个老师说是可以多个。但是可以确定的是一般情况下我们也只会最多配置两个而以)
         > - 配置在`core-site.xml` 中
     - > 负责管理DataNode 和存储元数据
     - > 元数据包含
@@ -53,8 +74,11 @@
     - > 元数据的存储文件是 edits 和 fsimage
         > - 这两个文件的查看路径：hadoop-2.7.1/tmp/dfs/name/current
         > - Edits文件 => 存储HDFS的操作记录,记录写操作
+        >> - 每当有写操作都会都实时的记录到这个文件中
         > - Fsimage文件 => 存储是整个HDFS的状态（相当于快照文件）
         >> - 记录元数据，非实时记录
+        >> - 当HDFS 启动了一分钟这后，它会去合并edits 文件。
+        >> - 然后每隔一个小时(默认值)它会去将edits 的操作合并到此文件中来。
         > - edits 文件和fsimage 文件进行合并的条件
         >> - 时间维度：与上一次合并相距一定时间之后进行全并。
         >>> - `core-site.xml` 中的`fs.checkpoint.period` 默认值是: 3600s
@@ -62,7 +86,7 @@
         >>> - `core-site.xml` 中`fs.checkpoint.size` 默认是64M
         >> - 在NameNode 重启时也会触发edits 和fsimage 文件的更新合并
         >> - 手动合并
-        >>> - `hadoop dfsadmin -rollEdits`
+        >>> - 使用命令: `hadoop dfsadmin -rollEdits`
         > - 写请求流程
         >> - 当NameNode 收到写请求的时候，会先将这个请求记录到edits中，
         >> - 如果记录成功再更改内存中的元数据，最后给客户端返回ack表示操作成功。
@@ -70,7 +94,11 @@
     - > NameNode 通过心跳机制来管理DataNode
         > - 心跳机制的默认时间是3秒，默认心跳无响应时间为10 分钟
         > - NameNode 作为服务端，DataNode 作为客户端连接
-        > - 心跳信号包含：当前节点的状态(表示存活)，以及当前节点存储的Block 信息(若DataNode 中某一个Block 块丢失，NameNode 会从这个Block中得知，然后让其从其他节点中拷贝一份，以保证其存储的Block 数据的正确)
+        > - 心跳信号包含：
+        >> - 当前节点的状态(表示存活)
+        >> - 当前节点存储的Block 信息
+        >>> - 若DataNode 中某一个Block 块丢失，NameNode 会从这个Block中得知。
+        >>> - 然后让其从其他节点中拷贝一份，以保证其存储的Block 数据的正确
         > - 若某一个DataNode 长时间没有心跳响应，则NameNode 会认为它lost ，此时NameNode 会将其存放的Block 再备份到当前存活的其他DataNode 上，以保证Block 的复本数量
     - > 当NameNode 重新启动的时候
         > - 触发edits 和fsImage 之间的更新合并，
@@ -125,6 +153,18 @@
 
 
 
+
+- ## dfs 目录
+    - > 在NameNode 进行格式化的时候创建
+        >> - tmp/dfs/
+    - > dfs - {data、name、namesecondary}  DataNode NameNode 以及SecondaryNameNode 的存储目录
+    - > 当启动HDFS 的时候，在name 目录下面会生成一个in_use.lock 文件
+        >> - in_use.lock 防止一个节点上多次启动HDFS
+    - > 当停止之后，in_use.lock 文件将会删除
+    - > 新的操作写到 edits_inprogress，当这个文件写满之后自动更名为edits_xxxxxxxxxxx1-xxxxxxxxxx2
+    - > HDFS 中会对每一次的写操作分配一个递增的编号 - 事务ID - txid
+    - > 在HDFS 第一次启动的时候，一分钟之后会自动合并edits 和fsimage 文件。仅在第一次启动的时候。之后就按照配置，每一个小时合并一次。
+    
 
 
 

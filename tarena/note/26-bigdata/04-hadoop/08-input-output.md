@@ -20,3 +20,8 @@
 	5. NLineInputFormat：0.18.x新加入，可以将文件以行为单位进行split，将文件的每一行对应一个mapper。得到的key是每一行的位置偏移量（LongWritable类型），value是每一行的内容，Text类型。适合于行数不多但是每一行的字段较多的场景
 	6. CompositeInputFormat：用于多个数据源的join
 	7. DBInputFormat：把数据库表数据读入到HDFS
+
+
+
+
+

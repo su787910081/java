@@ -25,7 +25,10 @@
     - > 临时节点不能挂载子节点
 
 
-
+- ## ZooKeeper 伪分布式
+    - > ZooKeeper 的伪分布式不需要任务的配置，只需要将 ${ZooKeeper}/conf/zoo_sample.cfg 复制为一个名为zoo.cfg 的文件即可。
+        > - 或者你也可以对里面的一些配置进行修改
+        > - 一般我们就只会修改一个dataDir
 
 - ## 查看服务是否正常运行
     - > `jps `
