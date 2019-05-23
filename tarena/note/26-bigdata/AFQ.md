@@ -21,3 +21,9 @@
 
     - > MapReduce
         - > 2.0 与1.0 相比 到底是TaskTracker 通过心跳去取任务还是在2.0 中由ApplicationMaster 往下分发任务？？？
+
+
+    - > Yarn 中一个Job 所需要的Container 资源由谁计算出来的？
+		> - 但是这个Container 对象是由ApplicationManager 来计算的，因为所有的资源都由它来管理。
+		> - 一个Job 对应一个ApplicationMaster 这个ApplicationMaster 的其中一个作用就是需要计算它所对应的Job 会产生多少个Task, 这一个Task 就会被封装成一个Container 对象
+		> - ApplicationMaster 会将Task 的数量上传给ApplicationManager，ApplicationManager 会跟Task 的数量以及对应的分片所在的DataNode 来分配资源，这个资源就被封装成一个Container 对象
