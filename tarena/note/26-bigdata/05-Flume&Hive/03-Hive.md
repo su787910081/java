@@ -39,3 +39,21 @@ default-character-set=utf8
 [mysqld]
 character_set_server=utf8
 sql_mode=NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES
+
+
+
+create table nums(num array<int>) row format delimited collection items terminated by ',';
+
+create table arrs(num array<int>, name array<string>) row format delimited fields terminated by '\t' collection items terminated by ',';
+
+create table person (info map<string, int>) row format delimited map keys terminated by ',';
+
+select info['tom'] from person where info['tom'] is not null;
+
+
+// 从words 表中查询 数据，将每一行数据以空格进行切分，切分 出来的每一条数据插入到临时表ws 中
+// 从ws 表中查询 ，查单词出现的次数，并以单词作为单位分组
+select w, count(w) from (select explode(split(word, ' ')) w from words) ws group by w;
+
+
+
