@@ -1,9 +1,9 @@
 
 - # 建表语句
 
-	- > ## 创建数据库
-		>		create database zebra;
-		>		use zebra;
+- > ## 创建数据库
+	>		create database zebra;
+	>		use zebra;
 
 - # hive 建表语句
 
