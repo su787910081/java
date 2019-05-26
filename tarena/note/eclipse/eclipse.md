@@ -34,6 +34,9 @@
 - 修改eclipse 中项目的JDK 版本
 	> `右键项目 -->  Build Path  -> Configure Build Path...`  --> `Libraries  -->  JRE System Library [xxx]  --> Edit...` <br>
 
+- 编译器 需要与JDK 一致
+	> `Java Compiler`  -- > `Compiler compliance level: `  指定与JDK 的版本一致
+
 - 修改eclipse 中jsp 文件的默认编码格式
 	> `Window --> Preferences --> JSP Files` 
 
@@ -90,7 +93,6 @@
 		2) `tomcat --> clean`
 		3) `tomcat --> publish `
 	4)	…. 其他
-
 
 
 
