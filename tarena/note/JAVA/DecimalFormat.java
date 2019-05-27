@@ -31,4 +31,11 @@ java 中保留小数的做法：
 		0: 有数字显示数字无数字显示0
 
 
-
+	// 001 002 003
+    @Test
+    public void numberFormatDemo() {
+        DecimalFormat format = new DecimalFormat("000"); 
+        for (long i = 0; i < 10; i++) {
+            System.out.println(format.format(i));
+        }
+    }
