@@ -98,6 +98,8 @@
     > | 非顺序    | Persistent                |  Ephemeral_Sequential         |
     > | 顺序      | Persistent_Sequential     | Ephemeral                     |
 
+    - > 临时节点
+        > - 临时节点的生命周期和客户端会话绑定在一起，客户端会话失效，则这个节点就会被自动清除。
 
 
 - ##  总结 - 特性

@@ -10,6 +10,10 @@
         >> - 当桶的数量达到64(枚举)个，且当前链表中元素的个数达到8(枚举)。这两个条件同时满足时那么这个链表就会转换成红黑树结构。
         >> - 当链表是红黑树结构且个数降到6(枚举) 个时，那么它就会被 转换成链表结构
 
+- ## ZooKeeper
+    - > ZooKeeper 中的临时节点在什么情况下会被 移除。这个移除是由ZooKeeper 来完成的吗?
+        > - 临时节点的生命周期和客户端会话绑定在一起，客户端会话失效，则这个节点就会被自动清除。
+
 - ## Hadoop
     - > 在Hadoop 中 NameNode 切块是按128MB 大小进行切块的。而MapReduce 默认是按行进行处理的。显然在很多情况下都不是刚好分到换行符，那么被切到两个块中的一整行数据Hadoop 中的MapReduce  是怎么处理这个问题的呢？
         - > 我的猜测
@@ -27,3 +31,10 @@
 		> - 但是这个Container 对象是由ApplicationManager 来计算的，因为所有的资源都由它来管理。
 		> - 一个Job 对应一个ApplicationMaster 这个ApplicationMaster 的其中一个作用就是需要计算它所对应的Job 会产生多少个Task, 这一个Task 就会被封装成一个Container 对象
 		> - ApplicationMaster 会将Task 的数量上传给ApplicationManager，ApplicationManager 会跟Task 的数量以及对应的分片所在的DataNode 来分配资源，这个资源就被封装成一个Container 对象
+
+
+
+- ## HBase
+    - > HBase 完全分布式环境中，为什么在任意一台主机上启动HBase 那么所有的HBase 的HRegionServer 都会被启动呢，它这个是通过什么实现的？
+    - > 在完全分布式HBase 时。为什么在任意一个节点上面启动 sh start-hbase.sh 在其他的节点上面的HRegionServer 进程也会运行呢？它这个是怎么实现的呀？
+        > - ZooKeeper ?
