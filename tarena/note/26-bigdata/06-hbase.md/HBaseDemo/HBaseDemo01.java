@@ -140,6 +140,8 @@ public class HBaseDemo01 {
             byte[] number = r.getValue("cf1".getBytes(), "number".getBytes());
             System.out.println(new String(number));
         }
+
+        result.close();
   
         table.close();
     }

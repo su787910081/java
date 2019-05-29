@@ -64,6 +64,8 @@ public class HBaseFilterDemo02 {
             byte[] age = r.getValue("cf1".getBytes(), "age".getBytes());
             System.out.println(new String(name) + ":" + new String(age));
         }
+        result.close();
+        
         table.close();
     }
 

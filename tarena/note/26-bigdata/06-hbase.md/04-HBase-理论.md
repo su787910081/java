@@ -47,6 +47,7 @@
         - > <mark>HRegion是分布式的存储最小单位，StoreFile(Hfile)是存储最小单位</mark>
         - > 用于存储HBase 的数据(Cell/KeyValue)到HDFS 上。
         - > 在HFile中的数据是按RowKey、Column Family、Column排序，对相同的Cell(即这三个值都一样)，则按timestamp倒序排列
+        - > 通过索引(类B + Tree)机制 +Bloom 过滤器加快查找速度
 
     - ## HStoreFile(HFile) 格式
         - > HBase的数据以KeyValue(Cell)的形式顺序的存储在HFile中，在MemStore的Flush过程中生成HFile，由于MemStore中存储的Cell遵循相同的排列顺序，因而Flush过程是顺序写，从而提升写磁盘的性能
@@ -149,7 +150,7 @@
 
 - # HBase 写流程
     - > 客户端 发起put 请求
-        > - 首先从hbase:meta 表中查出该 put 数据最终需要去的HRegionServer。
+        > - 首先从hbase:meta 表中查出该 put 操作最终需要去的HRegionServer。
         > - 然后将put 请求发送给相应的HRegionServer
         >> - 在HRegionServer中它首先会将该Put操作写入WAL日志文件中(Flush到磁盘中)。
         >> - 然后会将数据写到Memstore，在Memstore按Rowkey排序以及用LSM-TREE对数据做合并处理
@@ -160,7 +161,49 @@
 
 
 - # HBase 读流程
+    - > 一个数据当前可能在HBase 中的三个位置
+        > - BlockCache(读缓存)、MemStore(写缓存)、StoreFile(HFile)
 
+
+- # Compaction 机制
+    - > MemStore每次Flush会创建新的HFile，而过多的HFile会引起读的性能问题
+        > - Compaction 机制的引入就是解决这个问题的。
+
+    - ## Minor Compaction
+        - > 选取一些小的、相邻的StoreFile将他们合并成一个更大的StoreFile
+            > - <mark>在这个过程中不会处理已经Deleted或Expired的Cell</mark>
+        - > 一次Minor Compaction的结果是更少并且更大的StoreFile。
+        - > 操作
+            > - API: `admin.compact("tab2".getBytes());`
+            > - 命令: `hbase(main):0800:0>  compact('tab2')`
+
+    - ## Major Compaction
+        - > 将一个HStore 中的所有HFile 文件合并成一个HFile 
+        - > 将所有的StoreFile合并成一个StoreFile
+            > - <mark>标记为Deleted的Cell会被删除</mark>
+            > - <mark>已经Expired的Cell会被丢弃</mark>
+            > - <mark>已经超过最多版本数的Cell会被丢弃</mark>
+        - > Major Compaction可以手动或自动触发
+            > - 它会引起很多的I/O操作而引起性能问题
+            > - 一般会安排在周末、凌晨等集群比较闲的时间做这个操作
+        - > 操作
+            > - API: `admin.majorCompact("tab2".getBytes());`
+            > - 命令: `hbase(main):0800:0>  major_compact('tab2')`
+
+- # HBase 表设计
+    - ## RowKey
+        - > 将RowKey 以字典序按从大到小排序
+            > - 默认是从小到大
+        - > 尽量散列设计
+        - > 长度尽量短
+            > - 最好不超过16字节
+        - > 建议用String 类型
+            > - 底层是按字节数组形式存储和比较的
+        - > 建议指定长度
+            > - 操作系统位数的整数倍(8 的整数倍)，有利于操作系统的处理
+
+    - ## 列族
+        - >  不宜过多
 
 
 
