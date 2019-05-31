@@ -1,5 +1,9 @@
 
-- # hive - mysql 
+
+# 将Hive 的元数据保存到Mysql 数据库中
+
+
+- # hive - mysql 的安装
     - > 搜索安装的MYSQL
         >>     rpm -qa | grep Percona
         >>     rpm -qa | grep -i mysql

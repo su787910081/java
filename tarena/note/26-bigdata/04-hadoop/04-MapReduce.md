@@ -33,7 +33,7 @@
         >> - 为了提高效率，每一个逻辑分片(Split)对应一个物理分块(Block)。
         > - ReduceTask 任务
         >> - 每一个分区对应一个ReduceTask 任务。
-        >> - 每一个ReduceTask 都要接收MapTask 的结果做为其任务依据(参数)
+        >> - 每一个ReduceTask 都要接收MapTask 的结果作为其任务依据(参数)
         >> - 每一个ReduceTask 会产生一个结果文件
 
 - ## Hadoop 中的MapReducer 相关进程与线程

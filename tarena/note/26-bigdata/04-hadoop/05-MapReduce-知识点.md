@@ -40,17 +40,16 @@
 - ## 排序(WritableComparable)
     - > Map执行过后，在数据进入reduce操作之前，数据将会按照输出的Key进行排序
     - > 要排序的对象对应类实现`WritableComparable`接口
-        > - 如果比较的结果一致，则会将相同的结果舍弃，所以一般情况下，我们不会将比较结果返回0。
+        > - <mark>如果比较的结果一致，则会将相同的结果舍弃，所以一般情况下，我们不会将比较结果返回0。</mark>
 
 - ## 合并(Combiner)
-    - > 每一个MapperTask可能会产生大量的输出，Combiner的作用就是在MapperTask端对输出先做一次合并，以减少传输到reducerTask的数据量
-    - > Combiner是实现在Mapper端进行key的归并，Combiner具有类似本地的reduce功能
-        > - 多数情况下，Combiner 与Reducer 是一致的。
-    - > 合并的目的是将Reducer的部分计算提前挪到Mapper端，从而降低Reducer的计算量
-    - > 在MapTask  阶段这个Combiner 是一定会发生的
+    - > Combiner 的输入是Mapper 的输出
+        > - 只要我们指定了Combiner 那么MapTask 输出的结果就会执行Combiner
     - > 在Shuffle 阶段只有Spill 文件的数量达到3 个时才会Combiner
 
-- ## 指定mapper 的输入格式(InputFormat)
+- ## 自定义InputFormat (mapper 的输入格式)
+    - > InputFormat 的输出直接连接了Mapper 的输入
+    - > Mapper 的默认InputFormat 是`TextInputFormat`
     - ### 概述
         - > MapReduce开始阶段阶段，InputFormat类用来产生InputSplit，并把基于RecordReader它切分成record（即KEYIN-VALUEIN），形成Mapper的输入。
         - > Hadoop本身提供了若干内置的InputFormat，其中如果不明确指定默认使用TextInputFormat。
