@@ -1,85 +1,69 @@
 
 
-- # HBase 物理存储
-    - ## HTable 表
-        - > 一个HTable 表按行键化分出多个HRegion 
+# HBase 物理存储
+- ## HTable 表
+    - > 一个HTable 表按行键化分出多个HRegion 
 
-    - ## HRegion
-        - > HRegion是一个Table 中的一个Region 在一个HRegionServer 中的表达
-        - > HRegion 的大小可以动态扩展
-            > - 每个HRegion的大小默认是10GB(也可以调整为1～20GB)
-            > - HRegion 的大小可以调整(一般在1~20GB)
-            >> - 这个大小值的由配置文件(`hbase-site.xml`)的`hbase.hregion.max.filesize`属性指定
-        - > HRegion 的大小达到阈值的时候将会被拆分并做转移
-            > - HMaster 将自动做拆分和转移工作，用户没有感知
-        - > HMaster 负责对HRegion 的负载均衡
-        - > HRegion是Hbase中分布式存储和负载均衡的最小单元
-            > - HRegion虽然是分布式存储的最小单元，但并不是存储的最小单元
-        - > HRegion 中记录了StartKey 和EndKey
-            > - RowKey 是排序的，所以它可以被快速定位。
+- ## HRegion
+    - > HRegion是一个Table 中的一个Region 在一个HRegionServer 中的表达
+    - > HRegion是Hbase中分布式存储和负载均衡的最小单元
+        > - 也就是说HRegion 中可能包含很多个小单元，这些单元可以单独作为一个文件进行存储。
+        > - 但是，这些多个小单元必须作为一个整体(HRegion)存储在一个物理机上面。
+        > - HMaster 负责对HRegion 的负载均衡
+    - > HRegion 默认的最大大小为10GB
+        > - 这个大小值的由配置文件(`hbase-site.xml`)的`hbase.hregion.max.filesize`属性指定
+        > - HRegion 的大小达到阈值的时候将会被拆分并做转移，这个工作由HMaster 自动完成，用户没有感知
+    - > HRegion 中记录了StartKey 和EndKey，为了快速查找定位
 
-    - ## HStore(对应一个列族)
-        - > 每个HStore保存一个列族(columns family)的数据
-            > - 因而最好将具有相近I/O特性的Column存储在一个Column Family，以实现高效读取(数据局部性原理，可以提高缓存的命中率)
-        - > 每一个HStroe 有一个MemStore 
-        - > 每一个HStore 有0 个或者多个HStoreFile(HFile)
-        - > HStore是HBase中存储的核心，它实现了读写HDFS功能。
+- ## HStore
+    - > 一个HRegion 中的一个列族的数据存储到一个HStore
+        > - 因而最好将具有相近I/O特性的Column存储在一个Column Family，以实现高效读取(数据局部性原理，可以提高缓存的命中率)
 
-    - ## MemStore (写缓存)
-        - > MemStore 默认是128M，内存缓存
-        - > 通常每个HRegion 中的每个列族(HStore)都有一个MemStore
-        - > 在MemStore 中会根据RowKey、Column Family、Columng正序以及TimeStamp 倒序排序。
-        - > 所有数据的写操作，在完成WAL 日志写后，会写入MemStore 中
-        - > 最后MemStore 中的数据都将冲刷到磁盘中，有三种情况会冲刷数据到磁盘
-            > - 1. MemStore 中的大小超过了`hbase.hregion.memstore.flush.size`(默认是128MB) 时
-            >> - 这个值刚好对应一个HDFS 中Block
-            > - 2. HRegionServer 中所有的MemStore 大小之和超过了某一阈值就会冲刷到磁盘
-            >> - 这个阈值为配置属性`hbase.regionserver.global.memstore.upperLimit`, 默认是当前计算机总内存的35%
-            >> - 这种情况并不是将所有的MemStore 都一起冲刷到磁盘。
-            >> - 按MemStore 使用的内存大小，将多的优先刷新到磁盘。
-            > - 3. 当HRegionServer 中的WAL 文件的大小超过了1GB
-            >> - 1GB = `hbase.regionserver.hlog.blocksize`(32MB) * `hbase.regionserver.max.logs`(32)
-        - > MemStore 根据一定的算法将数据 flush 到HStoreFile(HFile) 中
-            > - LSM-TREE 算法
-            > - 这个算法的作用是将数据顺序写磁盘，而不是随机写。减少了磁头调度的时间，从而提高写入性能
+- ## MemStore (写缓存)
+    - > 每一个HStore 有一个MemStore，默认是128M。这个与DataNode 的块大小一样。
+    - > 在MemStore 中会根据RowKey、Column Family、Columng正序以及TimeStamp 倒序排序。
+    - > 所有数据的写操作，在完成WAL 日志写后，才会被写入MemStore 中
+    - > MemStore 中的数据在达到一定条件(三个条件)时会一次性冲刷到磁盘中。
+        > - 数据一次性冲刷到磁盘(顺序写)，高性能写。
+        > - 1. MemStore 超过了`hbase.hregion.memstore.flush.size`(默认是128MB) 
+        >> - 这个值刚好对应一个HDFS 中Block
+        > - 2. HRegionServer 中所有的MemStore 大小之和超过了(物理机总内存的)35%
+        >> - 这个阈值配置属性为: `hbase.regionserver.global.memstore.upperLimit`
+        >> - 按MemStore 使用的内存大小，将多的优先刷新到磁盘。并非所有都冲刷到磁盘。
+        > - 3. 当HRegionServer 中的WAL 文件的大小超过了1GB
+        >> - 1GB = `hbase.regionserver.hlog.blocksize`(32MB) * `hbase.regionserver.max.logs`(32)
+    - > MemStore 根据一定的算法(LSM-TREE)将数据 flush 到HStoreFile(HFile) 中
+        > - The Log-Structured Merge-Tree
 
-    - ## HStoreFile(HFile)
-        - > <mark>HRegion是分布式的存储最小单位，StoreFile(Hfile)是存储最小单位</mark>
-        - > 用于存储HBase 的数据(Cell/KeyValue)到HDFS 上。
-        - > 在HFile中的数据是按RowKey、Column Family、Column排序，对相同的Cell(即这三个值都一样)，则按timestamp倒序排列
-        - > 通过索引(类B + Tree)机制 +Bloom 过滤器加快查找速度
+- ## HStoreFile(HFile)
+    - > <mark>HRegion是分布式存储的最小单位，StoreFile(HFile)是存储的最小单位</mark>
+    - > 在HFile中的数据是按RowKey、Column Family、Column排序，对相同的Cell(即这三个值都一样)，则按timestamp倒序排列
+    - > 通过索引(类B + Tree)机制 +Bloom 过滤器加快查找速度
+    - > HFile 的尾部会存储一些meta数据，其中就有MemStore 冲刷时的最大WAL sequence值。
 
-    - ## HStoreFile(HFile) 格式
-        - > HBase的数据以KeyValue(Cell)的形式顺序的存储在HFile中，在MemStore的Flush过程中生成HFile，由于MemStore中存储的Cell遵循相同的排列顺序，因而Flush过程是顺序写，从而提升写磁盘的性能
+- ## BlockCache 读缓存
+    - > 一台HRegionServer 共用一块BlockCache
+    - > 引用局部性原理，每次存储一片数据
+        > - 分空间局部性和时间局部性
+        > - 空间局部性是指CPU在某一时刻需要某个数据，那么有很大的概率在一下时刻它需要的数据在其附近；
+        > - 时间局部性是指某个数据在被访问过一次后，它有很大的概率在不久的将来会被再次的访问
+        > - 这样设计的目的是为了提高读缓存的命中率
+    - > HBase中默认采用LRU 算法来回收缓存数据
+        > - LRU -evicted，是一种数据的回收策略
+        > - LRU– 最近最少使用的：移除最长时间不被使用的对象。
 
-    - ## BlockCache 读缓存
-        - > 一台HRegionServer 共用一块读缓存
-        - > 引用局部性原理
-            > - 分空间局部性和时间局部性
-            > - 空间局部性是指CPU在某一时刻需要某个数据，那么有很大的概率在一下时刻它需要的数据在其附近；
-            > - 时间局部性是指某个数据在被访问过一次后，它有很大的概率在不久的将来会被再次的访问
-            > - 这样设计的目的是为了提高读缓存的命中率
-        - > HBase中默认on-heap LruBlockCache。
-            > - LRU -evicted，是一种数据的回收策略
-            > - LRU– 最近最少使用的：移除最长时间不被使用的对象。
+- ## WAL (Write Ahead Log)  早期版本中也叫HLog
+    - > 一个日志文件，用于存储所有的写操作记录
+        > - 所有的写操作都会先存储到这个文件，然后才会到MemCache
+    - > 它最主要的作用是数据恢复
+        > - 当HRegionServer 宕机之后数据操作可以从WAL 文件中恢复
+    - > 它是HDFS上的一个文件
+        > - HLog文件就是一个普通的Hadoop Sequence File，Sequence File 的Key是HLogKey对象，HLogKey中记录了写入数据的归属信息，除了table和region名字外，同时还包括 sequence number和timestamp，timestamp是”写入时间”，sequence number的起始值为0，或者是最近一次存入文件系统中sequence number。HLog Sequece File的Value是HBase的KeyValue对象，即对应HFile中的KeyValue。
+        > - 这个Log文件会定期Roll出新的文件而删除旧的文件(那些已持久化到HFile中的Log可以删除)。WAL文件存储在/hbase/WALs/${HRegionServer_Name}的目录中(在0.94之前，存储在/hbase/.logs/目录中)，一般一个HRegionServer只有一个WAL实例，也就是说一个HRegionServer的所有WAL写都是串行的(就像log4j的日志写也是串行的)。一个RS服务器只有一个HLOG文件，在0.94版本之前，写HLOG的操作是串行的，所以效率很低，所以1.0版本之后，Hbase引入多管道并行写技术，从而提高性能。
 
-    - ## WAL (Write Ahead Log)  早期版本中也叫HLog
-        - > 它是一个日志文件
-        - > 它存储的是写操作记录
-        - > 它最主要的作用是数据恢复
-            > - 所有的`写操作`都会先保证写入到这个Log 文件中之后，才会真正的更新MemStore.
-            > - 当HRegionServer 宕机之后数据操作可以从WAL 文件中恢复
-
-        - > 它是HDFS上的一个文件
-            > - HLog文件就是一个普通的Hadoop Sequence File，Sequence File 的Key是HLogKey对象，HLogKey中记录了写入数据的归属信息，除了table和region名字外，同时还包括 sequence number和timestamp，timestamp是”写入时间”，sequence number的起始值为0，或者是最近一次存入文件系统中sequence number。HLog Sequece File的Value是HBase的KeyValue对象，即对应HFile中的KeyValue。
-            > - 这个Log文件会定期Roll出新的文件而删除旧的文件(那些已持久化到HFile中的Log可以删除)。WAL文件存储在/hbase/WALs/${HRegionServer_Name}的目录中(在0.94之前，存储在/hbase/.logs/目录中)，一般一个HRegionServer只有一个WAL实例，也就是说一个HRegionServer的所有WAL写都是串行的(就像log4j的日志写也是串行的)。一个RS服务器只有一个HLOG文件，在0.94版本之前，写HLOG的操作是串行的，所以效率很低，所以1.0版本之后，Hbase引入多管道并行写技术，从而提高性能。
-        - > 所有的写操作都会先保证先写入这个Log 文件中后，才会真正更新MemStore，最后再写入HFile。
-        - > 采用这种模式的目的是可以保证HRegionServer 宕机后依然可以从这个Log 文件中恢复所有的操作，而不至少数据在MemStore(内存) 中丢失。
-
-
-
+# 逻辑进程
 - # HRegionServer 服务器进程
-    - > HRegionServer 由WAL(HLog)、BlockCache、MemStore、HFile组成
+    - > HRegionServer 包含WAL(HLog)、BlockCache、MemStore、HFile组成
     - > 一个HRegionServer 中管理着多个HRegion存储单元
     - > 一般情况下HRegionServer 节点跟DataNode 节点放在一台物理计算机上(数据本地化策略)
     - > 它负责读写HDFS，管理Table中的数据。
@@ -87,22 +71,25 @@
         > - Client 从HMaster中获取元数据，找到RowKey 所在的HRegion/HRegionServer后直接从HRegionServer 读取数据。
     - > 一个HRegionServer 可以存放1000(来自于Google 的BigTable 论文) 个HRegion
 
-- # HMaster 节点
+- # HMaster 服务进程
+    - > HMaster 是HBase 中的管理节点
     - > HMaster 没有单点故障问题，它可以有多个back-up 节点。
-        > - 一般我们只会启用一个Active HMaster 和一个back-up HMaster，这样可以减少实时热备带来的网络开销。
-    - > 管理HRegionServer, 实现其负载均衡
+        > - 一般我们只会启用两个。
+        >> - 按照启动顺序第一个作为Active HMaster ，后一个作为back-up HMaster
+        >> - 这样可以减少实时热备带来的网络开销。
+    - > 负责管理HRegionServer, 实现其负载均衡
         > - 通过ZooKeeper 来监控集群中的所有HRegionServer 的状态。
         > - 使用心跳机制与ZooKeeper 通信。
     - > 管理和分配HRegion
-        > - 在HRegion 拆分时分配新的HRegion；
+        > - 在HRegion 拆分后，将新的HRegion 单元分配新的HRegionServer 节点上；
         > - 在HRegionServer退出时迁移其内的HRegion到其他HRegionServer上。
+    - > HMaster 在启动之后会自动在ZooKeeper 上注册一个临时节点 `/hbase/master`
+        > - back-up HMaster 注册一个临时节点`/hbase/backup-masters`
+        > - HMaster 定期向ZooKeeper 来发送心跳，维护这个临时节点，心跳时间默认是180s
     - > 实现DDL操作
         > - DDL(Data Definition Language)，namespace和table的增删改，column familiy(列族)的增删改等。
     - > 管理namespace和table的元数据（实际存储在HDFS上）。
     - > 权限控制（ACL）。
-
-- # HBase 内部通信
-    - > HBase Client 通过RPC 方式和HMaster、HRegionServer 通信；
 
 - # HBase 的ZooKeeper 集群(协调者)
     - > 管理着HMaster和HRegionServer的状态
@@ -117,6 +104,11 @@
     - > 存放HRegionServer服务器的运行状态
     - > 实现HMaster主备节点的failover。
 
+
+# 技术点
+
+- # HBase 内部通信
+    - > HBase Client 通过RPC 方式和HMaster、HRegionServer 通信；
 
 
 - # HBase 的第一次读写

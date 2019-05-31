@@ -42,7 +42,7 @@
     - > ApplicationMaster 为这个job 计算切片，然后向ResourceManager(ApplicationManager) 申请Container 资源
     - > ResourceManager(ApplicationManager) 会根据申请为其每一个Task 分配资源并封装到Container 中并添加到Scheduler 的Container 队列中。
     - > Scheduler 将队列中的Container 依次分配给ApplicationMaster 
-    - > ApplicationMaster 拿到Container 会到对应的NodeManager 上去提一个Container, NodeManager 会启动这个Container 并执行Task
+    - > ApplicationMaster 拿到Container 会到对应的NodeManager 上去提交一个Container, NodeManager 会启动这个Container 并执行Task
 
 
 

@@ -34,12 +34,15 @@
         > - `ls /root/software/kafka_2.11-1.0.0/kafka-logs`
         >>      cnbook-0/
         >>      cnbook-1/
+        > - 主题的分区数直接决定了消费的并行度
+        >> - 每一个分区将分对应一个线程
         - >  每一个分区可以有多个复本
             > - 各个复本之间有leader 和follower 之分
 
     - > replication-factor: 复本因子
         > - 每一个分区的副本数量
         > - 复本的数量不能超过 broker (节点)的数量
+        > - 提高分区的副数，并不能提高并发度，因为无论是生产者还是消费者，都是和副本的leader 交互。
 
 
     - > broker 
@@ -50,6 +53,8 @@
         - > 测试环境
             > -     sh kafka-console-consumer.sh --zookeeper HBase01:2181 -topic music  --from-beginning
             > - `--from-beginning` 指定从头开始消费，如果不加则之前的数据忽略掉，从新的数据开始消费。
+            > -  带消费者组
+            >> -    sh 
 
     - > 生产者
         - > 测试环境
@@ -124,12 +129,69 @@
         > - leader 最后给客户端响应ACK
 
 - ## ISR 机制
-    - > 比如有5个节点 broker
-        > - 1: leader 3: follower 4: follower
+    - > 比如有5个broker 节点 
+        > - 假设某个主题在各broker 节点中的角色为 `1: leader 3: follower 4: follower`
         > - 在同步数据的过程中，3 同步成功，但是4 同步失败
         > - 那么1 和3 是一组ISR 成员，4 不是ISR 成员
         >> - 在选举的时候会用到ISR 机制
         >> - 选举的时候就会从1 和3 两个ISR  成员中选出来
+
+- ## 配置
+    - > `config/server.properties`
+        > - `broker.id=0` 多节点的话这个值不能重复
+        >> - 由此ID 区分多节点
+        > - `log.dirs=/root/software/kafka_2.11-1.0.0/kafka-logs`
+        >> - 用来存储消息数据日志的目录
+        > - `zookeeper.connect=HBase01:2181,HBase02:2181,HBase03:2181`
+        >> - kafka 用到的ZooKeeper 集群
+
+- ## Kafka 依赖ZooKeeper  做分布式
+    - > /cluster
+    - > /brokers
+        - > `ls /brokers/ids`
+            > -     [0]
+            > - 每一台KAFKA 节点运行时在ZooKeeper 上注册的临时节点，以表示该节点为活动节点
+            > - 节点宕机或者停机该节点将消失
+        - > `get /brokers/ids/0`
+            > - `get /brokers/ids/0`
+            >>       {"listener_security_protocol_map":{"PLAINTEXT":"PLAINTEXT"},"endpoints":["PLAINTEXT://HBase01:9092"],"jmx_port":-1,"host":"HBase01","timestamp":"1559128852749","port":9092,"version":4}
+            >>       cZxid = 0x600000014
+            >>       ctime = Wed May 29 04:20:53 PDT 2019
+            >>       mZxid = 0x600000014
+            >>       mtime = Wed May 29 04:20:53 PDT 2019
+            >>       pZxid = 0x600000014
+            >>       cversion = 0
+            >>       dataVersion = 0
+            >>       aclVersion = 0
+            >>       ephemeralOwner = 0x36b034b33c40001
+            >>       dataLength = 184
+            >>       numChildren = 0
+    - > /brokers/topics
+        - > `ls /brokers/topics`
+            > -     [music, enbook]
+            >> - 当前KAFKA 中有哪些主题在ZooKeeper 中的存储位置
+            >> - 每一个主题都是一个节点信息
+
+
+
+- ## kafka 清理环境到初始环境
+    - > 清理KAFKA 服务器的历史数据
+        > - 找到KAFKA 服务器保存数据的目录
+        >> - 配置文件`server.properties` 中的配置项 `log.dirs=/root/software/kafka_2.11-1.0.0/kafka-logs`
+        > - 删除该目录
+        >> - `rm -rf /root/software/kafka_2.11-1.0.0/kafka-logs`
+    - > 清理KAFKA 在ZooKeeper 中的数据
+        > - 连接到ZooKeeper 服务器
+        > -  `./zkCli.sh -server HBase01:2181`
+        >>      [zk: HBase01:2181(CONNECTED) 2] rmr /cluster
+        >>      [zk: HBase01:2181(CONNECTED) 3] rmr /brokers
+        >>      [zk: HBase01:2181(CONNECTED) 4] rmr /admin
+        >>      [zk: HBase01:2181(CONNECTED) 5] rmr /isr_change_notification
+        >>      [zk: HBase01:2181(CONNECTED) 6] rmr /log_dir_event_notification
+        >>      [zk: HBase01:2181(CONNECTED) 7] rmr /controller_epoch
+        >>      [zk: HBase01:2181(CONNECTED) 8] rmr /consumers
+        >>      [zk: HBase01:2181(CONNECTED) 9] rmr /latest_producer_id_block
+        >>      [zk: HBase01:2181(CONNECTED) 10] rmr /config
 
 
 

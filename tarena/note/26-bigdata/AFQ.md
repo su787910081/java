@@ -38,3 +38,17 @@
     - > HBase 完全分布式环境中，为什么在任意一台主机上启动HBase 那么所有的HBase 的HRegionServer 都会被启动呢，它这个是通过什么实现的？
     - > 在完全分布式HBase 时。为什么在任意一个节点上面启动 sh start-hbase.sh 在其他的节点上面的HRegionServer 进程也会运行呢？它这个是怎么实现的呀？
         > - ZooKeeper ?
+    - > 写文件时，列存储是一行写完接着写下一行还是中间有间隔呢？
+
+
+
+
+
+
+- ## kafka
+    - > 在有三个KAFKA broker 三个ZooKeeper 节点的环境下。我使用代码往kafka 的某一个主题里面插入了数据, 从 0 ~ 99 100 个数字，但是我使用消费者客户端连接到KAFKA 服务器上，却只收到一半的数据(全为奇数据 或者全为偶数)。
+        > -  客户端 连接使用的命令如下
+        >> - `sh kafka-console-consumer.sh --zookeeper HBase01:2181,HBase02:2181,HBase03:2181 -topic  jpbook  --from-beginning`
+
+
+
