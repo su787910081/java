@@ -2,11 +2,30 @@
 /**
  *
  * Array List 通用方法
- * 1. take 2. takeRight 3. drop 4. dropRight 5. head 6. last
- * 7. mkString 8. intersect 9. unio 10. diff 11. exists
- * 12. count 13. filter 14. sortBy 15. map 16. max 17. min
- * 18. sum 19. reduce 20. reverse 21.
+ 1. take  取前N 项元素
+ 2. takeRight 取右N 项元素
+ 3. drop  删除前N 项元素，返回剩余元素
+ 4. dropRight  删除右N 项元素，返回剩余元素
+ 5. head 取出第一个元素
+ 6. last 取出最后一个元素
+ 7. mkString 生成一个字符串，并提供一个分隔符
+ 8. intersect 交集
+ 9. unio 并集
+ 10. diff 差集
+ 11. exists 是否存在指定规则的元素
+ 12. count 满足规则的元素的个数
+ 13. filter 过滤指定条件的元素
+ 14. sortBy 按指定规则排序
+ 15. map 将每一个元素按规则映射成另外一种元素类型，集合的类型是不会改变的。
+ 16. max 最大的一个元素
+ 17. min 最小的一个元素
+ 18. sum 所有元素求和
+ 19. reduce 每前两个相邻元素按指定规则进行处理，处理的结果与后一个元素继续按此规则处理，返回最终结果
+ 20. reverse 元素反转
+ 21. distinct 去重
  * 重点掌握：1. filter 2. sortBy 3. map 4. reduce 5. distinct, 6. flatMap, 7.groupBy
+ *      flatMap 扁平化map，按指定规则进行映射，映射的结果元素将会是一个单元素集合 List[String]
+ *      groupBy 按指定的规则进行分组，按批规则提取key。与key匹配的元素将被组合成一个Array 对象
  * 掌握类型转换的技巧: 比如List 没有而Array 有，则可以转换成Array 再来操作
  */
 import scala.collection.mutable._
