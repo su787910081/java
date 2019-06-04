@@ -3,7 +3,7 @@
 
 - ## 集群
     - > 准备三台计算机
-    - > 配置
+    - > 配置(`conf/zoo.cfg`)
         >> - 指定一个数据目录
         >>>     dataDir=/root/software/zookeeper-3.4.8/tmp
         >> - 配置三个节点
@@ -16,6 +16,8 @@
         >> - 配置选举ID(`myid`)
         >>> - 在指定的数据目录`dataDir=/root/software/zookeeper-3.4.8/tmp` 下面创建一个叫`myid` 的文件，并在里面添上相对应的选举ID值. 
         >>> - 也就是配置`server.1` 后面的数字1
+    - > 启动
+        > - `sh zkServer.sh start`
 
 - ## 节点状态
     | 节点状态  | 状态说明   |
