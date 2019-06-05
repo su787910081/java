@@ -46,10 +46,11 @@
 
 
 - ## kafka
-    - > 在有三个KAFKA broker 三个ZooKeeper 节点的环境下。我使用代码往kafka 的某一个主题里面插入了数据, 从 0 ~ 99 100 个数字，但是我使用消费者客户端连接到KAFKA 服务器上，却只收到一半的数据(全为奇数据 或者全为偶数)。
-        > -  客户端连接使用的命令如下
-        >> - `sh kafka-console-consumer.sh --zookeeper HBase01:2181,HBase02:2181,HBase03:2181 -topic  jpbook  --from-beginning`
-        - > 每一个消费者线程只处理某一些分区中的数据。
+    - ### 在有三个KAFKA broker 三个ZooKeeper 节点的环境下。我使用代码往kafka 的某一个主题里面插入了数据, 从 0 ~ 99 100 个数字，但是我使用消费者客户端连接到KAFKA 服务器上，却只收到一部分的数据。
+        - >  客户端连接使用的命令如下
+            >> - `sh kafka-console-consumer.sh --zookeeper HBase01:2181,HBase02:2181,HBase03:2181 -topic  jpbook  --from-beginning`
+        - > 答：原来是因为我在使用API 连接KAFKA 的时候使用的是主机名，而服务器端是虚拟机，而虚拟机的某一个IP 自动更新了。我在服务器里面将 hosts 文件更新，但是Windows里面却忘记了更新。最终我把Windows中的 hosts 文件更新了就没有问题了。
+            > - 我还发现：本来是有三个分区的，它们分别在三个 broker  上面，但是我检查时发现，总有一个 broker 的日志文件中没有数据，是空文件。
 
 
 

@@ -19,7 +19,7 @@
         > - 第一个JOB 处理去重(通过分区会有多个Reduce )，第二个JOB 做计数(计数只能有一个reduce)。
         >>       select count(*) from (select distinct id from tablename) tmp;
         > - 默认情况下reduce 的个数是只有一个，但是可以通过参数的形式设置reduce 的个数
-        > - 设置reduce 的个数，但是如果是count 的话，只能是一个
+        > - 设置reduce 的个数，但是如果是count 的话，只能是一个(设置多个也没用)
         >>       set mapred.reduce.task = 2;
     - > 调整切片数(map 任务)
         > - hive 底层自动将小文件合成一个切片来处理。

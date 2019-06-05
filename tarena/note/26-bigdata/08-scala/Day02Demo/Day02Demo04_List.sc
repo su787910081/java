@@ -24,8 +24,12 @@
  20. reverse 元素反转
  21. distinct 去重
  * 重点掌握：1. filter 2. sortBy 3. map 4. reduce 5. distinct, 6. flatMap, 7.groupBy
+ *      filter 过滤指定条件的元素
+ *      sortBy 按指定规则排序
+ *      map 将每一个元素按规则映射成另外一种元素类型，集合的类型是不会改变的。
+ *      reduce 每前两个相邻元素按指定规则进行处理，处理的结果与后一个元素继续按此规则处理，返回最终结果
  *      flatMap 扁平化map，按指定规则进行映射，映射的结果元素将会是一个单元素集合 List[String]
- *      groupBy 按指定的规则进行分组，按批规则提取key。与key匹配的元素将被组合成一个Array 对象
+ *      groupBy 按指定规则做聚合，最后将结果返回到一个map映射里。
  * 掌握类型转换的技巧: 比如List 没有而Array 有，则可以转换成Array 再来操作
  */
 import scala.collection.mutable._

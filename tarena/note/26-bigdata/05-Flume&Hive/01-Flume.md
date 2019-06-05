@@ -1,13 +1,29 @@
 
 
+- ## Flume 原理
+    > <details>
+    > <summary><mark><font color=darkred>Flume原理图</font></mark></summary>
+    >
+    >> ![](./img/Flume原理图.png)
+    >
+    > </details>
+    >
+
 
 - ## 基本概念
     - > Event: 
         > - 在Flume 中，将它的每一个日志封装成一个Event 对象。也就意味着在Flume中传输的Event 对象。Event 对象展现形式是一个json 串，这个json 串分为两个部分: headers 和body
     - > Agent: 
         - > Source  数据源
+            > - 可以通过路由将数据分发到不同的channel 中
+            > - 它也可以将数据通过路由将数据复制到不同的channel 中
+            > - 以及拦截一些数据，为这个数据封装一些其他属性进行一些简单的处理
+            >> - 比如在这个数据的event 对象中，添加一些header，下游可能通过这些标记来区分数据
         - > Channel  数据缓冲区
+            > - channel 就是一个缓冲区
+            > - 一个channel 对应一个sink
         - > Sink  数据流出目的地
+            > - 连接下游，从channel 中取数据，发往下游
 
 - ## 配置文件
     - > 文件名和文件路径不受限制，启用的时候使用命令会指定配置文件

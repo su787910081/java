@@ -5,9 +5,16 @@
 
 - # hive - mysql 的安装
     - > 搜索安装的MYSQL
+        > <details>
+        > <summary>rpm 命令</summary>
+        > 
         >>     rpm -qa | grep Percona
         >>     rpm -qa | grep -i mysql
         >>     rpm -qa | grep MySql
+        >
+        > </details>
+        >
+
     - > 卸载
         >>     rpm -ev --nodeps Percona-Server-56-debuginfo-5.6.24-rel72.2.el6.x86_64
     - > 删除历史数据
@@ -42,6 +49,9 @@
     - ## 将mysql 驱动添加到 ${HIVE}/lib/ 目录中
         > - `mysql-connector-java-5.1.34-bin.jar`
     - > 添加一个配置文件`vim ${HIVE}/conf/hive-site.conf`(新文件)
+        > <details>
+        > <summary><mark>详细信息</mark></summary>
+        >
         >>     <configuration>
         >>         <property>
         >>             <name>javax.jdo.option.ConnectionURL</name>
@@ -60,6 +70,8 @@
         >>             <value>root</value>
         >>         </property>
         >>     </configuration>
+        > </details>
+        >
 
 
 

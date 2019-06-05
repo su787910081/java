@@ -33,7 +33,8 @@
     - > 内部表和外部表都可以是分区表
     - > 分区表的最大作用就是避免全表查询
     - > 内部分区表
-        > - 一个分区会被认为是一个表的字段, overwrite 关键字会覆盖相同分区的数据
+        > - 一个分区会被认为是一个表的字段
+        > - 下面的示例中使用了 overwrite 关键字会覆盖之前的数据
         >>       create table book(id int, name string) partitioned by (title string) row format delimited fields terminated by ' ';
         >>
         >>       load data local inpath '/home/cn.txt' overwrite into table book partition(title='cn');
