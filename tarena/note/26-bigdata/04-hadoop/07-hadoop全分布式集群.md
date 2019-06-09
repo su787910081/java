@@ -13,6 +13,13 @@
     >> ![](./img/9节点配置.png)
     > </details>
     > 
+    > <details>
+    > <summary><mark><font color=darkred>高可用集群</font></mark></summary>
+    > 
+    >> ![](./img/Hadoop高可用集群.png)
+    >
+    >  </details>
+    >
 
 
 
@@ -53,7 +60,6 @@
     - ## ZooKeeper 集群配置
 
 - # Hadoop
-
     - <mark>hadoop 的配置各个节点的配置基本相同，可以配置一份，然后拷贝到其他几个节点主机上面。</mark>
     - ## Hadoop 配置
         - > 配置 hadoop-env.sh
@@ -94,9 +100,9 @@
     - ## 可以将上面的这些配置文件拷贝到各节点主机上面
         > - `scp -r  hadoop-2.7.1/etc/hadoop  hadoop02:/home/software/hadoop-2.7.1/etc/hadoop`
 
-    - ## hadoop 首次启动
-        - > 在namenode 所在节点上(hadoop04)
-            > - `hdfs zkfc -formatZK`
+    - ## <mark>**hadoop 首次启动**</mark>
+        - > 在<mark>*主NameNode*</mark> 所在一个主节点上(hadoop04)
+            > - `hdfs zkfc -formatZK` 执行一次
             > <details>
             > <summary><mark><font color=darkred>成功提示</font></mark></summary>
             > 
@@ -120,9 +126,11 @@
             >>      19/05/20 20:10:40 INFO zookeeper.ClientCnxn: EventThread shut down
             > </details>
             >
-        - > 启动 journalnode (在hadoop01、hadoop02、hadoop03节点上)
+        - > 启动 journalnode (在hadoop01、hadoop02、hadoop03节点上各执行一次)
             > - `hadoop-daemon.sh start journalnode`
             > - 使用 jps 查看是否启动成功
+            >>      [root@Hadoop01 ~]# jps
+            >>      27053 JournalNode
 
         - > 将hadoop04 节点格式化为主namenode，然后启动
             > - 在 hadoop04 节点主机上执行命令: `hadoop namenode -format`
@@ -148,7 +156,8 @@
             > - 启动主namenode 节点
             >> - `hadoop-daemon.sh start namenode`
         - > 将hadoop05 节点指定为备份节点,先格式化，再启动
-            > - `hadoop namenode -bootstrapStandby`
+            > - 格式化时需要保证主NameNode 已运行，否则会报错
+            > - 格式化: `hadoop namenode -bootstrapStandby`
             > <details>
             > <summary><mark><font color=darkred>成功提示</font></mark></summary>
             > 
@@ -184,11 +193,13 @@
             >> - 使用jps 查看是否启动成功
         
         - > 在 hadoop04 hadoop05 节点上来启动 FailOverController
-            > - 用于namenode 的故障切换
+            > - 用于NameNode 的故障切换
             > - `hadoop-daemon.sh start zkfc`
             >> - 使用JPS 查看是否启动成功
+            >>>     [root@Hadoop02 ~]# jps
+            >>>     6691 DFSZKFailoverController
 
-        - > datanode 启动(在hadoop07、hadoop08、hadoop09节点上)
+        - > DataNode 启动(在hadoop07、hadoop08、hadoop09节点上)
             > - `hadoop-daemon.sh start datanode`
             >> - 使用JPS 查看是否启动成功
 
@@ -226,6 +237,13 @@
     - > yarn的管理地址
         > - URL: http://192.168.234.21:8088
 
+- ## 还原Hadoop 环境
+    - ### 将Hadoop 高可用环境全部清理，还原为一个完新的Hadoop 环境
+        - > `$ stop-all.sh`
+        - > 删除ZooKeeper 中的相关节点
+            > - `rmr /hadoop-ha`
+            > - `rmr /yarn-leader-election`
+        - > 删除相关目录，然后新建
 
 
 

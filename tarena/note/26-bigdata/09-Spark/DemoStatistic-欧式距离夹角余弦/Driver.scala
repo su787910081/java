@@ -35,7 +35,6 @@ object Driver {
 
     val a3 = a1 zip a2
     val a4 = a3.map { x => (x._1 - x._2) * (x._1 - x._2) }
-    // val a5 = a4.reduce { (a, b) => a + b }
     val a5 = a4.sum
     val r1 = Math.sqrt(a5)
     println(r1)

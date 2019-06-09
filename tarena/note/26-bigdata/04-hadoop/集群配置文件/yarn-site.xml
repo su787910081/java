@@ -45,7 +45,7 @@
         <name>yarn.nodemanager.aux-services</name>    
         <value>mapreduce_shuffle</value>    
     </property>  
-    <!-- 指定resourcemanager地址(指定哪一个是主节点) -->
+    <!-- 指定Yarn 的老大，ResourceManager 的地址(指定哪一个是主节点) -->
     <property>
         <name>yarn.resourcemanager.hostname</name>
         <value>hadoop06</value>

@@ -28,7 +28,7 @@ object Driver {
     val data = sc.textFile("f://data/ml/lritem.txt")
 
     // 为了满足接下来的建模需求，RDD[String] -> RDD[(x1, x2, Y)] -> DataFrame 数据块
-    // RDD 的元素必须是元组类型
+    // RDD 的元素必须是元组类型，且元素是Double 类型
     val r1 = data.map { line =>
       val info = line.split("\\|")
       val Y = info(0).toDouble
@@ -61,9 +61,9 @@ object Driver {
     val model = new LinearRegression().setFeaturesCol("features")
       .setLabelCol("Y").setFitIntercept(true).fit(df1Vectors)
 
-    // 获取模型方程的自变量系数 a1和a2
+    // 获取模型方程的自变量系数 对应上面方程中的a1和a2
     val coef = model.coefficients
-    // 获取截距项系数a0
+    // 获取截距项系数 对应上面方程中的a0
     val intercept = model.intercept
 
     // println(coef)

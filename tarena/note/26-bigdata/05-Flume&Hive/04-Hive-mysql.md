@@ -2,50 +2,20 @@
 
 # 将Hive 的元数据保存到Mysql 数据库中
 
-
-- # hive - mysql 的安装
-    - > 搜索安装的MYSQL
-        > <details>
-        > <summary>rpm 命令</summary>
-        > 
-        >>     rpm -qa | grep Percona
-        >>     rpm -qa | grep -i mysql
-        >>     rpm -qa | grep MySql
-        >
-        > </details>
-        >
-
-    - > 卸载
-        >>     rpm -ev --nodeps Percona-Server-56-debuginfo-5.6.24-rel72.2.el6.x86_64
-    - > 删除历史数据
-        >>     rm -rf /var/lib/mysql/
-        >>     rm -rf  /etc/my.cnf.d/
-    - > 安装mysql
-        >>     rpm -ivh
-    - > 密码
-        >>     初始密码: /root/.mysql_secret
-        >>     使用初始密码修改密码为root： mysqladmin -u root -p password root
-    - > mysql 默认配置(`vim /etc/my.cnf`)
-        >>
-        >>       [client]
-        >>       default-character-set=utf8
-        >>       [mysql]
-        >>       default-character-set=utf8
-        >>       [mysqld]
-        >>       character_set_server=utf8
-        >>       sql_mode=NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES
-        >> 
-    - > 添加用户权限
-        >>     mysql> grant all privileges on *.* to 'root'@'hadoopalone' identified by 'root' with grant option;
-        >>     mysql> grant all on *.* to 'root'@'%' identified by 'root';
-        >>     mysql> flush privileges;
-    - > <mark>在Mysql 中创建一个供Hive 使用的专用数据库，字符集必须是 latin1</mark>
-        >>     mysql> create database hive character set latin1;
-
-
+- # hive 的安装使用
+    - > 直接下载安装文件解压即可
+        > - `apache-hive-1.2.0-bin.tar.gz`
+    - > 启动
+        > - hive 依赖hadoop ，所以在运行前必须要有hadoop 服务
+        > - 在 bin 目录 下面
+        >> - `sh hive`
 
 - # hive 元数据存到mysql 数据库中
-    - ## <mark>在使用hive 连接mysql 数据库的时候，必须要先在mysql 中创建一个新的数据库给hive 使用。并且必须是latin1 字符集。</mark>
+
+    - > 元数据存MYSQL
+        > - <mark>必须要先在mysql 中创建一个新的数据库给hive 使用</mark>
+        > - <mark>必须是latin1 字符集</mark>
+        >>     mysql> CREATE DATABASE hive CHARACTER SET latin1;
     - ## 将mysql 驱动添加到 ${HIVE}/lib/ 目录中
         > - `mysql-connector-java-5.1.34-bin.jar`
     - > 添加一个配置文件`vim ${HIVE}/conf/hive-site.conf`(新文件)
