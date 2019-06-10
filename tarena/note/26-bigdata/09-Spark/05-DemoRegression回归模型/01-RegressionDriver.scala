@@ -56,7 +56,7 @@ object Driver {
 
     // setFeaturesCol: 指定自变量列
     // setLabelCol: 指定因变量列
-    // setFitIntercept true- 计算截距项系数，false-不计算
+    // setFitIntercept true - 计算截距项系数，false - 不计算(不计算则为0)
     // fit: 带入数据建模
     val model = new LinearRegression().setFeaturesCol("features")
       .setLabelCol("Y").setFitIntercept(true).fit(df1Vectors)
