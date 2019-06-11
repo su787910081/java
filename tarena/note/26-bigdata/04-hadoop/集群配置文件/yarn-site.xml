@@ -13,12 +13,12 @@
     <!--配置rm1的主机-->
     <property>
         <name>yarn.resourcemanager.hostname.rm1</name>
-        <value>hadoop04</value>
+        <value>Hadoop01</value>
     </property>
     <!--配置rm2的主机-->
     <property>
         <name>yarn.resourcemanager.hostname.rm2</name>
-        <value>hadoop06</value>
+        <value>Hadoop02</value>
     </property>
     <!--开启yarn恢复机制-->
     <property>
@@ -33,7 +33,7 @@
     <!--配置zookeeper的地址-->
     <property>
         <name>yarn.resourcemanager.zk-address</name>
-        <value>hadoop01:2181,hadoop02:2181,hadoop03:2181</value>
+        <value>Hadoop01:2181,Hadoop02:2181,Hadoop03:2181</value>
     </property>
     <!--执行yarn集群的别名-->
     <property>
@@ -48,6 +48,6 @@
     <!-- 指定Yarn 的老大，ResourceManager 的地址(指定哪一个是主节点) -->
     <property>
         <name>yarn.resourcemanager.hostname</name>
-        <value>hadoop06</value>
+        <value>Hadoop01</value>
     </property>
 </configuration>

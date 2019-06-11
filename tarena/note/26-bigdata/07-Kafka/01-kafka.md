@@ -69,7 +69,7 @@
 
     - > 生产者
         - > 测试环境
-            > -     sh kafka-console-producer.sh --broker-list HBase01:9092 -topic music
+            > -     sh kafka-console-producer.sh --broker-list HBase01:9092,HBase02:9092 -topic music
             > - `--broker-list HBase01:9092` 指定有哪几个KAFKA 节点
             > - `-topic music` 指定往哪个topic 里面写消息
         - > 实际环境下可以是Flume、Web 等其他源

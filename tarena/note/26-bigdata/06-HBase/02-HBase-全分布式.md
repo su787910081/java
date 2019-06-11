@@ -1,5 +1,8 @@
 
 
+- # 安装文件
+    - > `hbase-0.98.17-hadoop2-bin.tar.gz`
+
 - # 依赖准备
     - > JDK
     - > HADOOP 伪分布式
@@ -62,7 +65,8 @@
 
 
 - # 校验查看
-    - > 查看各节点的java进程是否正确，或者通过浏览器访问http://HBase01:60010来访问web界面，通过web见面管理hbase
+    - > 查看各节点的java进程是否正确，或者通过浏览器管理hbase 页面查看
+        > - 访问网页: `http://HBase01:60010`
         > - 主Master
         >>      Master HBase01
         > - 备份Master

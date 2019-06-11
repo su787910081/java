@@ -192,7 +192,7 @@
             > - 启动命令: `hadoop-daemon.sh start namenode`
             >> - 使用jps 查看是否启动成功
         
-        - > 在 hadoop04 hadoop05 节点上来启动 FailOverController
+        - > 在 hadoop04 hadoop05 (两个<mark>**NameNode**</mark> 所对应的节点)上来启动 FailOverController
             > - 用于NameNode 的故障切换
             > - `hadoop-daemon.sh start zkfc`
             >> - 使用JPS 查看是否启动成功
