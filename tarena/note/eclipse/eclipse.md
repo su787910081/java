@@ -63,6 +63,12 @@
 ## 新建eclipse 工作空间的准备工作
 > - 1. 字体, 搜索(`Colors and fonts`):  `Basic  -->  Text Font  -->  Edit`
 > - 2. 编码格式, 搜索(`Workspace`): 指定编码格式
+	>> <details>
+	>> <summary><mark>图示</mark></summary>
+	>>
+	>>> - ![](./img/eclipseEncode.jpg)
+	>> </details>
+	>>
 > - 3. 禁用一些不需要的校验，一般情况下不写前端的代码全部都禁用就可以了。(`Validation`)
 > - 4. JDK，搜索(`Installed JREs`): `Add...  -->  Standard VM `  为JRE HOME 指定JDK 的根目录
 > - 5. `maven -> installations`  -->  `Add...`   --> 找到maven 的根目录添加。 `最后不要忘记勾选`
