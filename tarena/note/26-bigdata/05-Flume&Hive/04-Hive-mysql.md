@@ -18,7 +18,7 @@
         >>     mysql> CREATE DATABASE hive CHARACTER SET latin1;
     - ## 将mysql 驱动添加到 ${HIVE}/lib/ 目录中
         > - `mysql-connector-java-5.1.34-bin.jar`
-    - > 添加一个配置文件`vim ${HIVE}/conf/hive-site.conf`(新文件)
+    - > 添加一个配置文件`vim ${HIVE}/conf/hive-site.xml`(新文件)
         > <details>
         > <summary><mark>详细信息</mark></summary>
         >

@@ -5,7 +5,7 @@
 		> `dom4j-1.6.jar`<br>
 		> `xml-apis-1.0.b2.jar`<br>
 	2. 创建 SAXReader 对象，通过该对象解析XML文件
-		
+
 			import org.dom4j.Document;
 			import org.dom4j.DocumentException;
 			import org.dom4j.Element;
@@ -32,4 +32,4 @@
 				String strClass = e.attributeValue("class");
 			}
 
-			
+

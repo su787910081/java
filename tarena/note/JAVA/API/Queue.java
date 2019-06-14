@@ -23,7 +23,7 @@ Deque:
 
 	// java 的一个双端队列实现类LinkedList<E>
 	Deque<String> deque = new LinkedList<String>();
-	
+
 
 
 

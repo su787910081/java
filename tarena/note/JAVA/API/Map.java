@@ -47,8 +47,7 @@ HashMap - 无序Map
 		* 出现链表会降低查询性能，HashMap查询性能是最好的。
 		* 为了降低链表出现的概率，需重写equals 和hashcode 方法，重写这两个方法可以降低链表出现的概率，但不能避免。
 		* 总结：当key 元素HashCode 相同，但是equals 比较不同时就会在HashMap 中产生链表，影响查询性能。
-	
-	
+
 
 TreeMap - 排序Map
 	使用了红黑树进行了排序。

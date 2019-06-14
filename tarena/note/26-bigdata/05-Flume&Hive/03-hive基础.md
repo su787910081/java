@@ -16,8 +16,8 @@
         > - 加载本地文件到hive 数据库表中
         >>      LOAD DATA LOCAL INPATH '/home/data.txt' INTO TABLE stu;
         > - 加载本地文件到表中，指定分区字段
-        >> - title 是指定创建的分区
-        >>>      LOAD DATA LOCAL INPATH '/home/cn.txt' OVERWRITE INTO TABLE book PARTITION(title='cn');
+        >>      LOAD DATA LOCAL INPATH '/home/cn.txt' OVERWRITE INTO TABLE book PARTITION(title='cn');
+        >>> - title 是指定创建的分区
         > - 按其个已存在的表来创建一个新表，表结构相同，没有数据
         >>      CREATE TABLE stu2 LIKE SU;
         > - 将查询的结果插入到指定的表中
@@ -47,11 +47,12 @@
     - > 在已存在分区表中添加一个相同目录结构的分区数据，将这个目录添加到这个分区表中进行管理。
         > - 显示分区
         >>      SHOW PARTITIONS book;
-        > - 添加分区，方式一
-        >>       ALTER TABLE book ADD PARTITION(title='jp') LOCATION '/user/hive/warehouse/zebra.db/book/title=jp';
-        > - 添加分区，方式二
-        > - 自动查找相关表下面的相关分区目录，符合分区结构的目录文件名就会被 添加到分区表中
-        >>       MSCK REPAIR TABLE book;
+        > - 添加分区
+        >> - 方式一
+        >>>      ALTER TABLE book ADD PARTITION(title='jp') LOCATION '/user/hive/warehouse/zebra.db/book/title=jp';
+        >> - 方式二
+        >>>       MSCK REPAIR TABLE book;
+        >>> - 自动查找相关表下面的相关分区目录，符合分区结构的目录文件名就会被 添加到分区表中
         > - 删除分区
         >>       ALTER TABLE book DROP PARTITION(title='jp');
         > - 修改分区名

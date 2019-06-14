@@ -78,7 +78,7 @@ Collection 是一个接口，定义了集合相关的操作方法，其有两个
 
 java.util
 Collections -- 注意比Collection 多了一个's' 
-	Collections 是集合的工具类，它提供 了很多便于我们操作集合的方法，其中就有用于集合排序的sort 方法
+	Collections 是集合的工具类，它提供了很多便于我们操作集合的方法，其中就有用于集合排序的sort 方法
 		void sort(List<T> list);	用于给定集合的自然排序。默认是升序排列
 
 	Comparable:

@@ -150,7 +150,7 @@
 
 线程池
 	ExecutorService(返回接口) Executors.newFixedThreadPool(int nThreads); - ExecutorService(接口)
-	
+
 	将任务提交给线程池
 		execute(Runnable) - Executor
 	
