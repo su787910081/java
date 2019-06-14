@@ -1,64 +1,103 @@
-创建线程：
-	得到当前线程的线程名称
-	Thread.currentThread().getName();
+## 线程的特点
+- > JAVA 中每个线程都有一个自己的名字，可以使用 getName() 方法来获取
 
-	构建线程类方式一: 继承 Thread 类
-		定义一个类继承自 Thread 类，此时这个类就是一个线程 类，我们创建程的目的是执行一个任务，所以在类中我们需要重写 Thread::run() 方法。
-		JAVA 中线程的调度是抢占式的
-		启动线程应该调用 start() 方法，而不应该直接调用 run() 方法。如果直接调用run() 方法，那么只是调用一个类的一个方法，而线程并没有真正运行起来。
+## 创建线程：
+- ###  继承自 Thread 类
+	- > 自定义类并继承自Thread 同时重写 `run` 方法
+		> - 启动时调用 `start` 方法而非 `run`
+		> - 示例代码
+		>>		public class MyThread extends Thread{//继承Thread类
+		>>		　　public void run(){
+		>>		　　//重写run方法
+		>>		　　}
+		>>		}
+		>>		public class Main {
+		>>		　　public static void main(String[] args){
+		>>		　　　　new MyThread().start();//创建并启动线程
+		>>		　　}
+		>>		}
+	
+- ### 实现 Runnable 接口
+	- > 自定义类，实现 `Runnable` 接口 并实现`run` 方法
+		> - 将此自定义类实例对象作为`Thread` 的参数
+		> - 示例代码
+		>>		public class MyThread2 implements Runnable {//实现Runnable接口
+		>>		　　public void run() {
+		>>			　　// 重写run方法
+		>>		　　}
+		>>		}
+		>>		
+		>>		public class Main {
+		>>		　　public static void main(String[] args){
+		>>		　　　　//创建并启动线程
+		>>		　　　　MyThread2 myThread=new MyThread2();
+		>>		　　　　Thread thread=new Thread(myThread);
+		>>		　　　　thread().start();
+		>>		　　}
+		>>		}
 
-	构建线程类方式二: 自定义类，实现 Runnable 接口
-		虽然实现了Runnable 接口的 run() 方法，但该类并不是一个线程类。这里只是将线程 的任务创建出来了，还需要将该任务添加到一个线程类中才能创建一个真正的线程。
-		{
-			// 创建线程对象执行RunnableDemo 中的任务
-			RunnableDemo demo = new RunnableDemo();
-			
-			Thread thd = new Thread(demo);
-			thd.start();
-		}
+- ### 使用Callable和Future创建线程
+	- > Callable 
+		> - 和Runnable接口不一样，Callable接口提供了一个call（）方法作为线程执行体
+		>> - call()方法可以有返回值
+		>> - call()方法可以声明抛出异常
+	- > 代码示例
+		> - 示例
+		>>		public class Main {
+		>>		　　public static void main(String[] args){
+		>>		　　　MyThread3 th=new MyThread3();
+		>>		　　　//使用Lambda表达式创建Callable对象
+		>>		　　   //使用FutureTask类来包装Callable对象
+		>>		　　　FutureTask<Integer> future=new FutureTask<Integer>(
+		>>		　　　　(Callable<Integer>)()->{
+		>>		　　　　　　return 5;
+		>>		　　　　}
+		>>		　　  );
+		>>			 //实质上还是以Callable对象来创建并启动线程
+		>>		　　　new Thread(task,"有返回值的线程").start();
+		>>		　　  try{
+		>>				//get()方法会阻塞，直到子线程执行结束才返回
+		>>		　　　　System.out.println("子线程的返回值："+future.get());
+		>>		 　　 }catch(Exception e){
+		>>		　　　　ex.printStackTrace();
+		>>		　　　}
+		>>		　　}
+		>>		}
 
-	直接采用第一种方法，偶合度将会比较高。我们通常使用第二种方法创建线程。
-	还有一个就是继承只能是单继承，而实现接口我们可以实现多个接口。
+## 三种创建线程方法对比
 
-	通常我们可以通过匿名内部类的方式创建线程，使用该方式可以简化编写代码的复杂度，当一个线程 仅需要一个实例时我们通常使用这种方式来创建。
-		// 两种临时任务方式创建线程对象
-		Thread thd1 = new Thread() {
-			@Override
-			public void run() {
-				System.out.println("匿名创建Thread 对象1。");
-			};
-		};
-		thd1.start();
-		
-		Thread thd2 = new Thread(new Runnable() {
-			
-			@Override
-			public void run() {
-				System.out.println("接口创建Thread 对象2。");
-			}
-		});
-		thd2.start();
+- ### 对比
+	- > 实现Runnable和实现Callable接口的方式基本相同，不过是后者执行call()方法有返回值，后者线程执行体run()方法无返回值，因此可以把这两种方式归为一种这种方式与继承Thread类的方法之间的差别如下：
+		> - 1、线程只是实现Runnable或实现Callable接口，还可以继承其他类。
+		> - 2、这种方式下，多个线程可以共享一个target对象，非常适合多线程处理同一份资源的情形。
+		> - 3、但是编程稍微复杂，如果需要访问当前线程，必须调用Thread.currentThread()方法。
+		> - 4、继承Thread类的线程类不能再继承其他父类（Java单继承决定）。
+	- > <mark>注：一般推荐采用实现接口的方式来创建多线程</mark>
 
 
-	线程操作API
-		static Thread.currentThread() - Thread 获取当前线程对象
-		static Thread.getName() - String 获取当前线程名称
-		static Thread.sleep(long ms) - void 
 
-		static yield() - void 礼让
-			调用 yield() 方法，此时让当前线程并没有进入阻塞状态而是直接进入就绪状态，此时当前线程有可能会再次抢到时间片。
 
-		给线程起名字
-			setName(String name) - void
-			Thread(Runnable, String name);	构造方法
 
-		获取线程相关信息方法：
-			long getId(): 线程标识符
-			String getName();
-			Boolean isAlive();
-			int getPriority(); 	优先级
-			boolean isDaemon(); 守护线程
-			boolean isInterrupted(); 是否已中断
+### 线程操作API
+- > 线程操作API
+	>>		static Thread.currentThread() - Thread 获取当前线程对象
+	>>		static Thread.getName() - String 获取当前线程名称
+	>>		static Thread.sleep(long ms) - void 
+	>>
+	>>		static yield() - void 礼让
+	>>			调用 yield() 方法，此时让当前线程并没有进入阻塞状态而是直接进入就绪状态，此时当前线程有可能会再次抢到时间片。
+	>>
+	>>		给线程起名字
+	>>			setName(String name) - void
+	>>			Thread(Runnable, String name);	构造方法
+	>>
+	>>		获取线程相关信息方法：
+	>>			long getId(): 线程标识符
+	>>			String getName();
+	>>			Boolean isAlive();
+	>>			int getPriority(); 	优先级
+	>>			boolean isDaemon(); 守护线程
+	>>			boolean isInterrupted(); 是否已中断
 
 
 局部内部类调用方法的局部变量的注意点：
@@ -153,7 +192,7 @@
 
 	将任务提交给线程池
 		execute(Runnable) - Executor
-	
+
 	关闭: 
 		shutdown()
 		shutDownNow()

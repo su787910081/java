@@ -67,7 +67,7 @@
     </beans>
 
 > 详细说明: 
-![Alt Text](./img/spring_aop_xml.jpg)
+>> ![Alt Text](./img/spring_aop_xml.jpg)
 
 ## spring aop 的注解配置
 

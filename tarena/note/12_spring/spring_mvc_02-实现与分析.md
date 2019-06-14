@@ -24,11 +24,10 @@
             <!-- 配置容器启动时即初始化这个servlet -->
             <load-on-startup>1</load-on-startup>
         </servlet>
-        <!-- 配置servlet 映射 
-            在客户端 发起请求时，URL 后缀必须为".do"
-        -->
+
         <servlet-mapping>
             <servlet-name>dispatcherServlet</servlet-name>
+            <!-- 配置servlet 映射 , 在客户端发起请求时，URL 后缀必须为".do" -->
             <url-pattern>*.do</url-pattern>
         </servlet-mapping>
 

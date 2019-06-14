@@ -71,7 +71,7 @@
 	3. 释放资源<br>
 		> `ctx.close();`
 - 抽象类对象的创建<br>
-	![Alt Text](./img/absctrct.jpg)<br>
+	> ![Alt Text](./img/absctrct.jpg)<br>
 
 
 ## Spring 依赖注入，bean 对象的配置
