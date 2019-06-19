@@ -93,3 +93,15 @@
     >>>> - http://locahost/test.png; 返回203
     >>> </details>
     >>>
+
+
+
+
+
+- ## Linux 下的Nginx 的启动
+    - > 直接到bin 目录下面运行 nginx 就可以了。
+
+
+
+
+

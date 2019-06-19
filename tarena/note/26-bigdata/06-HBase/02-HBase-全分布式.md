@@ -16,7 +16,7 @@
     - > 配置文件(`conf/hbase-env.sh`)
         > - JDK 
         >>      export JAVA_HOME=/usr/local/src/java/jdk1.8.0_51
-        > - <mark>禁止使用自带ZooKeeper</mark>
+        > - <mark>禁止使用自带ZooKeeper</mark>(自带的ZooKeeper好像端口是2181)
         >>      export HBASE_MANAGES_ZK=false
         > - 使配置生效
         >>      source conf/hbase-env.sh
@@ -51,13 +51,13 @@
 - ## HBase 服务
     - > 启动
         > - 在任意一个节点启动，其他节点中的也会启动相应的进程
-        >>      cd bin/
-        >>      sh start-hbase.sh
+        >>     cd bin/
+        >>     sh start-hbase.sh
         > - 检查是否有相关进行
         >> - `HMaster` 进程只有一个节点上有
         >> - `HRegionServer`  进程在三个节点上都有
         > - 这个时候只有一个主Master，如果想要增加备份Master 则需要在对应的节点上执行启动
-        >>      sh start-hbase.sh
+        >>     sh start-hbase.sh
         > - 主Master 是按顺序来控制的，后启动的Master 会自动作为备份Master 存在
     - > 停止
         > -     sh stop-hbase.sh

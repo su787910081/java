@@ -65,7 +65,7 @@
             > -     sh kafka-console-consumer.sh --zookeeper HBase01:2181 -topic music  --from-beginning
             > - `--from-beginning` 指定从头开始消费，如果不加则之前的数据忽略掉，从新的数据开始消费。
             > -  带消费者组
-            >> -    sh 
+
 
     - > 生产者
         - > 测试环境
