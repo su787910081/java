@@ -34,7 +34,16 @@
         > - 在`bin` 目录下执行命令
         >> - `$ sh spark-submit --class day02.cn.tedu.wordcount.Driver wordcount.jar `
         >> - 指定要执行的哪一个Driver, 并提供jar 包
-        
+
+- ## 集群进程
+    - > Master 进程
+        > - 在哪台机器开启的集群，那么这个进程就会在哪台机器运行
+    - > Worker 进程
+
+# 访问spark
+- # WEB 访问
+    - > 管理界面URL: `http://192.168.234.11:8080`
+
 # 相关配置
 - ## 配置文件：`spark-defaults.conf`
     - > 从提供的模板拷贝一个复本

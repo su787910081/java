@@ -107,6 +107,53 @@
         >>
         >>       SELECT info.name FROM s1;
 
+- ## hive 处理json 格式的数据
+    - > 引入包
+        > - 在hive 命令行中输入如下命令
+        >> - `add jar /root/software/hive-1.2.0/hcatalog/share/hcatalog/hive-hcatalog-core-1.2.0.jar;`
+    - > 创建表
+        > - 这个表用于处理json 格式的数据
+        >>      CREATE TABLE vip(
+        >>      student_email string,
+        >>      student_name string,
+        >>      student_gender string,
+        >>      student_phone string,
+        >>      student_education_background string,
+        >>      student_order_code string,
+        >>      class_code string,
+        >>      series_class_code string,
+        >>      center_code string,
+        >>      course_id string,
+        >>      study_mode string,
+        >>      account_state string,
+        >>      create_time string,
+        >>      operation_mode string,
+        >>      modified_fields array<
+        >>      	struct<
+        >>      		student_email:string,
+        >>      		student_name:string,
+        >>      		student_gender:string,
+        >>      		student_phone:string,
+        >>      		education_background:string,
+        >>      		student_order_code:string,
+        >>      		class_code:string,
+        >>      		series_class_code:string,
+        >>      		center_code:string,
+        >>      		study_mode:string,
+        >>      		course_id:string,
+        >>      		operation_mode:string,
+        >>      		create_time:string,
+        >>      		study_type:string
+        >>      	>
+        >>      >,
+        >>      before_class_study_mode string,
+        >>      after_class_study_mode string,
+        >>      before_course_id string,
+        >>      after_course_id string)
+        >>      ROW FORMAT SERDE 'org.apache.hive.hcatalog.data.JsonSerDe' ;
+        > - 这个表所对应的一行测试数据
+        >>      {"student_email": "111111", "student_name": "22222222 ","student_gender": "女","student_phone": "4444444","student_education_background": "5555555","student_order_code": "666666","class_code": "77777777","series_class_code": "8888888","center_code": "9999999","study_mode": "125100","course_id": "U3D","operation_mode": "add","create_time": "2019-02-09","study_type": "105101","before_class_study_mode": "125101","after_class_study_mode": "125100","before_course_id": "PHP","after_course_id": "TESTING"}
+
 
 
 - ## 平时练习的一些SQL

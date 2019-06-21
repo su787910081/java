@@ -12,6 +12,10 @@ import org.apache.spark.sql.SQLContext
  */
 object Driver {
     def main(args: Array[String]): Unit = {
+
+    }
+
+    def test01() = {
         val conf = new SparkConf
         conf.setMaster("local")
         conf.setAppName("sql")
@@ -22,7 +26,7 @@ object Driver {
         val sqc = new SQLContext(sc)
         val r1 = sc.makeRDD(List(("tom", 20 ), ("rose", 18), ("jim", 30)))
         
-        // 把RDD 转变为DataFrame
+        // 把RDD 转变为DataFrame(table)
         // val df1 = sqc.createDataFrame(r1).toDF("name", "age")
         
         // 导入一个(SparkSql 上下文)对象的隐式转换包，作用是省略(sqc.createDataFrame(r1))
@@ -42,4 +46,28 @@ object Driver {
         // 将结果存到指定目录
         resultRDD.saveAsTextFile("F://data/sqlresult")
     }
+
+    // 从文件中读数据转换成一个DataFrame 表格式
+    def test01() = {
+        val conf = new SparkConf
+        conf.setMaster("local")
+        conf.setAppName("sql")
+        
+        val sc = new SparkContext(conf)
+        
+        // 创建SparkSql 的上下文对象，用于创建DataFrame, 以及完成对DataFrame 的sql 查询 
+        val sqc = new SQLContext(sc)
+
+        val data1 = sc.textFile("D://data/info.txt")
+        val data2 = data1.map { _.split(" ") }
+        val data3 = data2.map { arr => (arr(0), arr(1)) }
+        val t1 = data3.toDF("id", "name")
+        t1.show
+    }
 }
+
+
+
+
+
+

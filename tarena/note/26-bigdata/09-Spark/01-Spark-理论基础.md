@@ -124,48 +124,6 @@
 - ## Spark 的优势
     - > 内存缓存
 
-# Spark 的调度
-- ## 调度
-    - > 示例图
-        >> <details>
-        >> <summary><mark>示例图</mark></summary>
-        >> 
-        >>> ![](./img/cluster-overview.png)
-        >> </details>
-        >> 
-
-- ## 调度流程
-    - > 示例图
-        >> <details>
-        >> <summary><mark>示例图1</mark></summary>
-        >> 
-        >>> ![](./img/Saprk任务调度流程图.png)
-        >> </details>
-        >> 
-        >> <details>
-        >>
-        >> <summary><mark>示例图2</mark></summary>
-        >> 
-        >>> ![](./img/Saprk任务调度流程图.jpg)
-        >> </details>
-        >> 
-    - > 流程解析
-        > - RDD Objects 可以理解为用户实际代码中创建的RDD，这些代码逻辑上组成了一个DAG
-        >> - 也就是一个SparkContext 中的处理逻辑
-        >> - 这些逻辑形成一个DAG(有向无环图)
-        > - DAGScheduler 主要负责分析依赖关系，然后将DAG 划分为不同的Stage(阶段)
-        >> - 其中每个Stage 由一组TaskSet 组成
-        >> - 这些Task 执行逻辑完全相同，只是作用于不同的数据源
-        >> - DAGScheduler 将TAG 划分完成之后，会将Stage 中的TaskSet 提交到TaskScheduler
-        > - TaskScheduler 向ClusterManager 申请计算资源，并提交到对应的Worker 节点去执行相应的逻辑
-        >> - 在Worker 中计算的结果会回传到Driver 或者保存到本地磁盘
-        > - SchedulerBackend 这是一个类对象，它会分配当前的可用资源
-
-
-- ## 调度模块
-    - > Driver Program
-        > - 每个Driver 都有一个SpackContext(sc)
-        >> - sc 负责与Executor 交互，完成任务的分配的高度
 
 
 # Spark 的参数配置
