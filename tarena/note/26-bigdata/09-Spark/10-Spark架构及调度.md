@@ -28,6 +28,12 @@
     >>> ![](./img/Saprk任务调度流程图.jpg)
     >> </details>
     >> 
+    - > 可以配置允许同时多个SparkContext 对象
+        >
+        >       // 是否允许存在多个SparkContext，默认是false
+        >       // If true, log warnings instead of throwing exceptions when multiple SparkContexts are active
+        >       private val allowMultipleContexts: Boolean =
+        >         config.getBoolean("spark.driver.allowMultipleContexts", false)
     - > 每一个Driver Program 里都有一个SparkContext 对象
     - > 它的职责如下
         > - SparkContext 对象联系Cluster Manager(集群管理器), 让Cluster Manager 为 Worker Node 分配CPU、内存等资源。
@@ -101,3 +107,91 @@
     - > Driver Program
         > - 每个Driver 都有一个SpackContext(sc)
         >> - sc 负责与Executor 交互，完成任务的分配的高度
+
+
+# SparkContext 核心类对象
+## 功能和作用
+- ### SparkContext 最主要的作用有三个
+    - > 初始化SparkEnv 对象
+    - > 初始化并启动三个调度模块
+        > - DAGScheduler 
+        >> - 主要负责分析依赖关系，然后将DAG 划分为不同的tage
+        >> - 其中每个Stage 由可以并发执行的一组Task 构成
+        >> - 这些Task 的执行逻辑完全相同，只是作用于不同的数据。
+        > - TaskScheduler
+        >> - 为SparkContext 调度任务
+        >> - 即从DAG 接收不同的Stage ，并且向集群提交这些任务，并为执行特别慢的任务启动备份任务
+        > - SchedulerBackEnd
+        >> - 依据当前任务申请到的可用资源，将Task 在Executor 进程中启动并执行，完成计算的调度过程。
+    - > 建立各个工作节点的心中机制，用于检测和最监控
+## 其它
+- ### SparkContext 对象的数量
+    - > 默认情况下SparkContext 只能有一个对象，若创建多个则会报错
+    - > 如果想要创建多个，需要添加配置
+
+# SparkEnv 环境参数对象
+## 功能和作用
+- ### 介绍
+    - > local 模式
+        > - 在此模式下Driver 会创建Executor, 在Standalone 部署模式下，Worker 上创建Executor。
+        > - 所以SparkEnv 存在于Spark 任务调度时的每个Executor 中。
+        > - SparkEnv 中的环境信息是对一个job 中所有的Task都是可见且一致的。以确保运行的环境一致。
+## SparkEnv 各组件依次构造
+- ### SecurityManager
+    - > 安全管理器
+- ### RpcEnv
+    - > RPC通信方式
+- ### ShuffleManager
+    - > 负责管理本地及远程的Block数据的shuffle操作
+- ### MapOutPutTracker
+    - > 用于跟踪Shuffle Map Task任务的输出状态
+- ### MemoryManager
+    - > 内存管理器
+- ### NettyBlockTransferService
+    - > 块传输服务
+        > - 使用Netty提供的网络应用框架
+        > - 提供web服务及客户端
+        > - 获取远程节点上Block的集合
+        > - 底层的fetchBlocks方法用于获取远程shuffle文件中的数据
+- ### BlockManagerMaster
+    - > 负责对BlockManager的管理和协调
+- ### BlockManager
+    - > 块管理器
+- ### BroadcastManager
+    - > 广播管理器
+- ### CacheManager
+    - > 缓存管理器
+- ### ListenerBus
+    - > 监听总线
+- ### MetricsSystem
+    - > 检测系统
+
+## SparkEnv 中的各个组件介绍
+### 内存管理器 MemoryManager
+#### 内存模块
+- ### 说明
+    - > 每个Executor进程都有一个MemoryManager。
+- ### storageMemory（存储内存）
+    - > 用来缓存rdd，unroll partition，direct task result、广播变量等
+- ### executionMemory（执行内存）
+    - > 用于shuffle、join、sort、aggregation 计算中的缓存
+- ### 其他内存
+    - > 除了这两者以外的内存都是预留给系统的。
+
+#### 两套管理方案
+- ### StaticMemoryManager 静态管理(旧)
+    - > 拥有的内存是独享的不可相互借用
+        > - 所以在其中一方内存充足，但另一方内存不足但又不能借用的情况下会造成资源的浪费
+- ### UnifiedMemoryManager 动态管理(新)
+    - > 统一管理，初始状态是内存各占一半，相互之间可以借用
+        > - 其中一方内存不足时可以向对方借用，对内存资源进行合理有效的利用，提高了整体资源的利用率。
+
+#### 参数配置
+- ### 对应参数
+    - > `spark.memory.useLegacyMode`
+        > - 默认值：`UnifiedMemoryManager` 动态管理机制
+
+
+
+
+

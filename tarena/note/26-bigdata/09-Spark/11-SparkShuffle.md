@@ -6,11 +6,11 @@
 
 - ## Shuffle Write
     - > 数据持久化到文件
-    - > Hash Based Shuffle Write
+    - > `Hash Based Shuffle Write`
         > - 产生过多的Shuffle 文件(MapTask * ResultTask)
         > - 每打开一个文件需要一个线程，每一个线程都需要内存。
         > - 过多文件被打开，那么内存消耗过大
-    - > Sort Based Shuffle Write
+    - > `Sort Based Shuffle Write`
         > - Spark 1.2
         > - Spark 默认是不排序的。这里的Sort 是对MapTask 分区编号进行排序，而分区中的数据不排序。
         > - 排序的作用是为建立索引。

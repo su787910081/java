@@ -1,3 +1,15 @@
+# 概述
+- ## 介绍
+    - > SparkSql 是将RDD 封装成一个DataFrame 对象，这个对象就类似于关系型数据库中的表。
+- ## DataFrame
+    - > DataFrame 相当于数据库中的一个表对象
+    - > RDD中的每一个元素作为一个Tuple ，Tuple 中的每一个元素作为一个数据列
+    - > 对RDD 中的每一列添加列名，以创建一个DataFrame 对象
+    - > 一个DataFrame 对象通过方法 registerTempTable 来指定一个表名
+- ## DataFrame 与RDD 之间的转换
+    - > RDD rdd;  rdd.toDF()
+    - > DataFrame df; df.toJavaRDD()
+
 
 # 处理txt 源文件
 > <details>

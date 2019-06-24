@@ -6,7 +6,7 @@
 ## GC 调优
 - > 查看回收器相关的笔记
 
-## 更好的序列化机制
+## 序列化 调优
 - ### Spark 默认的序列化机制
     - > Spark 默认使用的序列化机制是JAVA 原生的序列化。
     - > JAVA 序列化有两个问题
@@ -33,7 +33,12 @@
             > - `conf.set(“spark.serializer”,“org.apache.spark.serializer.KryoSerializer”)`
         - > 上面三种方式实现效果相同，但是优先级为: `配置文件 < 启动参数 < 代码设置`
 
-## 配置多临时文件目录
+## Shuffle 调优
+### 两种Shuffle
+- ### Sort Based Shuffle Write
+- ### Hash Based Shuffle Write
+
+### 配置多临时文件目录，提供Shuffle Write
 - ### 产生临时文件
     - > 当shuffle、归并的排序(sort、merge)时都会产生临时文件。
         > - 这个临时文件都在一个指定的目录下。
@@ -52,7 +57,7 @@
 - ### 配置参数
     - > `spark.speculation  true `
 
-## 减少甚至禁止使用 collect 
+## 减少甚至禁止使用 collect
 - > 我们在讲的时候一直强调，collect只适合在测试时，因为把结果都收集到Driver服务器上，数据要跨网络传输，同时要求Driver服务器内存大，所以收集过程慢。解决办法就是直接输出到分布式文件系统中。
 
 ## RDD操作使用MapPartitions替代map
