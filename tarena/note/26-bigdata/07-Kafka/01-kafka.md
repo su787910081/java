@@ -129,6 +129,14 @@
         >>      00000000000000000000.log    leader-epoch-checkpoint
         > - `00000000000000000000.log` 中记录着一个分区中的顺序的数据
 
+- ## Kafka 的高可用机制
+    - > 以复本因子为单位
+        > - Kafka 中的每一个复本存储到不同的计算机节点上面
+        > - 每一个主题中的每一个分区为一个整体，这个整体为一个复本，分别散落到不同的计算机节点上面
+        > - 这样的一个整体之间自行进行选举leader 与follower 
+    - > 不引入过半性机制
+        > - 主要是ISR 成员，则可以提升为leader 
+        > - 只要有一个节点存活且为ISR 中的成员则KAFKA 的此复本就可以继续正常提供服务
 
 - ## KAFKA 的写流程
     - > `sh kafka-topics.sh --create --zookeeper HBase01:2181 --replication-factor 3 --partitions 1 --topic enbook`
@@ -151,6 +159,8 @@
         >> - 选举的时候就会从1 和3 两个ISR  成员中选出来
 
 - ## 配置
+    - > Kafka 的集群模式的话，只需要配置的broker.id 不同且为非负整数就可以了。
+        > - 它自己会通过ZooKeeper 去处理副本之间的复本
     - > `config/server.properties`
         > - `broker.id=0` 多节点的话这个值不能重复
         >> - 由此ID 区分多节点
