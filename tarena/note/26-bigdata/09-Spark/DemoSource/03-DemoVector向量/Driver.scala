@@ -66,7 +66,7 @@ object Driver {
         println(lb1)
         //--获取标签值
         println(lb1.label)
-        //--获取向量
+        //--获取特征(向量)值
         println(lb1.features)
         
         //--处理labeled.txt文件。RDD[String]->RDD[LabeledPoint]

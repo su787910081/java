@@ -33,6 +33,15 @@
 		> - ApplicationMaster 会将Task 的数量上传给ApplicationManager，ApplicationManager 会跟Task 的数量以及对应的分片所在的DataNode 来分配资源，这个资源就被封装成一个Container 对象
 
 
+- ## Flume
+    - > 连接HDFS 集群
+        > - `a1.sinks.k1.hdfs.path = hdfs://192.168.220.135:9000/flumeTemp/`
+        > - `a1.sinks.k1.hdfs.path = hdfs://ns:9000/flumeTemp/`
+        > - 使用Flume 连接HDFS 集群，像上面这样配置为什么连接不上呢？
+        > - 必须要指定NameNode 节点的IP。
+        > - 那如果这样的话，这个节点挂掉了，我岂不是要手动切换这个IP地址。
+        > - 我要如何做才可以直接使用HDFS 的集群功能，当NameNode 主节点挂了，自动切换连接备份节点？
+    - > 正确配置：`a1.sinks.k1.hdfs.path = hdfs://ns/flumeTemp/`
 
 - ## HBase
     - > HBase 完全分布式环境中，为什么在任意一台主机上启动HBase 那么所有的HBase 的HRegionServer 都会被启动呢，它这个是通过什么实现的？
@@ -52,5 +61,12 @@
         - > 答：原来是因为我在使用API 连接KAFKA 的时候使用的是主机名，而服务器端是虚拟机，而虚拟机的某一个IP 自动更新了。我在服务器里面将 hosts 文件更新，但是Windows里面却忘记了更新。最终我把Windows中的 hosts 文件更新了就没有问题了。
             > - 我还发现：本来是有三个分区的，它们分别在三个 broker  上面，但是我检查时发现，总有一个 broker 的日志文件中没有数据，是空文件。
 
+- ## Spark
+- ### SparkStream 的窗口长度与滑动长度
+    - > 假设batch length 为1秒，窗口长度(2秒)，滑动长度(3秒)。那么这里就有一个1秒(滑动长度 - 窗口长度)的空闲时间，这个1秒的空闲时间内的数据会被计算呢，还是会被忽略？
+        > - 测试了一下，在这种情况下，这个空闲时间内的数据将被处理。
+    - > 上面的这个情况是怎么处理的呢？
+        > - 是窗口长度默认大于等于滑动长度吗?
+        > - 还是在一个滑动长度里面，至少要将之前没处理的数据一起处理了？
 
 

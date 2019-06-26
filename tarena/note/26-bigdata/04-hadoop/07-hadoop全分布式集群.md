@@ -66,19 +66,25 @@
 
 - # Hadoop
     - <mark>hadoop 的配置各个节点的配置基本相同，可以配置一份，然后拷贝到其他几个节点主机上面。</mark>
-    - ## Hadoop 配置
+    - ## Hadoop 环境配置
         - > 配置 hadoop-env.sh
             > - 编辑 hadoop-env.sh 主要有两个
             >> - `export JAVA_HOME=/usr/local/src/java/jdk1.8.0_51`
             >> - `export HADOOP_CONF_DIR=/root/software/hadoop-2.7.1/etc/hadoop`
             > - 使其生效
             >> - `source hadoop-env.sh`
+    
+    - ## 配置文件
         - > 配置core-site.xml
         - > 配置hdfs-site.xml
         - > 配置mapred-site.xml
         - > 配置yarn-site.xml
-        - > 配置slaves文件
+    
+    - ## slaves 配置文件
+        - > <mark>配置slaves文件</mark>
             > - DataNode 所在的主机名 04、05、06 三个节点配置的是datanode
+            > - 以及NodeManager 所在的主机，但是一般DataNode NodeManager 都是在同一台主机节点上面。
+            > - 在使用start-yarn.sh 的时候也会来找这个文件
             >>      hadoop04
             >>      hadoop05
             >>      hadoop06
@@ -106,8 +112,9 @@
         > - `scp -r  hadoop-2.7.1/etc/hadoop  hadoop02:/home/software/hadoop-2.7.1/etc/hadoop`
 
     - ## <mark>**hadoop 首次启动**</mark>
-        - > 在<mark>*主NameNode*</mark> 所在一个主节点上(hadoop04)
-            > - `hdfs zkfc -formatZK` 执行一次
+        - > 格式化ZooKeeper
+            > - 在NameNode 的主节点上执行
+            > - `hdfs zkfc -formatZK`
             > <details>
             > <summary><mark><font color=darkred>成功提示</font></mark></summary>
             > 
@@ -131,13 +138,14 @@
             >>      19/05/20 20:10:40 INFO zookeeper.ClientCnxn: EventThread shut down
             > </details>
             >
-        - > 启动 journalnode (在hadoop01、hadoop02、hadoop03节点上各执行一次)
+
+        - > 启动 journalnode (在hadoop01、hadoop02、hadoop03节点)
             > - `hadoop-daemon.sh start journalnode`
             > - 使用 jps 查看是否启动成功
             >>      [root@Hadoop01 ~]# jps
             >>      27053 JournalNode
 
-        - > 将hadoop04 节点格式化为主namenode，然后启动
+        - > 格式化 NameNode 主节点
             > - 在 hadoop04 节点主机上执行命令: `hadoop namenode -format`
             > <details>
             > <summary><mark><font color=darkred>成功提示</font></mark></summary>
@@ -158,10 +166,14 @@
             >>      SHUTDOWN_MSG: Shutting down NameNode at hadoop04/192.168.220.139
             > </details>
             > 
-            > - 启动主namenode 节点
+
+        - > 启动 NameNode 主节点
+            > - 在对应的计算机上执行
             >> - `hadoop-daemon.sh start namenode`
-        - > 将hadoop05 节点指定为备份节点,先格式化，再启动
+
+        - > 格式化 NameNode 备份节点
             > - 格式化时需要保证主NameNode 已运行，否则会报错
+            > - 在对应的计算机节点上执行下面的命令
             > - 格式化: `hadoop namenode -bootstrapStandby`
             > <details>
             > <summary><mark><font color=darkred>成功提示</font></mark></summary>
@@ -194,22 +206,26 @@
             >>      ************************************************************/
             > </details>
             >
+
+        - > 启动 NameNode 备份节点
             > - 启动命令: `hadoop-daemon.sh start namenode`
             >> - 使用jps 查看是否启动成功
-        
-        - > 在 hadoop04 hadoop05 (两个<mark>**NameNode**</mark> 所对应的节点)上来启动 FailOverController
-            > - 用于NameNode 的故障切换
+
+        - > 启动 FailOverController 失败恢复进程。
+            > - 在 NameNode 对应的节点上运行，用于 NameNode 的故障切换
             > - `hadoop-daemon.sh start zkfc`
             >> - 使用JPS 查看是否启动成功
             >>>     [root@Hadoop02 ~]# jps
             >>>     6691 DFSZKFailoverController
 
-        - > DataNode 启动(在hadoop07、hadoop08、hadoop09节点上)
+        - > 启动 DataNode (在hadoop07、hadoop08、hadoop09节点上)
             > - `hadoop-daemon.sh start datanode`
             >> - 使用JPS 查看是否启动成功
 
-        - > 启动yarn 在hadoop06 节点上
-            > - yarn 用来管理resourcemanager 和nodemanager ，但是这里只启动了一个resourcemanager 这是主节点，另外一个副节点需要单独手动启动
+        - > 启动 ResouceManager 主节点，以及 NodeManager 工作节点
+            > - 这个命令对应一个配置文件: ${HADOOP_HOME}/etc/hadoop/slave 
+            >> - 在这个文件中映射了NodeManager 的主机名，yarn 会在这些节点上运行NodeManager 进程
+            > - 执行之前最好检查一下slave 中的配置是否正确
             > - `start-yarn.sh`
             > <details>
             > <summary><mark><font color=darkred>成功提示</font></mark></summary>
@@ -221,7 +237,7 @@
             >>      hadoop09: starting nodemanager, logging to /root/software/hadoop-2.7.1/logs/yarn-root-nodemanager-hadoop09.out
             > </details>
             >
-        - > 在04 节点上单独启动一个resourcemanager 的副节点 
+        - > 启动 ResourceManager 副节点
             > - 命令：`yarn-daemon.sh start resourcemanager`
             >> - 使用命令jps 查看是否启动成功
 
@@ -249,6 +265,22 @@
             > - `rmr /hadoop-ha`
             > - `rmr /yarn-leader-election`
         - > 删除相关目录，然后新建
+
+
+# 遇到的问题
+- ## 格式化ZooKeeper时
+    - > 在ZooKeeper 的leader 上执行命令，这个节点并不是NameNode 的主节点导致的
+        >> <details>
+        >>
+        >>>      [root@tarena06 ~]# hdfs zkfc -formatZK
+        >>>      Exception in thread "main" org.apache.hadoop.HadoopIllegalArgumentException: Could not get the namenode ID of this node. You may run zkfc on the node other than namenode.
+        >>>      	at org.apache.hadoop.hdfs.tools.DFSZKFailoverController.create(DFSZKFailoverController.java:128)
+        >>>      	at org.apache.hadoop.hdfs.tools.DFSZKFailoverController.main(DFSZKFailoverController.java:177)
+        >> </details>
+        >>
+
+
+
 
 
 

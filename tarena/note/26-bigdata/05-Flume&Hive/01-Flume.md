@@ -34,7 +34,7 @@
 
 
 - 启动
-    - > 命令 `sh flume-ng agent -n a1 -c ../conf/ -f ../data/basic.conf -Dflume.root.logger=INFO,console`
+    - > 命令 `sh flume-ng agent -n a1 -c ../conf/ -f ../conf/basic.conf -Dflume.root.logger=INFO,console`
         > - agent  运行一个Flume Agent
         > -  -n a1 指定agent 的别名a1，这里要和配置文件中的名字一致
         > - -c ../conf/   指定一些模板配置文件，这里用的是自带的没有做任何修改
