@@ -6,9 +6,11 @@
 ## GC 调优
 - > 查看回收器相关的笔记
 
+## RDD操作使用MapPartitions替代map
+- > `MapPartitions` 是对整个分区做处理，比如每次我们都要对某个资源做打开关闭操作的话。按分区一次打开关闭性能将会得到很大的提高
+
 ## 序列化 调优
-- ### Spark 默认的序列化机制
-    - > Spark 默认使用的序列化机制是JAVA 原生的序列化。
+- ### Spark 默认的序列化机制(Java 原生序列化)
     - > JAVA 序列化有两个问题
         > - 性能相对较低
         > - 二进制的内容长度较大
@@ -24,11 +26,11 @@
         > - 必须实现特质`Serializable`
         > - 详细查看DEMO
     - > 引入Kryo 有三种方式
-        - > 修改配置文件: `spark-defaults.conf`
+        - > 修改配置文件(全局影响，优先级最低): `spark-defaults.conf`
             > - `spark.serializer  org.apache.spark.serializer.KryoSerializer`
-        - > 启动Spark-shell 或者Spark-submit 时配置参数
+        - > 启动Spark-shell 或者Spark-submit 时配置参数(仅对当前提交的Driver 有影响，优先级次之)
             > - `--conf spark.serializer=org.apache.spark.serializer.KryoSerializer`
-        - > 在代码中(更灵活，可以指定一个Driver)
+        - > 在代码中(更灵活，可以指定一个Driver。优先级最高)
             > - `val conf = new SparkConf()`
             > - `conf.set(“spark.serializer”,“org.apache.spark.serializer.KryoSerializer”)`
         - > 上面三种方式实现效果相同，但是优先级为: `配置文件 < 启动参数 < 代码设置`
@@ -60,8 +62,6 @@
 ## 减少甚至禁止使用 collect
 - > 我们在讲的时候一直强调，collect只适合在测试时，因为把结果都收集到Driver服务器上，数据要跨网络传输，同时要求Driver服务器内存大，所以收集过程慢。解决办法就是直接输出到分布式文件系统中。
 
-## RDD操作使用MapPartitions替代map
-- > `MapPartitions` 是对整个分区做处理，比如每次我们都要对某个资源做打开关闭操作的话。按分区一次打开关闭性能将会得到很大的提高
 
 
 

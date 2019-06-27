@@ -11,7 +11,6 @@
 - ## 介绍
     - > 这是一个**只读对象**，在所有节点上都有一份缓存
 - ## 使用
-    - > `SparkContext.broadcast()`
     - > `val broadcastVar = sc.broadcast(Array(1, 2, 3))`
     - > `broadcastVar.value`
 - ## 应用场景
