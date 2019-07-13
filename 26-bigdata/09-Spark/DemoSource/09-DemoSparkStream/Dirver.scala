@@ -82,7 +82,7 @@ object Driver {
     // 注意: 窗口长度和滑动区间必须是batch size (批大小)的整数位
     def driverDemo03() = {
         val conf = new SparkConf
-        conf.setMaster("local")
+        conf.setMaster("local")     // 一般不写这个，这个可以在命令提交的时候写，但是如果是测试的话估计是要指定的
         conf.setAppName("driver03")
         
         val sc = new SparkContext(conf)
@@ -97,14 +97,37 @@ object Driver {
         val r1 = data.flatMap { _.split(" ") }.map { (_, 1) }
 
         // 参数1：匿名函数，指定key 的Value 如何计算
-        // 参数2：滑动区间
-        // 参数3：窗口长度
+        // 参数2：窗口长度
+        // 参数3：滑动区间
+        // 参数4: 如果有的话是指的分区数量
         val r2 = r1.reduceByKeyAndWindow((a: Int, b: Int) => a + b, Seconds(10), Seconds(10))
-        
+        // 这种模式需要设置checkpoint   ssc.checkpoint("F://data/windowdata")
+        // 每一个方法处理添加进来的批次的数据，第二个方法处理离开窗口长度的批次的数据
+        // 这里将添加进来的批次的数据加上，然后将离开的批次的数据减去，就是最新的一个窗口长度里面的最新数据
+        // val r2 = r1.reduceByKeyAndWindow((a: Int, b: Int) => a + b, (a: Int, b: Int) => a - b, Seconds(5 * 4), Seconds(5 * 3))
+
         r2.print
-        
+
+        /*
+        // 这里使用了三种模式处理这个单词统计
+        val mode = "updateStateByKey"
+        if (mode.equals("updateStateByKey")) {
+            // 使用updateStateByKey 统计历史数据，前提是: ssc.checkpoint() 必须要有
+            val wordCount = res1.updateStateByKey( (seq, op:Option[Int]) => Some(seq.sum + op.getOrElse(0)) )
+            wordCount.print()
+        } else if (mode.equals("reduceByKeyAndWindow01")) {
+            // 这种模式下每次都会将窗口大小中的所有批次数据都计算一遍很浪费性能，它跟 checkpoint()  好像是没有关系的
+            val wordCount = res1.reduceByKeyAndWindow( (a: Int, b: Int) => a + b, Seconds(3 * 4), Seconds(3 * 3) )
+            wordCount.print()
+        } else if (mode.equals("reduceByKeyAndWindow02")) {
+            // 使用窗口函数处理，同时只对添加进来的数据和离开窗口大小中的数据进行处理，这也需要checkpoint 前提
+            val wordCount = res1.reduceByKeyAndWindow((a: Int, b: Int) => a + b, (a: Int, b: Int) => a - b, Seconds(3 * 4), Seconds(3 * 3))
+            wordCount.print()
+        }
+        */
+
         ssc.start
-        
+
         ssc.awaitTermination()
     }
 }

@@ -6,6 +6,14 @@
     - > 应用场景
         > - 构建实时流计算平台
 
+- ### 常用命令
+    > - 创建主题        `sh kafka-topics.sh --create    --zookeeper tarena01:2181 --replication-factor 1 --partitions 1 --topic words`
+    > - 查看主题        `sh kafka-topics.sh --list      --zookeeper HBase01:2181`
+    > - 删除主题        `sh kafka-topics.sh --delete    --zookeeper HBase01:2181 --topic "video"`
+    > - 生产者          `sh kafka-console-producer.sh   --broker-list tarena01:9092 -topic words`
+    > - 消费者          `sh kafka-console-consumer.sh   --zookeeper tarena01:2181 -topic words  --from-beginning`
+    > - 消费者组        `sh kafka-console-consumer.sh   --bootstrap-server tarena01:9092 --topic words --from-beginning --new-consumer`
+    > - 启动服务器      `sh kafka-server-start.sh ../config/server.properties`
 
 - ### 数据的处理:
     - > 离线批处理
@@ -112,13 +120,7 @@
     - > 在WEB 环境下可以实现消峰限流
 
 
-- ## 命令
-    - > 查看当前KAFKA 中有哪些主题
-        > - `sh kafka-topics.sh --list --zookeeper HBase01:2181`
 
-
-- # 服务端启动
-    - > `sh kafka-server-start.sh ../config/server.properties`
 
 
 - ## KAFKA 持久化数据

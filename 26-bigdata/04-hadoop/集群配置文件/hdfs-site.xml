@@ -12,27 +12,27 @@
     <!--nn1(NameNode1)的RPC通信地址-->
     <property>
         <name>dfs.namenode.rpc-address.ns.nn1</name>
-        <value>Hadoop01:9000</value>
+        <value>tarena01:9000</value>
     </property>
     <!--nn1(NameNode1)的http通信地址-->
     <property>
         <name>dfs.namenode.http-address.ns.nn1</name>
-        <value>Hadoop01:50070</value>
+        <value>tarena01:50070</value>
     </property>
     <!--nn2(NameNode2)的RPC通信地址-->
     <property>
         <name>dfs.namenode.rpc-address.ns.nn2</name>
-        <value>Hadoop02:9000</value>
+        <value>tarena02:9000</value>
     </property>
     <!--nn2(NameNode2)的http通信地址-->
     <property>
         <name>dfs.namenode.http-address.ns.nn2</name>
-        <value>Hadoop02:50070</value>
+        <value>tarena02:50070</value>
     </property>
     <!--指定namenode的元数据在JournalNode上的存放位置,这样，namenode2可以从jn集群里获取最新的namenode的信息，达到热备的效果-->
     <property>
         <name>dfs.namenode.shared.edits.dir</name>
-        <value>qjournal://Hadoop01:8485;Hadoop02:8485;Hadoop03:8485/ns</value>
+        <value>qjournal://tarena01:8485;tarena02:8485;tarena03:8485/ns</value>
     </property>
     <!--指定JournalNode存放数据的位置-->
     <property>
