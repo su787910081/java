@@ -2,6 +2,7 @@
 
 - Maven 服务的URL： 
     > http://maven.aliyun.com/
+    > https://mvnrepository.com/tags/scala  搜索仓库
 
 1. Maven 仓库的配置
     > 配置文件: `D:\apache-maven-3.3.9\conf\settings.xml` <br>
