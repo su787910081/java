@@ -14,6 +14,13 @@
     > - 消费者          `sh kafka-console-consumer.sh   --zookeeper tarena01:2181 -topic words  --from-beginning`
     > - 消费者组        `sh kafka-console-consumer.sh   --bootstrap-server tarena01:9092 --topic words --from-beginning --new-consumer`
     > - 启动服务器      `sh kafka-server-start.sh ../config/server.properties`
+    > - 查看分区的offset `./kafka-run-class.sh kafka.tools.GetOffsetShell --broker-list tarena03:9092 --topic words --time -1`
+    >> - `-1` 表示各个分区当前的最大位移值，使用`-2` 表示该主题当前消息总数(它会将最小位移扣除)
+    >> - 这里显示的结果是 "topic:partition:offset"
+    >> - 当前主题: 当前分区: 当前分区的最大offset(这里指的生产者的位置)
+    >>>     words:0:22
+    >>>     words:1:20
+    >>>     words:2:21
 
 - ### 数据的处理:
     - > 离线批处理

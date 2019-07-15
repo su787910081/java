@@ -13,6 +13,7 @@
         > - `systemctl stop firewalld.service`  临时停止
         > - `systemctl disable firewalld.service`   永久禁止
 
+nc -lk 9999
 
 
 
