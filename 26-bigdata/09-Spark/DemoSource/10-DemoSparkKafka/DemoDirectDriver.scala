@@ -40,47 +40,46 @@ object DemoDirectDriver {
 
         //迭代处理数据
         data.foreachRDD(rdd => {
-        rdd.foreachPartition(p => {
-            val conf = HBaseConfiguration.create()
-            //连接Connection
-            val hConnection = ConnectionFactory.createConnection(conf)
-            //获取table
-            val click = hConnection.getTable(TableName.valueOf(Constants.HISTORY_CLICK))
-            val statistic = hConnection.getTable(TableName.valueOf(Constants.RESULT_STATISTIC))
+            rdd.foreachPartition(p => {
+                val conf = HBaseConfiguration.create()
+                //连接Connection
+                val hConnection = ConnectionFactory.createConnection(conf)
+                //获取table
+                val click = hConnection.getTable(TableName.valueOf(Constants.HISTORY_CLICK))
+                val statistic = hConnection.getTable(TableName.valueOf(Constants.RESULT_STATISTIC))
 
-            try {
-            while (p.hasNext) {
-                val tuple = p.next()
-                val logType = tuple._1
-                val logVal = tuple._2
-                println(logType + "\t" + logVal)
-                logType match {
-                case "click" => {
-                    val clickObj = new Click(logVal)
-                    if (HBaseUtil.isExists(click, clickObj.getRowKey)) {
-                    clickObj.doRepeat(statistic)
-                    } else {
-                    clickObj.doNoRepeat(click, statistic)
+                try {
+                    while (p.hasNext) {
+                        val tuple = p.next()
+                        val logType = tuple._1
+                        val logVal = tuple._2
+                        println(logType + "\t" + logVal)
+                        logType match {
+                            case "click" => {
+                                val clickObj = new Click(logVal)
+                                if (HBaseUtil.isExists(click, clickObj.getRowKey)) {
+                                    clickObj.doRepeat(statistic)
+                                } else {
+                                    clickObj.doNoRepeat(click, statistic)
+                                }
+                            }
+                            case _ => {
+                                logger.info("msg:" + logVal)
+                            }
+                        }
                     }
+                } catch {
+                    case ex: Exception => {
+                        logger.error("error :", ex)
+                    }
+                } finally {
+                    click.close()
+                    statistic.close()
+                    hConnection.close()
                 }
-                case _ => {
-                    logger.info("msg:" + logVal)
-                }
-
-                }
-
-            }
-            } catch {
-            case ex: Exception => {
-                logger.error("error :", ex)
-            }
-            } finally {
-            click.close()
-            statistic.close()
-            hConnection.close()
-            }
+            })
         })
-        })
+
         ssc
     }
 }
