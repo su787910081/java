@@ -50,7 +50,6 @@
         <name>yarn.resourcemanager.hostname</name>
         <value>tarena01</value>
     </property>
-	
 	<!-- 对于资源过小的集群，需要配置如下两项。以免被Yarn KILL 掉 -->
 	<property>
 		<name>yarn.nodemanager.vmem-check-enabled</name>
