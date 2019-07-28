@@ -11,6 +11,8 @@
     <name>1803eureka-center</name>
     <!-- FIXME change it to the project's website -->
     <url>http://www.example.com</url>
+    <!-- 打包方式   jar/war  -->
+    <packaging>jar</packaging>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -96,5 +98,16 @@
             </plugins>
 
         </pluginManagement>
+
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <!-- 指定该Main Class为全局的唯一入口 -->
+                    <mainClass>com.jt.EurekaCenter</mainClass>
+                </configuration>
+            </plugin>
+        </plugins>
     </build>
 </project>
