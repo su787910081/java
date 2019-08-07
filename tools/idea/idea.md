@@ -6,13 +6,19 @@
 - > 代码提示快捷键
     > - `file -> Settings...`
     > - 搜索 `Keymap` 并选中
-    > - 搜索 `Cyclic Expand Word` 
+    > - 搜索 `Cyclic Expand Word` 先将这个快捷键空出来
     > - 右击 选择 `Remove Alt+/`
     > - 重新搜索 `Basic`
     > - 找到 `Code -> Completion -> Basic` 
     > - 并右键选择 `Add Keyboard Shortcut`
 
 
+# 插件
+## 翻译
+- > 添加翻译插件
+    > -  `file -> Settings...`
+    > - `Plugins`
+    > - 搜索安装: `translation`
 
 # 导出jar
 
