@@ -12,6 +12,10 @@
     > - 找到 `Code -> Completion -> Basic` 
     > - 并右键选择 `Add Keyboard Shortcut`
 
+- > 代码提示补充大小写忽略
+    > - `file -> Settings...`
+    > - 搜索 `Code Completion`
+    > - `Match case`
 
 # 插件
 ## 翻译
