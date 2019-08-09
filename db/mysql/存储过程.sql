@@ -22,5 +22,35 @@
 	end;
 	//
 	delimiter ;
-	
+
+
+
+
+
+-- 创建存储过程
+DELIMITER $$　　#将语句的结束符号从分号;临时改为两个$$(可以是自定义)
+
+CREATE PROCEDURE porcSuyhTest(IN conf_no INTEGER)
+BEGIN
+	IF conf_no = 1 THEN
+		INSERT INTO conf(note) VALUES ('conf_01');
+    END IF;
+END
+$$
+
+DELIMITER ;
+
+
+-- 删除存储过程
+DROP PROCEDURE IF EXISTS porcSuyhTest; -- 没有括号() 
+
+-- 查看存储过程或者函数
+	查看存储过程：	SHOW   CREATE  PROCEDURE  sp_name
+	查看函数：		SHOW   CREATE  FUNCTION  sp_name
+
+-- 查看存储过程
+	方法一：	select `name` from mysql.proc where db = 'your_db_name' and `type` = 'PROCEDURE';
+	方法二：	show procedure status;
+
+
 

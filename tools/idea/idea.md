@@ -23,6 +23,10 @@
     > -  `file -> Settings...`
     > - `Plugins`
     > - 搜索安装: `translation`
+- > `p3c`
+    > - `NR Coding Style`
+- > `mybatis plus`
+    > - `iBATIS/MyBatis mini-plugin`
 
 # 导出jar
 
