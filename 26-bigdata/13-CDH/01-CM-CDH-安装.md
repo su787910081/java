@@ -33,30 +33,32 @@
     hosts 配置文件
         `/etc/hosts`
     免密登录
-        
+
 
     创建Hive 数据库
         `mysql> CREATE DATABASE hive CHARACTER SET latin1;`
     创建amon 数据库
+    创建`oozie` 数据库
+        mysql> CREATE DATABASE oozie DEFAULT CHARACTER SET utf8;
 
 
 将cm 压缩包解压到 /opt 目录
     [root@tarena03 opt]# cd /opt/
     [root@tarena03 opt]# tar -zxvf ~/software/cdh/cloudera-manager-el6-cm5.10.0_x86_64.tar.gz 
 
-/opt/cm-5.14.0/share/cmf/schema/scm_prepare_database.sh mysql cm -htarena01 -uroot -proot --scm-host tarena01 scm scm scm
+
 拷贝一个 mysql 数据库驱动包
-    cp ~/mysql-connector-java-5.1.34-bin.jar /opt/cm-5.14.0/share/cmf/lib/
+    `cp ~/mysql-connector-java-5.1.34-bin.jar /opt/cm-5.14.0/share/cmf/lib/`
 
 准备Cloudera Manager Server数据库 使用脚本命令
-    /opt/cm-5.14.0/share/cmf/schema/scm_prepare_database.sh mysql cm -htarena01 -uroot -proot --scm-host tarena01 scm scm scm
+    `/opt/cm-5.14.0/share/cmf/schema/scm_prepare_database.sh mysql cm -htarena01 -uroot -proot --scm-host tarena01 scm scm scm`
     [数据库类型mysql] [数据库名]  -h [数据库所在主机]  -u [用户名] -p [密码] --scm-host [Server 所在主机] scm scm scm
     这里有个问题就是我想将数据库创建在远程计算机上没有成功。不知道为什么！！！！！！
         --scm-host 这个是指的Server 所在的主机，可能是这个问题导致的。
     其实这里我们不需要用root 帐户去连接mysql 应该创建一个专门的用户，给他指定这个数据库的权限。
 
 配置代理 `vim /opt/cm-5.14.0/etc/cloudera-scm-agent/config.ini`
-    修改: server_host=tarena01
+    修改: `server_host=tarena01`
         告诉所有agent server 所在的主机节点
 
 拷贝相关文件到指定目录，交对其中一个文件进行改名
@@ -77,24 +79,27 @@
 
 
 集群处理，将配置好的目录拷贝到另外两台节点计算机上
-    scp -r -p /opt/cm-5.14.0/ tarena02:/opt/
-    scp -r -p /opt/cm-5.14.0/ tarena03:/opt/
+    `scp -r -p /opt/cm-5.14.0/ tarena02:/opt/`
+    `scp -r -p /opt/cm-5.14.0/ tarena03:/opt/`
 
-在所有节点创建 cloudera-scm 用户
-    useradd --system --home=/opt/cm-5.14.0/run/cloudera-scm-server/ --no-create-home --shell=/bin/false --comment "Cloudera SCM User" cloudera-scm
+在**所有节点**创建 cloudera-scm 用户
+    *这样的话，如果要新加一个节点上来，那么这台节点上也需要添加这样一个用户了吧。*
+    `useradd --system --home=/opt/cm-5.14.0/run/cloudera-scm-server/ --no-create-home --shell=/bin/false --comment "Cloudera SCM User" cloudera-scm`
 
 如果之前创建过此用户可以使用下面的命令来删除
     userdel cloudera-scm
     这个命令是删除帐户，但是不删除其家目录。如果要删除其家目录，则需要添加一个参数: "-r"
 
 
-在tarena01 启动服务 cm server
-    [root@tarena01 parcel-repo]# /opt/cm-5.14.0/etc/init.d/cloudera-scm-server start
+在**tarena01** 启动服务 cm server
+    [root@tarena01 parcel-repo]# `/opt/cm-5.14.0/etc/init.d/cloudera-scm-server start`
+启动起来之后，可以查看日志，以确定其运行起来了
+    [root@tarena01 parcel-repo]# `tail -f /opt/cm-5.14.0/log/cloudera-scm-server/cloudera-scm-server.log`
 
 
-在所有节点启动代理 cm agent
+在**所有节点**启动代理 cm agent
     tarena01 上启动
-    [root@tarena01 opt]# /opt/cm-5.14.0/etc/init.d/cloudera-scm-agent start
+    [root@tarena01 opt]# `/opt/cm-5.14.0/etc/init.d/cloudera-scm-agent start`
 
     tarena02 上启动
     [root@tarena02 opt]# /opt/cm-5.14.0/etc/init.d/cloudera-scm-agent start
@@ -133,7 +138,12 @@ CDH 中没有集成 kafka ，所以需要单独处理这个kafka
     删除帐户(所有节点): `userdel cloudera-scm`
     删除目录(所有节点): `rm -rf /opt/cloudera/`        `rm -rf /opt/cm-5.14.0/`
 
-如果出现NameNode 格式化失败的情况，则需要对所有节点上的 `/dfs` 目录进行删除  然后可以新建一个空目录 `/dfs`
-    这个目录是在集群设置之前可以看到的
+
+首次登录 hue
+    用户名/密码: hdfs/hdfs
+    用户名/密码: hue/hue
+    
+
+
 
 

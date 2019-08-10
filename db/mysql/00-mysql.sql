@@ -1,3 +1,8 @@
+
+
+
+
+
 -- 建表
 CREATE TABLE person (
     SID integer NOT NULL PRIMARY KEY AUTO_INCREMENT, 

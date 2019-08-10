@@ -23,7 +23,7 @@
 - # NTP
     - > 同步时间
         > - 设置开机启动: `chkconfig ntpd on`
-        > - 设置时间同步：`ntpdate 202.120.2.101`
+        > - 设置时间同步：`ntpdate -u ntp.api.bz`
 
 - ## 免密登录
     - > 为每台机器配置ssh免秘钥登录
