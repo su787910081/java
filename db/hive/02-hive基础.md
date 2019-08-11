@@ -22,11 +22,36 @@
         - > 分区也是一个列
     - > ### 双分区(多分区)
     - > ### 分区修复
+        > - 使用场景
+        >> - 分区是作为元数据存储在MySQL 中的，当HDFS 路径中包含多级目录，同时存在 分区列时，可以创建外部表使用，但是分区的元数据没有在MYSQL 中存在，查不到数据。
         > - 如果创建表的时候指定了分区。HDFS 中的数据是在创建表之后添加的。那么这些数据中的分区数据在hive 中是不能被识别的，这个时候就需要用到分区修复功能了。
         > - `MSCK REPAIR TABL psn;`
         > - 它主要是去查找，当前增加了哪些分区，并将这些分区作为元数据存储起来。
 
+- ## 动态分区
+    - > 注意: 动态分区对应的一定是离线数据。实时数据无法做动态分区
+    - > 开启动态分区需要几个参数
+        > - `hive.exec.dynamic.partition=true` 默认就是`true`
+        > - `hive.exec.dynamic.partition.mode=nostrict` 默认是 `strict`
+        >> - `strict` 是指至少有一个分区列是静态分区
+    - > 相关参数
+        > - `hive.exec.max.dynamic.partitions.pernode`
+        >> - 每一个执行mr 节点上，允许创建的动态分区的最大数据(100)
+        > - `hive.exec.max.dynamic.partitions`
+        >> - 所有执行mr节点上，允许创建的所有动态分区的最磊数据(1000)
+        > - `hive.exec.max.created.fields`
+        >> - 所有的mr job 允许创建的文件的最大数量(100000)
+        >> - 100000 个打开文件大概对应1GB 内存资源
 
+
+- ## 分桶
+    - > 参数    
+        > - 需要开启支持分桶的参数
+        >> - `hive.enforce.bucketing=true;` 默认是`false`;
+    - > 语法
+        > - tablesample(bucket x out of y)
+        >> - x: 从哪个桶取数据
+        >> - Y: 桶的个数的整数倍，或者整除
 
 
 
