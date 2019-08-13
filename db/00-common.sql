@@ -30,5 +30,6 @@ CREATE TABLE person (
     DELETE FROM TableName WHERE id = 1;
     e.g DELETE FROM conf WHERE id = 1;
 
-
+-- CASE WHEN THEN
+    CASE Subject WHEN '语文' THEN Score ELSE 0 END;
 
