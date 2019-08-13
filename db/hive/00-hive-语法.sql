@@ -15,28 +15,38 @@ DESC FORMATTED tableName;
 
 -- ###########################################################
 -- 建表
-    -- 基本语法
+    -- 基本语法 1
+        -- TEMPORARY 临时表，这个一般不用
+        -- EXTERNAL 外部表，这个需要结合后面的 LOCATION 字段使用。与HDFS 上面的某个文件做映射
         CREATE [TEMPORARY] [EXTERNAL] TABLE [IF NOT EXISTS] [db_name.]table_name    -- (Note: TEMPORARY available in Hive 0.14.0 and later)
+        -- (列名 数据类型 注释, ...)
         [(col_name data_type [COMMENT col_comment], ... [constraint_specification])]
+        -- 表注释
         [COMMENT table_comment]
+        -- 分区: 指定分区名字及类型
         [PARTITIONED BY (col_name data_type [COMMENT col_comment], ...)]
         [CLUSTERED BY (col_name, col_name, ...) [SORTED BY (col_name [ASC|DESC], ...)] INTO num_buckets BUCKETS]
         [SKEWED BY (col_name, col_name, ...)                  -- (Note: Available in Hive 0.10.0 and later)]
             ON ((col_value, col_value, ...), (col_value, col_value, ...), ...)
             [STORED AS DIRECTORIES]
         [
-        [ROW FORMAT row_format] 
-        [STORED AS file_format]
-            | STORED BY 'storage.handler.class.name' [WITH SERDEPROPERTIES (...)]  -- (Note: Available in Hive 0.6.0 and later)
+            -- 指定分隔符格式，具体关注后面对 row_format 的详细说明
+            [ROW FORMAT row_format] 
+            -- 文件格式，具体关注对 file_format 的详细说明
+            [STORED AS file_format]
+                | STORED BY 'storage.handler.class.name' [WITH SERDEPROPERTIES (...)]  -- (Note: Available in Hive 0.6.0 and later)
         ]
+        -- HDFS 上面的文件路径，这个应该是一个目录，并不能指定到具体文件
         [LOCATION hdfs_path]
         [TBLPROPERTIES (property_name=property_value, ...)]   -- (Note: Available in Hive 0.6.0 and later)
         [AS select_statement];   -- (Note: Available in Hive 0.5.0 and later; not supported for external tables)
         
+    -- 基本语法 2
         CREATE [TEMPORARY] [EXTERNAL] TABLE [IF NOT EXISTS] [db_name.]table_name
         LIKE existing_table_or_view_name
         [LOCATION hdfs_path];
         
+    -- 详细说明: 
         data_type
         : primitive_type
         | array_type
@@ -76,10 +86,15 @@ DESC FORMATTED tableName;
         
         row_format
         -- 指定读取文件的格式和规则。分隔符的指定
-        : DELIMITED [FIELDS TERMINATED BY char [ESCAPED BY char]] [COLLECTION ITEMS TERMINATED BY char]
+        : DELIMITED 
+                -- 字段之间的分隔符
+                [FIELDS TERMINATED BY char [ESCAPED BY char]] 
+                -- 集合之间的分隔符
+                [COLLECTION ITEMS TERMINATED BY char]
+                -- map 类型之间的分隔符
                 [MAP KEYS TERMINATED BY char] [LINES TERMINATED BY char]
                 [NULL DEFINED AS char]   -- (Note: Available in Hive 0.13 and later)
-        -- 
+        -- Hive 的序列化与反序列化(Serializer and Deserializer)
         | SERDE serde_name [WITH SERDEPROPERTIES (property_name=property_value, property_name=property_value, ...)]
         
         file_format:
@@ -164,11 +179,13 @@ DESC FORMATTED tableName;
             192.168.57.4 - - [29/Feb/2016:18:14:36 +0800] "GET /bg-upper.png HTTP/1.1" 304 -
 
     -- 建表，动态分区
+    -- 注意: 动态分区对应的一定是离线数据。实时数据无法做动态分区
+    -- 开启动态分区需要几个参数，详见笔记"hive基础.md"
         CREATE TABLE psn22(
-        id INT,
-        name STRING,
-        likes ARRAY<STRING>,
-        address MAP<STRING, STRING>
+            id INT,
+            name STRING,
+            likes ARRAY<STRING>,
+            address MAP<STRING, STRING>
         )
         PARTITIONED BY (age INT, gender STRING)
         ROW FORMAT DELIMITED
@@ -222,13 +239,16 @@ Inserting data into Hive Tables from queries
 -- 官方语法: 
     Standard syntax:
     -- 基本插入语法
+    -- 这种语法跟普通SQL 一样
     INSERT OVERWRITE TABLE tablename1 [PARTITION (partcol1=val1, partcol2=val2 ...) [IF NOT EXISTS]] select_statement1 FROM from_statement;
     INSERT INTO TABLE tablename1 [PARTITION (partcol1=val1, partcol2=val2 ...)] select_statement1 FROM from_statement;
     
     -- 扩展插入语法(用得相当多)
+    -- 这种语法主是将FROM TABLE 放到前面，但是可以跟多条INSERT 语句。这样可以做一次查询然后插入到多张表中
     Hive extension (multiple inserts):
 
     FROM from_statement
+    -- 这里的 [IF NOT EXISTS] 的意思应该是如果分区不存在则创建此分区
     INSERT OVERWRITE TABLE tablename1 [PARTITION (partcol1=val1, partcol2=val2 ...) [IF NOT EXISTS]] select_statement1
     [INSERT OVERWRITE TABLE tablename2 [PARTITION ... [IF NOT EXISTS]] select_statement2]
     [INSERT INTO TABLE tablename2 [PARTITION ...] select_statement2] 
@@ -241,6 +261,10 @@ Inserting data into Hive Tables from queries
     [INSERT OVERWRITE TABLE tablename2 [PARTITION ... [IF NOT EXISTS]] select_statement2] 
     ...;
 
+    -- Hive 动态分区
+    -- 动态分区有一些参数需要指定
+    -- 以插入的方式进行动态分区的话。指定的数据的最后一列将被作为分区列(这个地方必须是在最后的位置)。
+    -- 插入的表必须在创建时指定了分区。
     Hive extension (dynamic partition inserts):
     INSERT OVERWRITE TABLE tablename PARTITION (partcol1[=val1], partcol2[=val2] ...) select_statement FROM from_statement;
     INSERT INTO TABLE tablename PARTITION (partcol1[=val1], partcol2[=val2] ...) select_statement FROM from_statement;

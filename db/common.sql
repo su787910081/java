@@ -1,3 +1,11 @@
+-- DDL: "Data Definition Language"
+    -- 操作数据库、操作表
+-- DML: "Data Manipulation Language"
+    -- INSERT、DELETE、UPDATE
+-- DCL: "Data Control Language"
+    -- GRANT、DENY、REVOKE
+
+
 -- 创建数据库
 CREATE DATABASE suyh DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
