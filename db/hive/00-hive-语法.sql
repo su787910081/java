@@ -45,7 +45,7 @@ DESC FORMATTED tableName;
         CREATE [TEMPORARY] [EXTERNAL] TABLE [IF NOT EXISTS] [db_name.]table_name
         LIKE existing_table_or_view_name
         [LOCATION hdfs_path];
-        
+
     -- 详细说明: 
         data_type
         : primitive_type
@@ -96,7 +96,7 @@ DESC FORMATTED tableName;
                 [NULL DEFINED AS char]   -- (Note: Available in Hive 0.13 and later)
         -- Hive 的序列化与反序列化(Serializer and Deserializer)
         | SERDE serde_name [WITH SERDEPROPERTIES (property_name=property_value, property_name=property_value, ...)]
-        
+
         file_format:
         : SEQUENCEFILE
         | TEXTFILE    -- (Default, depending on hive.default.fileformat configuration)
