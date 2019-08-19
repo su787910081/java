@@ -2,6 +2,18 @@
 -- 官方地址
       https://blogs.oracle.com/sql/how-to-create-alter-and-drop-tables-in-sql
     
+
+-- 查询当前表是否存在，若存在则删除
+    DECLARE
+    AN_FLAG NUMBER := 0;
+    BEGIN
+    SELECT COUNT(1) INTO AN_FLAG FROM ALL_TABLES WHERE TABLE_NAME = 'DBI_ACCOUNT_DOCUMENT';
+    IF AN_FLAG = 1 THEN 
+        EXECUTE IMMEDIATE 'DROP TABLE DBI_ACCOUNT_DOCUMENT'; 
+    END IF; 
+    END;
+    /
+
 -- Create Table
     create table <table_name> (
         <column1> <data type>,

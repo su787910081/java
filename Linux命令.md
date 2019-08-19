@@ -110,7 +110,7 @@ vim
 
 
 
-- ## 防炎墙
+- ## 防火墙
 	- > 临时关闭
 		>> service iptables stop
 	- > 永久关闭

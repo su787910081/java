@@ -15,7 +15,7 @@
 - > 代码提示补充大小写忽略
     > - `file -> Settings...`
     > - 搜索 `Code Completion`
-    > - `Match case`
+    > - `Match case` 取消勾选
 
 # 插件
 ## 翻译
