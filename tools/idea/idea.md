@@ -17,6 +17,12 @@
     > - 搜索 `Code Completion`
     > - `Match case` 取消勾选
 
+- > 自动补全代码快捷键
+    > - `Ctrl + Alt + t`
+    >> - `if ... else `
+    >> - `try ... catch ...`
+
+
 # 插件
 ## 翻译
 - > 添加翻译插件

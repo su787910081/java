@@ -372,7 +372,29 @@
 
 - `foreach`元素
     - 说明: 
-        > foreach用于迭代mybatis找那个的多个参数数据. 例如根据多个id的值删除多个元素.
+        > - foreach用于迭代mybatis找那个的多个参数数据. 例如根据多个id的值删除多个元素.
+    - > `collection` 参数(必选)
+        >> - foreach遍历的对象，作为入参时，List对象默认用list代替作为键，数组对象有array代替作为键，Map对象没有默认的键。也就是传入的集合（list，array，map）的名字，这个名字可以在foreach里面随便引用）
+        >> - 当然在作为入参时可以使用@Param(“params”)来设置键，设置keyName后，list,array将会失效。 除了入参这种情况外，还有一种作为参数对象的某个字段的时候。举个例子：
+        >> - 如果User有属性List ids。入参是User对象，那么这个collection = “ids”
+        >> - 如果User有属性Ids ids;其中Ids是个对象，Ids有个属性List id;入参是User对象，那么collection = “ids.id”
+        >> - 
+        >> - 如果传入参数类型为map，这个入参有注解@Param(“params”)，则map的所有的key集合可以写成params.keys，所有值集合可以写成params.values。这样foreach就可以对key集合或值集合进行迭代了。
+        >> - 
+        >> - 上面只是举例，具体collection等于什么，就看你想对那个元素做循环。
+
+    - > `item` 参数(可选)
+        >> - 循环体中的具体对象。支持属性的点路径访问，如item.age,item.info.details。
+        >> - 具体说明：若collection属性为list或array，则item代表list或array里面的一个元素。若collection属性对应一个map，则item代表的是map中的value集合中的单个value
+
+    - > `separator` 参数(可选)
+        >> - 元素之间的分隔符，例如在in()的时候，separator=”,”会自动在元素中间用“,“隔开，避免手动输入逗号导致sql错误，如in(1,2,)这样。
+    - > `open` 参数(可选)
+        >> - foreach代码的开始符号，一般是(和close=”)”合用。常用在in(),values()时
+    - > `close` 参数(可选)
+        >> - foreach代码的关闭符号，一般是)和open=”(“合用。常用在in(),values()时
+    - > `index` 参数(可选)
+        >> - 在list和数组中,index是元素的序号，在map中，index是元素的key
 
     - 示例: 
         > 接口方法:

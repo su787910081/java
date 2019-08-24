@@ -7,7 +7,7 @@
 -- 创建自增序列
     CREATE SEQUENCE seq_intf_account_document_source_line_id_seq;
 
-    create sequence SEQ_APPROVE_TASK
+    create sequence SEQ_INTF_ACCOUNT_DOCUMENT_SOURCE_LINE_ID_SEQ
         minvalue 1
         maxvalue 90000000
         start with 1
