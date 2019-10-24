@@ -1,4 +1,9 @@
 
+# maven 更新
+## 更新失败，长时间更新不下来
+- > 清空缓存，然后全部重新拉取
+    > - `file` -> `Invalidate Caches/Restarts...`
+    
 
 # 快捷键
 
