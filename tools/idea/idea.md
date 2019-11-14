@@ -26,6 +26,9 @@
     > - `Ctrl + Alt + t`
     >> - `if ... else `
     >> - `try ... catch ...`
+	
+- > 查看调用链
+	> - `Alt + F7` 或者 `Ctrl + Alt + h`
 
 
 # 插件
