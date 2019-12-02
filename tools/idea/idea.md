@@ -3,7 +3,16 @@
 ## 更新失败，长时间更新不下来
 - > 清空缓存，然后全部重新拉取
     > - `file` -> `Invalidate Caches/Restarts...`
-    
+
+# maven 项目识别
+## 有时候项目没有被识别为maven 或者maven 项目没有三角形的启动图标时
+- > 以maven 项目来识别
+	> - 右键项目中的`pom.xml` -> `Add as Maven Project`
+
+# 常用
+## 将非项目文件排除
+- > 排除".idea" 目录
+    > - `file` -> `settings` -> `File Types` -> 在编辑框中添加
 
 # 快捷键
 
