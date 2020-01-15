@@ -118,7 +118,7 @@
 
     >> 插入`insert` 语句
 
-    >>> 所有的insert、update、delete 都有一个默认的返回类型为int，表示影响的行数
+    >>> 所有的 insert、update、delete 都有一个默认的返回类型为int，表示影响的行数
 
     >>> 如果我们需要将表中的自增长的ID 值取回保存在对象中，那么我们需要用到`insert` 标签中的`useGeneratedKeys="true" keyProperty="id"` 属性<br>
     >>> `useGeneratedKeys="true"` 表示要使用自增长的id<br>
