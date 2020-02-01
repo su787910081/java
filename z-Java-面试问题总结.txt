@@ -16,6 +16,12 @@ Redis Hash 一致性算法
 	4. 为了解决这个问题，让尺可能少的访问指向数据库，Redis 引入了Hash 一致性算法。也就是在一个整数闭环上面，每一个点对应一个Hash 值，将每一个主机节点也对应到这个闭环上面，同时还对每一个主机节点添加虚拟节点，使其尽可能分散。然后每次来查询某个数据的时候，都会先计算它的Hash 值，然后映射到这个闭环上面，再就是顺时针找到第一个主机节点。那么这个查询的数据就应该在这个主机节点上面，之后就到这个主机节点上面去获取相应的值。
 	5. 这样，如果某一个主机节点断开或者添加到这个集群中来，只会影响一部分的数据未命中情况。不会造成大面积的数据未命中而导致数据库的访问压力过大。
 
+Redis 集群的搭建
+	一主二从
+
+Redis 如果在存储的时候还没有在从节点备份，那么这部分数据的结果是什么？
+	
+
 StringBuffer StringBuilder 的区别
 	StringBuffer 线程安全
 	StringBuilder 非线程安全
@@ -106,10 +112,20 @@ JVM 垃圾回收机制
 数据库调优
 	Blob Text 大字段会使索引失效，所以这种字段都是单独处理，或者使用其他的方式。
 
+MySQL 的锁结构  行锁还是表锁
+	根据引擎的不同而不同，一般我们使用的都是InnoDB，它的特点就是可以做事务控制。默认的锁级别为行级别锁。同时也支持表级别锁。
+
+RabbitMQ 消息丢失的处理
+
 Spring IOC
 	控制反转
 	其实IOC 我的理解就是它是一个大的容器，这个容器中管理着大量的 Bean 对象，我们需要用到的时候直接管 Spring 这个大容器要就可以了。
 	另外我们可以根据自己的需求来指定不同的 Bean 对象的使用。
+
+	循环依赖问题，ClassA 依赖ClassB，同时ClassB 也依赖ClassA。？？？？
+		1. 最简单的方法就是改为set 注入
+		2. 在构造注入的时候使用懒加载 public ClassA(@Lazy ClassB b) {}
+		3. 使用@PostConstruct 在有循环依赖的地方让其先把对象构造出来，在第一次使用对象的时候再进行实际的注入。
 
 Spring AOP
 	面向切面编程
@@ -131,6 +147,10 @@ SpringBoot 有哪些注解
 	@Confi
 	@Transactional
 	@Configuration
+	@ControllerAdvice
+		哪个类上面加了这个注解，哪个类就是一个异常处理类
+	@ExceptionHandler(value=java.lang.Exception.class)
+		
 	@SpringBootConfiguration
 	@EnableAutoConfiguration
 		完成一些初始化环境的配置
@@ -159,15 +179,25 @@ Linux 常用命令
 	sed
 	scp
 	top
+	chmod
+		修改权限
 	
 Linux 在线使用
 	http://tpcg.io/2jC11bYX 
 	https://www.tutorialspoint.com/unix_terminal_online.php
 		
 	
-如果查看日志的
+如何查看日志的
 	使用 less grep vi 命令
 	
+CAP 原理
+	CAP原则又称CAP定理，指的是在一个分布式系统中，一致性（Consistency）、可用性（Availability）、分区容错性（Partition tolerance）。CAP 原则指的是，这三个要素最多只能同时实现两点，不可能三者兼顾。
+	ZooKeeper 是CP 原理，一致性+分区容错性。
+		ZooKeeper 在选举的时候是不对外提供服务的，所以这就不满足可用性。它是需要先保证一致性，在数据一致的前提下，再提供服务的可用性。
+	Eureka 是AP 原理，可用性+分区容错性。
+		Eurea 会首先保证可用性，也就是说只要有一台服务可用，则服务可用。在服务可用的前提下，再去同步数据保证数据的一致性。
 	
-	
+面试题目
+	扑克牌的洗牌
+		随机选择两个位置的牌，进行多次交换就可以了。
 	

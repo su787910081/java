@@ -117,7 +117,16 @@ vim
 		>> chkconfig iptables off
 
 
-
+- ## yum
+	- > 查看某个应用的版本号列表
+		> - 下面这个是把erlang 的版本列出来了
+		>> - `yum list erlang --showduplicates`
+		>> - 下面是其中的一行示例
+		>>> - 	erlang.x86_64      21.3.6-1.el6   erlang-solutions
+	- > 安装指定版本，一般是使用应用名-版本号的方式
+		> - erlang 
+		>> - `yum install erlang-21.3.6-1.el6`
+		> - 其他的可能需要添加 .x86_64
 
 
 
