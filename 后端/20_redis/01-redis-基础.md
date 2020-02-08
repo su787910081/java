@@ -62,6 +62,9 @@
     >> - 主动删除数据时有人工成本；redis 有数据过时剔除的逻辑；
     >>> 1. 超时
     >>> 2. 自带的删除数据逻辑(LRU): lasted recent unused
+	> - `$ setex color 10 red`
+	>> - 设置 color 的有效期为10 秒
+	>> - 也可以使用`expire` 来重新设置它的有效期
 
 - 辅助命令
     > - `type`
@@ -96,12 +99,31 @@
     >> - 只能在本机节点执行，不支持分布式
     >> - 同时获取多个key 的value 或者同时设置多个数据对
 
-- hash 数据类型
+- 高级命令
+	> - `keys list*` 模糊匹配，只能用 *
+	> - `expire` 设置某个key 的过期时间，使用ttl 查看剩余时间
+	>> - `expire name 15` 15 秒时间的过期时间
+	>> - `ttl name` 查看name 的剩余时间
+	> - `persist` 取消过期时间
+	> - `select [数据库下标]` 选择一个指定的数据库
+	> - `rename [key-name]` 改名
+	> - `dbsize` 查看当前数据库中的key 的数量
+	> - `info` 查看redis的信息 全局性
+	> - `config get [配置名]` 查看redis 的一些配置项
+	>> - `config get *`
+	> - `flushdb` 清空当前数据库
+	>> - `flushdb 0` 清空指定数据库
+	> - `flushall` 清空全部数据库
+	
+	
+- Hash 数据类型(类比JAVA 中的HashMap)
+	> - hset hget 都是对key 进行求Hash 然后对槽道取余，选择槽道位置。
+	>> - 如果一个hset user 中存储的数据量过大，那么这些所有数据都会存放在一个槽道对应的主机节点中。
     > - 面向对象数据类型
     > - `hset user id 1`  |  `hget user id`
     >> - hash 数据类型的设定和读取
     > - `hexists user id`
-    >> - 判断属性是否存在
+    >> - 判断属性是否存在 返回true false
     > - `hdel`
     >> - 删除属性
     > - `hkeys` | `hvals`
@@ -110,25 +132,26 @@
     >> - 对某个key 的value 进行自增
     > - `hlen`
     >> - 判断当前hash 类型数据的属性个数
+	> - `hgetall [key]`
 
 - List 数据集合链
     > - ## 操作命令分左右，数据查看是上下
-    > - `lpush`
-    >> - 往一个链结构中添加数据
-    > - `lrange`
-    >> - 查看一个范围内的数据
-    >>> - `lrange 0 3` 查看从0 到3 4 个数据
-    >>> - `lrange 0 -1` 查看所有数据
+    > - `lpush` 
+    >> - 往链表头部添加一个元素
+    > - `lrange`   没有`rrange` 命令
+    >> - 查看一个链表中的元素，需要指定下标范围
+    >>> - `lrange list1 0 3` 查看从0 到3 4 个数据
+    >>> - `lrange list1 0 -1` 查看所有数据
     > - `rpush`
-    >> - 从下插入数据链
+    >> - 往链表尾部添加一个元素
     > - `lset`
-    >> - 设定list中对应下标的元素值;
-    > - `lrem`
+    >> - 设置list中对应下标的元素值;
+    > - `lrem`  没有`rrem` 命令
     >> - 从key 对应的list 中删除count 个相同value 数据的元素，count 可以大于0， 小于0， 等于0 
-    >> - 大于0 表示从上到下删除count 个元素
-    >> - 小于0 表示从下到上删除count 个元素
+    >> - 大于0 表示从正方向删除count 个元素
+    >> - 小于0 表示从反方向删除count 个元素
     >> - 等于0 删除所有相同的元素
-    >>> - `lrem mylist 0 two`
+    >>> - `lrem mylist 0 two`  删除 mylist 链表中所有的 two 元素
     > - `lpop`
     >> - 从头部删除一个元素，并返回
     > - `rpop` 
@@ -136,6 +159,31 @@
     > - `rpoplpush`
     >> - 从第一个list 的尾部移除元素，添加到第二个list 的头部
     >>> - `rpoplpush mylist mylist1`
+	> - `lindex` 返回指定下标位置的元素
+	> - `llen`  链表的个数
+
+- set  String 类型的无序集合
+	> - 这里所说的无序，指的是插入到set 中，set 是不会给我们排序，插入是什么顺序，查看就是什么顺序。
+	> - 取交集、并集、差集
+	> - `sadd` 添加元素
+	> - `srem` 删除元素
+	> - `spop` 随机返回删除的key
+	> - `smembers` 查看集合中的所有元素
+	> - `sdiff` 返回两个集合的不同元素(以前面一个集合为标准)
+	> - `sdiffstore` 将返回的不同元素存储到另外一个集合中
+	> - `sinter` 交集
+	> - `sinterstore` 将返回交集结果存入另外一个集合中
+	> - `sunion` 取并集
+	> - `sunionstore` 取得并集，存入另外一个集合中
+	> - `smove` 从一个集合中移动到另一个集合
+	> - `scard` 查看集合中元素个数
+
+- zset 有序集合
+	> - 按给定的评分来进行排序
+	> - `zadd` 添加一个元素，如果这个元素存在，则会修改其评分的值。
+	>> - `zadd zset1(集合名称) 6(评分) six(元素)`
+	> - `zrange zset1 0 -1 withscores` 查看元素，同时显示评分
+	> - `zrange zset1 0 -1` 不显示评分
 
 
 - > ##  redis-server 配置文件

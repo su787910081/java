@@ -128,6 +128,34 @@ vim
 		>> - `yum install erlang-21.3.6-1.el6`
 		> - 其他的可能需要添加 .x86_64
 
+- ## CentOS7 关闭系统蜂鸣声音
+	- > 命令
+		> - `$ vi /etc/inputrc`
+		> - 将 set bell-style none 改为 set bell-style off
+		>> - 记得将前面的‘#’去掉
+		> - `$ reboot`
+
+- ## shell 脚本
+	- > 批量操作，连续数字
+		>> - `for i in {1..5461}; do redis-cli -h 192.168.159.135 -c -p 7001 cluster addslots $i; done`
+	- > 批量操作，数组
+		>> - `for i in {a,b,c,d,e}; do echo $i; done`
+	- > 批量操作，redis
+		>>		for port in 7001 7002 7003 7004 7005 7006
+		>>		do
+		>>			REDIS_CMD="redis-server $port/redis.conf"
+		>>			# 好像不加 `` 也可以
+		>>			`$REDIS_CMD`
+		>>			echo $REDIS_CMD
+		>>		done
+	- > 批量操作，redis
+		>>		for port in 7001 7002 7003 7004 7005 7006
+		>>		do
+		>>			REDIS_CMD="redis-cli -p $port shutdown"
+		>>			$REDIS_CMD
+		>>			echo $REDIS_CMD
+		>>		done
+
 
 
 

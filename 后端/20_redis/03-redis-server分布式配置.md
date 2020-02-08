@@ -3,7 +3,7 @@
 - ## Redis server 的相关配置
     > 1. 在解压并安装redis 的那个根目录 下面有一个配置文件模板(`redis.conf`)
     > - 修改配置文件
-    >> - p61 行 --> 注释掉bind 所在的那一行，它是指定哪些IP 地址可以连接到此服务器
+    >> - p61 行 --> 注释掉bind 所在的那一行，redis 服务器监听的IP 有哪些，或者改成 "0.0.0.0"
     >>> ![](./img/redis-conf-bind-01.jpg)
     >> - p80 行  --> 修改为no 不启用保护模式, 如果开启了保护模式，则需要登录密码
     >>> ![](./img/redis-conf-protected.jpg)

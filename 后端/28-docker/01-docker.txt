@@ -16,6 +16,7 @@
 
 docker 搜索
 	https://hub.docker.com/
+	$ docker search xxx
 
 查看容器内部细节
 	docker inspect centos1
@@ -29,6 +30,9 @@ docker rmi 镜像ID
 	删除一个指定镜像
 docker pull centos:7
 
+
+docker info
+	查看详细信息
 
 
 
@@ -82,7 +86,7 @@ docker rm 容器名称|容器ID
 		docker run -id -v /opt:/opt:ro --name=centos4 centos:7
 
 查看挂载的容器详细挂载信息
-	docker inspect --format='{{.Mounts}}' centos4
+	docker inspect --format='{{.Mounts}}' centos4(容器名、容器ID)
 
 
 mysql 容器的使用
@@ -108,6 +112,25 @@ tomcat 容器
 rabbitmq 容器
 	拉取容器
 		docker pull rabbitmq:management
+		docker pull rabbitmq:3.7.3-management
 	创建容器并运行
 		docker run -id --name=mxg_rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:management
 		rabbitmq 有两个端口需要映射
+
+nginx 容器
+	拉取容器
+		docker pull nginx
+	创建并运行
+		docker run -d -p 8088:80 --name "nginx-suyh-8088" nginx
+		docker run -d -p 8098:80 --name "nginx-suyh-8098" nginx
+	在宿主机测试
+		curl "http://127.0.0.1:8088"
+
+
+
+
+
+
+
+
+
