@@ -59,3 +59,12 @@ Kent,生物,85
 -- UNPIVOT 
 
 
+-- MYSQL 列转行博客：
+-- https://blog.csdn.net/zhengjl369/article/details/80853310
+
+
+
+
+
+
+
