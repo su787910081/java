@@ -1,0 +1,37 @@
+
+性别
+    gender
+男性 male
+女性 female
+
+启用 - 停用
+    enable - disable
+    enable - stopped
+    running - stopped
+    run - stop
+有效 - 无效
+    valid - invalid
+正常 - 无效
+    normal - invalid
+允许 - 拒绝
+    allow - refuse
+    enable - disable
+种类、类别、类型
+    kinds
+    type
+商品
+    goods
+过期、到期
+    expire
+有效期
+    valid days
+生产日期
+    production date
+保持期
+    expiry date
+存储
+    store
+    storage
+
+
+

@@ -3,13 +3,14 @@
 
 ![mybatis 处理流程图](./img/process.png)
 
-
 ## mybatis 配置
 
-- 核心配置文件`mybatis-config.xml`
+- #### 核心配置文件`mybatis-config.xml`
     > - XML 依赖规则
+    >> 
     >>      <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
     > - 开发环境配置 <span style="color:red">**注意`configuration` 是根标签**</span>
+    >> 
     >>      <configuration>
     >>          <environments default="development">
     >>              <environment id="development">
@@ -24,142 +25,126 @@
     >>          </environments>
     >>      </configuration>
     > - `mapper` 配置
-    >> 添加`mapper` 配置 <span style="color:red">**注意`configuration` 是根标签**</span>
+    >> - 添加`mapper` 配置 <span style="color:red">**注意`configuration` 是根标签**</span>
+    >>> 
     >>>     <configuration>
     >>>         <mappers><mapper resource="mapper/SysUserMapper.xml" /></mappers>
     >>>     </configuration>
     > - <a name="aliase"></a>`mapper` 配置中的类<span style="color:red">**配置别名**</span>
     >> 1. 为某一个类添加别名 <span style="color:red">**注意`configuration` 是根标签**</span>: 
+    >>> 
     >>>     <configuration>
     >>>         <typeAliases>
     >>>             <typeAlias type="com.project.sys.entity.SysUser" alias="sysUser"/>
     >>>         </typeAliases>
     >>>     </configuration>
     >> 2. 为某一个包下所有类添加别名: 默认别名为类首字母小写 <span style="color:red">**注意`configuration` 是根标签**</span>
+    >>> 
     >>>     <configuration>
     >>>         <typeAliases>
     >>>             <package name="com.project.sys.entity"/>
     >>>         </typeAliases>
     >>>     </configuration>
 
-- `mapper` 映射配置文件`mapper/SysUserMapper.xml`
-    > 依赖规则
-
-        <?xml version="1.0" encoding="UTF-8"?>
-        <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-            "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
-    > mybatis 中的映射文件，对于这个映射文件必须有一个`mapper` 根元素，这个根元素中必须定义个命名空间 `namespace`，并且这个`namespace` 指到接口一级别，而非包一级别。<br>
-
-    > 所有的SQL 语句都必须要有一个id
-
-    >> SQL 查询
-
-    >> 对于查询必须要有一个`resultType` 或者 `resultMap`
-
-    >> `resultType` 的使用
-
-    >>> 对于查询语句，其中`resultType="map"` 表示查询结果会封装到对应的map类型中，一行记录对应一个map
-
-        <mapper namespace="com.project.sys.dao.SysUserDao">
-            <select id="findUsers" resultType="map">select * from sys_users</select>
-        </mapper>
-
-    >>> 为查询语句指定参数，以及参数类型
-
-        <mapper namespace="com.project.sys.dao.SysUserDao">
-            <select id="findUserById" parameterType="int" resultType="map">
-                select * from sys_users where id = #{id}
-            </select>
-        </mapper>
-
-    >>> 将结果指定封装到一个实体类中
-
-    >>> `resultType="com.project.sys.entity.SysUser"` 可以在mybatis-config.xml 中<a href="#aliase">配置别名</a>
-
-        <mapper namespace="com.project.sys.dao.SysUserDao">
-            <select id="findObjectById" resultType="com.project.sys.entity.SysUser">
-                select * from sys_users where id = #{id}
-            </select>
-        </mapper>
-
-    >> `resultMap` 的使用
-
-    >> 当数据库返回的字段名与要映射对象的属性和set 方法不匹配时，我们就需要使用`resultMap` 来做具体映射
-
-    >>> 假如我们想要把数据库中查询出来的数据存放到一个vo(Value Object) 对象`Account` 类中。需要实现其`set`、`get` 方法
-
-        public class Account {
-            private String uname;
-            private String pwd;
-            set...   get...
-        }
-
-    >>> 那么我们就使用`resultMap` 标签的`result` 子标签的`property`和`column` 做映射
-
-    >>> 同时`type="account"` <==> `Account`<br>
-    >>> 为其指定一个`id="amap"`
-
-        <mapper namespace="com.project.sys.dao.SysUserDao">
-            <resultMap type="account" id="amap">
-                <!-- 将数据库中的username 字段 映射到account 中的uname 属性 -->
-                <result property="uname" column="username" />
-                <result property="pwd" column="password" />
-            </resultMap>
-        </mapper>
-
-    >>> 在`select` 标签中指定`resultMap="amap"` `amap` 对应上面的`id="amap"`
-
-        <mapper namespace="com.project.sys.dao.SysUserDao">
-            <select id="findNameAndPwd" resultMap="amap">
-                select username, password from sys_users
-            </select>
-        </mapper>
-
-    >> 插入`insert` 语句
-
-    >>> 所有的 insert、update、delete 都有一个默认的返回类型为int，表示影响的行数
-
-    >>> 如果我们需要将表中的自增长的ID 值取回保存在对象中，那么我们需要用到`insert` 标签中的`useGeneratedKeys="true" keyProperty="id"` 属性<br>
-    >>> `useGeneratedKeys="true"` 表示要使用自增长的id<br>
-    >>> `keyProperty="id"` 表示要将自增长的id 值赋值给`sysUser` 对象的`id` 属性<br>
-    >>> 前提是数据库需要支持自增长的ID
-
-        <mapper namespace="com.project.sys.dao.SysUserDao">
-            <insert id="insertObject" parameterType="sysUser"
-            useGeneratedKeys="true" keyProperty="id">
-                insert into sys_users(id, username, password, phone, createdDate, modifiedDate) 
-                values(null, #{username}, #{password}, #{phone}, now(), now())
-            </insert>
-        </mapper>
-
-    >>> 对应的接口方法
-
-        int insertObject(SysUser entity);
-
-    >>> 在上面的`#{username}` 将会由`entity.getUsername()` 来获取。同时会将使用`entity.setId()` 来将生成的自增长ID 填充进去
+- #### `mapper` 映射配置文件`mapper/SysUserMapper.xml`
+- > 依赖规则
+    > - 依赖规则
+    >> 
+    >>     <?xml version="1.0" encoding="UTF-8"?>
+    >>     <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    >>         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    > - mybatis 中的映射文件，对于这个映射文件必须有一个`mapper` 根元素，这个根元素中必须定义个命名空间 `namespace`，并且这个`namespace` 指到接口一级别，而非包一级别。<br>
+    > - 所有的SQL 语句都必须要有一个id
+    >> - SQL 查询
+    >> - 对于查询必须要有一个`resultType` 或者 `resultMap`
+    >> - `resultType` 的使用
+    >>> - 对于查询语句，其中`resultType="map"` 表示查询结果会封装到对应的map类型中，一行记录对应一个map
+    >>>> 
+    >>>>     <mapper namespace="com.project.sys.dao.SysUserDao">
+    >>>>         <select id="findUsers" resultType="map">select * from sys_users</select>
+    >>>>     </mapper>
+    >>> - 为查询语句指定参数，以及参数类型
+    >>>> 
+    >>>>     <mapper namespace="com.project.sys.dao.SysUserDao">
+    >>>>         <select id="findUserById" parameterType="int" resultType="map">
+    >>>>             select * from sys_users where id = #{id}
+    >>>>         </select>
+    >>>>     </mapper>
+    >>> - 将结果指定封装到一个实体类中
+    >>> - `resultType="com.project.sys.entity.SysUser"` 可以在mybatis-config.xml 中<a href="#aliase">配置别名</a>
+    >>>> 
+    >>>>     <mapper namespace="com.project.sys.dao.SysUserDao">
+    >>>>         <select id="findObjectById" resultType="com.project.sys.entity.SysUser">
+    >>>>             select * from sys_users where id = #{id}
+    >>>>         </select>
+    >>>>     </mapper>
+    >> - `resultMap` 的使用
+    >> - 当数据库返回的字段名与要映射对象的属性和set 方法不匹配时，我们就需要使用`resultMap` 来做具体映射
+    >>> - 假如我们想要把数据库中查询出来的数据存放到一个vo(Value Object) 对象`Account` 类中。需要实现其`set`、`get` 方法
+    >>>> 
+    >>>>     public class Account {
+    >>>>         private String uname;
+    >>>>         private String pwd;
+    >>>>         set...   get...
+    >>>>     }
+    >>> - 那么我们就使用`resultMap` 标签的`result` 子标签的`property`和`column` 做映射
+    >>> - 同时`type="account"` <==> `Account`
+    >>> - 为其指定一个`id="amap"`
+    >>>> 
+    >>>>     <mapper namespace="com.project.sys.dao.SysUserDao">
+    >>>>         <resultMap type="account" id="amap">
+    >>>>             <!-- 将数据库中的username 字段 映射到account 中的uname 属性 -->
+    >>>>             <result property="uname" column="username" />
+    >>>>             <result property="pwd" column="password" />
+    >>>>         </resultMap>
+    >>>>     </mapper>
+    >>> - 在`select` 标签中指定`resultMap="amap"` `amap` 对应上面的`id="amap"`
+    >>>> 
+    >>>>     <mapper namespace="com.project.sys.dao.SysUserDao">
+    >>>>         <select id="findNameAndPwd" resultMap="amap">
+    >>>>             select username, password from sys_users
+    >>>>         </select>
+    >>>>     </mapper>
+    >> - 插入`insert` 语句
+    >>> - 所有的 insert、update、delete 都有一个默认的返回类型为int，表示影响的行数
+    >>> - 如果我们需要将表中的自增长的ID 值取回保存在对象中，那么我们需要用到`insert` 标签中的`useGeneratedKeys="true" keyProperty="id"` 属性
+    >>> - `useGeneratedKeys="true"` 表示要使用自增长的id
+    >>> - `keyProperty="id"` 表示要将自增长的id 值赋值给`sysUser` 对象的`id` 属性
+    >>> - 前提是数据库需要支持自增长的ID
+    >>>> 
+    >>>>     <mapper namespace="com.project.sys.dao.SysUserDao">
+    >>>>         <insert id="insertObject" parameterType="sysUser"
+    >>>>         useGeneratedKeys="true" keyProperty="id">
+    >>>>             insert into sys_users(id, username, password, phone, createdDate, modifiedDate) 
+    >>>>             values(null, #{username}, #{password}, #{phone}, now(), now())
+    >>>>         </insert>
+    >>>>     </mapper>
+    >>> - 对应的接口方法
+    >>>> 
+    >>>>     int insertObject(SysUser entity);
+    >>> - 在上面的`#{username}` 将会由`entity.getUsername()` 来获取。同时会将使用`entity.setId()` 来将生成的自增长ID 填充进去
 
     <a name="placeholder_01"></a>
-    > <span style="color:red">**配置文件中的'#' 与'$' 符号的区别**</span>
+- > '#' 与 '$' 符号
+    > - <span style="color:red">**配置文件中的'#' 与'$' 符号的区别**</span>
+    >> - 以String columnName = "username"; String phone = "139"; 且SQL 如下
+    >>> 
+    >>>     <select id="findUsers" resultType="sysUser">
+	>>> 	    select * from sys_users where phone=#{phone} order by ${columnName} desc
+	>>>     </select>
 
-    >> 以String columnName = "username"; String phone = "139"; 且SQL 如下<br>
+    >>> - 他将被最终解析为:  `select * from sys_users where phone='139' order by username desc`
 
-        <select id="findUsers" resultType="sysUser">
-		    select * from sys_users where phone=#{phone} order by ${columnName} desc
-	    </select>
+    >>> - 当使用`${columnName}` 时，那么SQL 语句中将会是 {username} 替换<br>
+    >>> - 当使用`#{phone}` 时，那么SQL 语句中将会是 {'139'} 替换<br>
+    >>> - 也就是说使用# 他会将取出来的值添加一个`''` 认为它是一个字符串(整数不会)<br>
 
-    >>> 他将被最终解析为:  `select * from sys_users where phone='139' order by username desc`
-
-    >>> 当使用`${columnName}` 时，那么SQL 语句中将会是 {username} 替换<br>
-    >>> 当使用`#{phone}` 时，那么SQL 语句中将会是 {'139'} 替换<br>
-    >>> 也就是说使用# 他会将取出来的值添加一个`''` 认为它是一个字符串(整数不会)<br>
-
-    > 提示: 
-    > 1) $符号在应用时有可能会出现SQL 注入的风险。
-    >> 使用'#' 防止SQL 注入，比如使用函数: `cancat("%", #{likeStr}, "%"} `
-    > 2) $符号接收接口方法参数值时，此值<span style="color:red">**必须**</span>要使用`@Param` 注解进行定义
-    > 3) #符号接收接口方法参数数据时，假如接口中参数个数大于一个，建议使用`@Param` 注解对参数进行定义。
-    > 4) #符号在SQL 中将会被替换成`'?'` 占位符
+    > - 提示: 
+    > - 1) $符号在应用时有可能会出现SQL 注入的风险。
+    >>     使用'#' 防止SQL 注入，比如使用函数: `cancat("%", #{likeStr}, "%"} `
+    > - 2) $符号接收接口方法参数值时，此值<span style="color:red">**必须**</span>要使用`@Param` 注解进行定义
+    > - 3) #符号接收接口方法参数数据时，假如接口中参数个数大于一个，建议使用`@Param` 注解对参数进行定义。
+    > - 4) #符号在SQL 中将会被替换成`'?'` 占位符
 
 
 
