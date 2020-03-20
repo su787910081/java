@@ -215,11 +215,12 @@
 
 ## Mybatis 的日志配置及应用
 
-- 配置
+- ### 配置
+- > #### spring框架原始配置
     > 1. 添加log4j 依赖
     >>      <dependency>
     >>          <groupId>log4j</groupId>
-    >>          <artifactId>log4j</artifactId>
+    >>          <art    ifactId>log4j</artifactId>
     >>          <version>1.2.17</version>
     >>      </dependency>
     > 2. 定义一个`log4j.properties`配置文件放在类路径（例如maven项目的resource目录）
@@ -235,6 +236,14 @@
     > 3. 然后在mybatis核心的配置文件(`mybatis-config.xml`)中添加此日志配置
     >>		<!-- name="logImpl" 为约定值  value="log4j" 对应文件名 -->
     >>		<setting name="logImpl" value="log4j"/>
+
+- > #### springboot 框架配置
+    > - 我们只需要在文件里面添加一个配置项的值就可以了。如下: 
+    > - `application.properties` 配置文件
+    >>      logging.level.com.suyh=debug
+    > - 这里前面分两部分
+    >> - logging.level 有前缀指定日志配置
+    >> - com.suyh 指定mybatis 接口源文件所在的包
 
 
 ## 缓存
@@ -269,7 +278,7 @@
 
 ## 动态SQL
 
-- `if` 元素
+- ### `if` 元素
     - 说明: 
         > 这里我们需要注意的是，在`<if test="phone != nulland phone!=’’">`这里面的`phone`， 它只认识dao 接口中方法通过注解`@Param("phone")` 指定的名称，所以必须要加这个注解。
 
@@ -284,7 +293,7 @@
         >           </if>
         >       </select>
 
-- `choose` 组合 `choose ... when ... otherwise`
+- ### `choose` 组合 `choose ... when ... otherwise`
     - 说明:
         > 动态SQL 中没有`if ... else ...` 这种语法，它可以用`choose ... when ... otherwise ...` 来代替
 
@@ -310,7 +319,7 @@
         >           </choose>
         >           )
         >       </insert>
-- `where` 元素
+- ### `where` 元素
     - 说明: 
         > where 元素用于定义查询条件,并且可以去除空格或者是and,or等不符合语法要求的字符.
 
@@ -331,7 +340,7 @@
         >>          </where>
         >>      </select>
 
-- `set` 元素
+- ### `set` 元素
     - 说明: 
         > set 元素用于定义更新字段，并且可以去除多于的','
     
@@ -355,7 +364,7 @@
 		>>      </set>
 		>>      where id=#{id}
 
-- `foreach`元素
+- ### `foreach`元素
     - 说明: 
         > - foreach用于迭代mybatis找那个的多个参数数据. 例如根据多个id的值删除多个元素.
     - > `collection` 参数(必选)
@@ -408,7 +417,7 @@
 
 
 
-- sql 元素
+- ### sql 元素
     - 这个元素的功能就是SQL 代码的复用。我们可以先声明一段SQL 代码，并为它指定一个ID，然后在需要这段代码的地方利用这个ID 来将其插入到我们的SQL 代码中。
 
         > 1. 声明一段SQL 代码
@@ -436,19 +445,39 @@
 
 
 
-- 动态SQL 实例
+- ## 动态SQL 实例
 
-## SQL 示例
+- ### SQL 示例
 
-- 返回一个`List` 对象
+- > #### 返回一个`List` 对象
 
-    > dao 层接口
+    > - dao 层接口
     >>      List<Integer> findObjectByUserId(Integer userId);
-    > sql
+    > - sql
     >>      <select id="findObjectByUserId" resultType="integer">
-    >>          select role_id from sys_roles_users where user_id=#{userId}
+    >>          select role_id from sys_roles_users 
+    >>              where user_id=#{userId}
     >>      </select>
 
+- > #### 调用存储过程
+
+    > - 调用存储过程分页
+    >>     <select id="pagingPlatformCmAppInfo" 
+    >>             parameterType="com.isoftstone.hig.common.model.PagingProceduresInfo"
+    >>             resultType="com.isoftstone.hig.platform.api.entity.PlatformCmAppInfo" 
+    >>             statementType="CALLABLE">
+    >>         { call Proc_CommonPagingStoredProcedure(
+    >>                 #{tables,mode=IN,jdbcType=VARCHAR},
+    >>                 #{pk,mode=IN,jdbcType=VARCHAR},
+    >>                 #{sort, mode=IN, jdbcType=VARCHAR},
+    >>                 #{pageNumber, mode=IN, jdbcType=INTEGER},
+    >>                 #{pageSize, mode=IN, jdbcType=INTEGER},
+    >>                 #{fields, mode=IN, jdbcType=VARCHAR},
+    >>                 #{filter, mode=IN, jdbcType=VARCHAR},
+    >>                 #{countTotal, mode=IN, jdbcType=BIT},
+    >>                 #{total, mode=OUT, jdbcType=INTEGER}
+    >>         ) }
+    >>     </select>
 
 
 

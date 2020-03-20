@@ -39,7 +39,7 @@
 联络
 	Contacts
 联系人
-	contactser
+	contacts
 发票
 	invoice
 收据

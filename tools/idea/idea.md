@@ -15,7 +15,7 @@
     > - `file` -> `settings` -> `File Types` -> 在编辑框中添加
 ## 自动添加 `serialVersionUID` 的值
 - > `file -> settings...`
-    > - 搜索 ` inspections`
+    > - 搜索 `inspections`
     > - 在右边框中继续搜索 `serialVersionUID`
     >> - 搜索结果会是: java -> Serialization issues
     >>> - 然后下面有4 个可选项
@@ -83,6 +83,20 @@
 ## install打包
 - > 打包输出路径
     > - 这个路径我不知道在哪里配置，但是使用 install 之后在下面的日志中会有提示打包在哪个位置去了。
+
+# MYSQL
+## 手动配置和下载MYSQL 驱动
+- > ### 下载驱动
+- >> 官方下载地址
+    > - https://dev.mysql.com/downloads/connector/j/ 
+    > - 选择 "Archives" 选择指定版本
+    > - 选择 "platform independent" 与平台无关
+    > - 然后下载、解压放到本地目录。
+    >> - IDEA 有一个存放驱动的地址
+    >> - 大概是: C:\Users\yhsud\.IntelliJIdea2019.2\config\jdbc-drivers
+- > ### idea 中配置驱动
+- >> 选择右边 "Database"  -->  选择有一个"+" 号的  -->  "Data Source"  -->  "Mysql" 
+- >> 在 "Drivers" 下面选择 "MYSQL"  然后点击在右边的 "+" 选择我们本地的驱动包就可以了。
 
 
 
