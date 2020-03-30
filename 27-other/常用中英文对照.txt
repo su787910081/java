@@ -19,6 +19,8 @@
 种类、类别、类型
     kinds
     type
+	category
+	Varieties
 商品
     goods
 过期、到期
@@ -77,3 +79,59 @@
 	inside：多指处于某物内部或靠近内部，常可与inner换用，可引申指内幕的，秘密的。
 	inner：含义广泛，指事物中心或接近中心的部位，也可指内心隐密的活动。
 	interior：指某物的内部，尤指某物的内侧，也可指内地的或国内的。
+选择性的
+	Selective
+单个、单一
+	single
+多个、多数
+	Multiple
+	multi
+集群
+	cluster
+开本
+	book size
+	format
+站台 月台
+	platform
+区间
+	section
+预约
+	pre appointment
+调度 派遣
+	Dispatching 
+	Dispatch
+叫号
+	Call sign
+卸货 卸载
+	unload
+	unloading
+	discharge cargo
+卸货费用
+	discharging expense
+卸货员
+	discharge man
+权限
+	Permission
+角色
+	role
+组织
+	organize
+资源
+	resource
+特权
+	Privilege   
+部门
+	department
+供应商
+	supplier
+消费者、客户
+	consumer
+优先级
+	priority
+运输
+	transport
+转换
+	convert
+
+
+

@@ -27,6 +27,10 @@
     >>> - 在上面的四个选项中勾选第二和第四个即可
     >>> - 然后在使用的时候，只要继承了`Serializable` 类，就可以使用快捷键`Alt + Enter` 就会弹出"Add 'serialVersionUID' field"
 
+## 文件默认编码 UTF-8
+- > 设置文件编码
+    > - `file` -> `settings` -> 搜索 `file encoding` -> `Global Encoding` `Project Encoding` `Properties files`
+
 # 快捷键
 
 ## 修改快捷键
