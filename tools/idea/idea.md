@@ -101,6 +101,7 @@
 - > ### idea 中配置驱动
 - >> 选择右边 "Database"  -->  选择有一个"+" 号的  -->  "Data Source"  -->  "Mysql" 
 - >> 在 "Drivers" 下面选择 "MYSQL"  然后点击在右边的 "+" 选择我们本地的驱动包就可以了。
+- >> ‘mysql-connector-java-8.0.13.jar’
 
 
 
