@@ -378,6 +378,7 @@
         >> - 上面只是举例，具体collection等于什么，就看你想对那个元素做循环。
 
     - > `item` 参数(可选)
+        >> - item="it" 它后面的'it' 值是自定义的，不受外界的干扰。这里是'it' 也可以写成'element' 等
         >> - 循环体中的具体对象。支持属性的点路径访问，如item.age,item.info.details。
         >> - 具体说明：若collection属性为list或array，则item代表list或array里面的一个元素。若collection属性对应一个map，则item代表的是map中的value集合中的单个value
 

@@ -4,6 +4,9 @@
 男性 male
 女性 female
 
+实际 真实
+	real
+	actual
 启用 - 停用
     enable - disable
     enable - stopped
@@ -11,6 +14,9 @@
     run - stop
 有效 - 无效
     valid - invalid
+	validity
+期望 希望
+	expected
 正常 - 无效
     normal - invalid
 允许 - 拒绝
@@ -132,6 +138,12 @@
 	transport
 转换
 	convert
-
+快递、物流
+	express
+审核
+	approved
+	Examine
+校验、测试
+	verify
 
 
