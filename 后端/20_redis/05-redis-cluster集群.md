@@ -50,7 +50,7 @@
         >> <summary><mark><font color=darkred>Redis cluster 详细配置说明</font></mark></summary>
         >> 
         >> - p61 行，注释掉`bind ` 相关的配置，表示它允许任何IP 来进行访问
-        >> - P80 行, `protected-mode no`    表示不使用保护模式，即不需要密码来进行登录
+        >> - P80 行, `protected-mode no`    表示不使用保护模式，即外网(非本机)也可以访问
         >> - p84 行，`port 8000` 指定访问端口
         >> - p128 行，`daemonize yes` 指定以守护进程运行
         >> - p150 行，`pidfile /var/run/redis_8000.pid`  pidfile 文件对应8000
