@@ -91,8 +91,8 @@ docker rm 容器名称|容器ID
 
 mysql 容器的使用
 	启动mysql 容器
-		docker run -id --name=mxg-mysql -p 33306:3306 -eMYSQL_ROOT_PASSWORD=123456 mysql:5.7
-	我们不能直接从外边直接连接到容器中，而是只能通过宿主机去连接。 33306  这个映射的端口
+		docker run -id --name=mxg-mysql -p 3333:3306 -eMYSQL_ROOT_PASSWORD=123456 mysql:5.7
+	我们不能直接从外边直接连接到容器中，而是只能通过宿主机去连接。 3333  这个映射的端口
 		$ docker exec -it mxg-mysql /bin/bash
 	在容器中可以使用mysql 命令登录
 		$ mysql -u root -p 123456
