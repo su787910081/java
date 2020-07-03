@@ -103,7 +103,14 @@
 - >> 在 "Drivers" 下面选择 "MYSQL"  然后点击在右边的 "+" 选择我们本地的驱动包就可以了。
 - >> ‘mysql-connector-java-8.0.13.jar’
 
-
+# IntelliJ IDEA自动导入包去除星号（import xxx.*）
+- > ### 打开设置 > Editor > Code Style > Java
+	> - Scheme: Default
+	> - Imports
+    >> - ① 将Class count to use import with "*"改为99（导入同一个包的类超过这个数值自动变为 * ）
+    >> - ② 将Names count to use static import with "*"改为99（同上，但这是静态导入的）
+    >> - ③ 将Package to Use import with "*"删掉默认的这两个包（不管使用多少个类，只要在这个列表里都会变为 *(星) ）
+	> - PS：Scheme Default是针对全局的，你也可以只修改某个Project的
 
 
 

@@ -1,3 +1,6 @@
+JVM 内存模型
+	博客： https://www.jianshu.com/p/76959115d486
+
 ## JVM GC 触发条件
 - > #### Minor GC ，
     > - 从年轻代空间（包括 Eden 和 Survivor 区域）回收内存被称为 Minor GC；
