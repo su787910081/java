@@ -112,6 +112,24 @@
     >> - ③ 将Package to Use import with "*"删掉默认的这两个包（不管使用多少个类，只要在这个列表里都会变为 *(星) ）
 	> - PS：Scheme Default是针对全局的，你也可以只修改某个Project的
 
+# File --> settings
+- > ### Editor > File and Code Templates
+    > - Scheme: "Default"
+    >> - Select "Includes"
+    >>> - File Header
+    /**
+     * @author suyh
+     * @since ${YEAR}-${MONTH}-${DAY}
+     */
+    >>> - FileCopyright(create file, fileName)
+    /**
+     * Copyright XXXXXXXX......
+     */
+    >> - Select "Files"
+    >>> - Select "Class Interface Enum AnnotationType"
+    #parse("FileCopyright.java")
+    ....
+    
 
 
 
