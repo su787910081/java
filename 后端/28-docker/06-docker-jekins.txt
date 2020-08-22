@@ -136,7 +136,7 @@ docker run \
 		最好还是先重启一下，先进入到jenkins WEB 界面，安装默认插件之后，可能会有一些失败，然后再进行下一步。
 	2、修改updates文件夹中的 default.json文件
 		cd /var/jenkins-data/updates
-		替换文件中所有 http://updates.jenkins-ci.org/download 为 https://mirrors.tuna.tsinghua.edu.cn/jenkins
+		替换文件中所有 http://updates.jenkins-ci.org/download(或者 https://updates.jenkins.io/download) 为 https://mirrors.tuna.tsinghua.edu.cn/jenkins
 		替换 http://www.google.com 修改为 http://www.baidu.com
 	3、重启
 		在浏览器中，http:localhost:8080/reload，这样可以重新载入配置。
