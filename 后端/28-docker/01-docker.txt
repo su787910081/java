@@ -34,6 +34,8 @@ docker pull centos:7
 docker info
 	查看详细信息
 
+# 查看当前本地的镜像文件信息
+docker images
 
 
 docker ps 
