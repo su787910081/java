@@ -1,0 +1,10 @@
+-- 普通打包
+mvn clean package [] -Dmaven.test.skip=true
+-- 指定环境打包 profile
+mvn clean package [] -P <环境:dev;local;prod> -Dmaven.test.skip=true
+-- 指定模块打包
+-- -am 同时打包所依赖的模块
+-- -amd 同时打包所依赖的模块以及依赖该包的模块
+-- 我们在一个父pom 的目录打包时就需要用到 -amd 将其子模块也一起打包
+-- -pl <模块名/路径> 打包指定模块  这里有多级的话最好指定路径，而非模块名
+mvn clean package -pl <模块名/路径> -am -P <环境:dev;local;prod> -Dmaven.test.skip=true
