@@ -138,6 +138,11 @@ docker run \
 		cd /var/jenkins-data/updates
 		替换文件中所有 http://updates.jenkins-ci.org/download(或者 https://updates.jenkins.io/download) 为 https://mirrors.tuna.tsinghua.edu.cn/jenkins
 		替换 http://www.google.com 修改为 http://www.baidu.com
+
+        Linux 命令处理
+        sed -i 's#http://updates.jenkins-ci.org/download#https://mirrors.tuna.tsinghua.edu.cn/jenkins#g' default.json 
+        sed -i 's#https://updates.jenkins.io/download#https://mirrors.tuna.tsinghua.edu.cn/jenkins#g' default.json 
+        sed -i 's#http://www.google.com#https://www.baidu.com#g' default.json
 	3、重启
 		在浏览器中，http:localhost:8080/reload，这样可以重新载入配置。
 		或者使用http:localhost:8080/restart，重启一下Jenkins ，选择安装推荐插件， 秒速安装成功，简直超速！！
@@ -167,7 +172,8 @@ docker run \
 		搜索：Maven Integration
 	3. Maven 插件 Publish Over SSH
 		搜索：SSH
-
+    4. Docker Slave 插件
+    5. Docker 插件
 
 
 
