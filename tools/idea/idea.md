@@ -58,6 +58,9 @@
 
 
 # 插件
+## 常用插件
+- > ### lombok
+- > ### mybatisx
 ## 翻译
 - > 添加翻译插件
     > -  `file -> Settings...`
@@ -67,6 +70,7 @@
     > - `NR Coding Style`
 - > `mybatis plus`
     > - `iBATIS/MyBatis mini-plugin`
+
 
 # 导出jar
 
@@ -102,6 +106,7 @@
 - >> 选择右边 "Database"  -->  选择有一个"+" 号的  -->  "Data Source"  -->  "Mysql" 
 - >> 在 "Drivers" 下面选择 "MYSQL"  然后点击在右边的 "+" 选择我们本地的驱动包就可以了。
 - >> ‘mysql-connector-java-8.0.13.jar’
+- >> 'ojdbc8-19.3.0.0.jar'
 
 # IntelliJ IDEA自动导入包去除星号（import xxx.*）
 - > ### 打开设置 > Editor > Code Style > Java
