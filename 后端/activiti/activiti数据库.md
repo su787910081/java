@@ -72,13 +72,13 @@
 > | 字段                      | 解释说明-描述 | 类型          |
 > | ------------------------- | ------------- | ------------- |
 > | `ID_`                     |               | varchar(64)   |
-> | `REV_`                      |               | int(11)       |
+> | `REV_`                    |               | int(11)       |
 > | `CATEGORY_`               |               | varchar(255)  |
-> | `NAME_`                     |               | varchar(255)  |
-> | `KEY_`                    |               | varchar(255)  |
+> | `NAME_`                   | 流程名称      | varchar(255)  |
+> | `KEY_`                    | 流程定义KEY   | varchar(255)  |
 > | `VERSION_`                |               | int(11)       |
-> | `DEPLOYMENT_ID_`          |               | varchar(64)   |
-> | `RESOURCE_NAME_`          |               | varchar(4000) |
+> | `DEPLOYMENT_ID_`          | 部署ID，对应流程部署表ID_字段 | varchar(64)   |
+> | `RESOURCE_NAME_`          | 资源名称 | varchar(4000) |
 > | `DGRM_RESOURCE_NAME_`     |               | varchar(4000) |
 > | `DESCRIPTION_`            |               | varchar(4000) |
 > | `HAS_START_FORM_KEY_`     |               | tinyint(4)    |
@@ -132,19 +132,20 @@
 ######  `act_ru_identitylink`   
 
 > -  运行时流程人员表，主要存储任务节点与参与者的相关信息
+> -  任务办理人表(个人任务，组任务)
 >
- > | 字段 | 解释说明-描述 | 类型 |
- > | ---- | ------------- | ---- |
- > |`ID_`||varchar(64)              |
- > |`REV_`||int(11)                 |
- > |`GROUP_ID_`||varchar(255)       |
- > |`TYPE_`||varchar(255)           |
- > |`USER_ID_`||varchar(255)        |
- > |`TASK_ID_`||varchar(64)         |
- > |`PROC_INST_ID_`||varchar(64)    |
- > |`PROC_DEF_ID_`||varchar(64)     |
- >
- > 
+> | 字段 | 解释说明-描述 | 类型 |
+> | ---- | ------------- | ---- |
+> |`ID_`||varchar(64)              |
+> |`REV_`||int(11)                 |
+> |`GROUP_ID_`||varchar(255)       |
+> |`TYPE_`|participant-参与者(个人/组任务)类型;candidate-候选者(组任务)|varchar(255)           |
+> |`USER_ID_`||varchar(255)        |
+> |`TASK_ID_`|任务ID|varchar(64)         |
+> |`PROC_INST_ID_`|流程实例ID|varchar(64)    |
+> |`PROC_DEF_ID_`|流程定义ID|varchar(64)     |
+>
+> 
 
 ######  `act_ru_task`         
 
@@ -266,24 +267,25 @@
 ######  `act_hi_detail`       
 
 > - 历史详情表，提供历史变量的查询
+> - 历史任务办理人表(个人任务，组任务)
 >
- > | 字段 | 解释说明-描述 | 类型 |
- > | ---- | ------------- | ---- |
- > |`ID_`||varchar(64)               |
- > |`TYPE_`||varchar(255)            |
- > |`PROC_INST_ID_`||varchar(64)     |
- > |`EXECUTION_ID_`||varchar(64)     |
- > |`TASK_ID_`||varchar(64)          |
- > |`ACT_INST_ID_`||varchar(64)      |
- > |`NAME_`||varchar(255)            |
- > |`VAR_TYPE_`||varchar(255)        |
- > |`REV_`||int(11)                  |
- > |`TIME_`||datetime(3)             |
- > |`BYTEARRAY_ID_`||varchar(64)     |
- > |`DOUBLE_`||double                |
- > |`LONG_`||bigint(20)              |
- > |`TEXT_`||varchar(4000)           |
- > |`TEXT2_`||varchar(4000)          |
+> | 字段 | 解释说明-描述 | 类型 |
+> | ---- | ------------- | ---- |
+> |`ID_`||varchar(64)               |
+> |`TYPE_`||varchar(255)            |
+> |`PROC_INST_ID_`||varchar(64)     |
+> |`EXECUTION_ID_`||varchar(64)     |
+> |`TASK_ID_`||varchar(64)          |
+> |`ACT_INST_ID_`||varchar(64)      |
+> |`NAME_`||varchar(255)            |
+> |`VAR_TYPE_`||varchar(255)        |
+> |`REV_`||int(11)                  |
+> |`TIME_`||datetime(3)             |
+> |`BYTEARRAY_ID_`||varchar(64)     |
+> |`DOUBLE_`||double                |
+> |`LONG_`||bigint(20)              |
+> |`TEXT_`||varchar(4000)           |
+> |`TEXT2_`||varchar(4000)          |
 
 ######  `act_hi_procinst`      
 
@@ -398,4 +400,8 @@
  > |`REV_`||int(11)        |
 
  
+
+
+
+
 
