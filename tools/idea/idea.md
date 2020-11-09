@@ -67,6 +67,8 @@
     > - `NR Coding Style`
 - > `mybatis plus`
     > - `iBATIS/MyBatis mini-plugin`
+- > `SequenceDiagram`
+    > - 时序图插件
 
 # 导出jar
 
