@@ -2,17 +2,20 @@
 # maven 更新
 ## 更新失败，长时间更新不下来
 - > 清空缓存，然后全部重新拉取
-    > - `file` -> `Invalidate Caches/Restarts...`
+  >
+  > - `file` -> `Invalidate Caches/Restarts...`
 
 # maven 项目识别
 ## 有时候项目没有被识别为maven 或者maven 项目没有三角形的启动图标时
 - > 以maven 项目来识别
+	>
 	> - 右键项目中的`pom.xml` -> `Add as Maven Project`
 
 # 常用
 ## 将非项目文件排除
 - > 排除".idea" 目录
-    > - `file` -> `settings` -> `File Types` -> 在编辑框中添加
+  >
+  > - `file` -> `settings` -> `File Types` -> 在编辑框中添加
 ## 自动添加 `serialVersionUID` 的值
 - > `file -> settings...`
     > - 搜索 `inspections`
@@ -29,7 +32,8 @@
 
 ## 文件默认编码 UTF-8
 - > 设置文件编码
-    > - `file` -> `settings` -> 搜索 `file encoding` -> `Global Encoding` `Project Encoding` `Properties files`
+  >
+  > - `file` -> `settings` -> 搜索 `file encoding` -> `Global Encoding` `Project Encoding` `Properties files`
 
 # 快捷键
 
@@ -54,6 +58,7 @@
     >> - `try ... catch ...`
 	
 - > 查看调用链
+	>
 	> - `Alt + F7` 或者 `Ctrl + Alt + h`
 
 
@@ -61,15 +66,19 @@
 ## 常用插件
 - > ### lombok
 - > ### mybatisx
+  >
+  > SequenceDiagram 调用链 时序图
 ## 翻译
 - > 添加翻译插件
     > -  `file -> Settings...`
     > - `Plugins`
     > - 搜索安装: `translation`
 - > `p3c`
-    > - `NR Coding Style`
+  >
+  > - `NR Coding Style`
 - > `mybatis plus`
-    > - `iBATIS/MyBatis mini-plugin`
+  >
+  > - `iBATIS/MyBatis mini-plugin`
 
 
 # 导出jar
@@ -90,7 +99,8 @@
 
 ## install打包
 - > 打包输出路径
-    > - 这个路径我不知道在哪里配置，但是使用 install 之后在下面的日志中会有提示打包在哪个位置去了。
+  >
+  > - 这个路径我不知道在哪里配置，但是使用 install 之后在下面的日志中会有提示打包在哪个位置去了。
 
 # MYSQL
 ## 手动配置和下载MYSQL 驱动
@@ -112,9 +122,10 @@
 - > ### 打开设置 > Editor > Code Style > Java
 	> - Scheme: Default
 	> - Imports
-    >> - ① 将Class count to use import with "*"改为99（导入同一个包的类超过这个数值自动变为 * ）
-    >> - ② 将Names count to use static import with "*"改为99（同上，但这是静态导入的）
-    >> - ③ 将Package to Use import with "*"删掉默认的这两个包（不管使用多少个类，只要在这个列表里都会变为 *(星) ）
+  > > - ① 将Class count to use import with "*"改为99（导入同一个包的类超过这个数值自动变为 * ）
+  > > - ② 将Names count to use static import with "*"改为99（同上，但这是静态导入的）
+  > > - ③ 将Package to Use import with "*"删掉默认的这两个包（不管使用多少个类，只要在这个列表里都会变为 *(星) ）
+	>
 	> - PS：Scheme Default是针对全局的，你也可以只修改某个Project的
 
 # IntelliJ IDEA 自定义类模板
