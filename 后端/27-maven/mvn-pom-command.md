@@ -21,6 +21,10 @@ mvn clean install -D maven.test.skip=true -P dev -D maven.repo.local=/home/juven
 mvn clean install -D maven.test.skip=true -s E:\java\apache-maven-3.6.3\conf\settings.xml
 ```
 
+```sh
+# 在windows 中使用mvn 命令时，最好用call，不然mvn 后面的命令将不会执行，转为mvn 也是一个bat 脚本
+call mvn clean package -D maven.test.skip=true
+```
 
 
 ## pom.xml 的相关配置
